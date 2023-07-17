@@ -33,32 +33,31 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout"
+        android:layout_marginTop="@dimen/remaining_attempt_padding_value"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout">
+
         <TextView
             android:id="@+id/remainingAttempts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="@dimen/remaining_attempt_padding_value"
+            android:paddingEnd="@dimen/remaining_attempt_padding_value"
             android:text="@string/remaining_attempts"
             android:textSize="@dimen/text_size"
-            android:gravity="center"
-            android:paddingEnd="@dimen/remaining_attempt_padding_value"
-            android:paddingStart="@dimen/remaining_attempt_padding_value"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/remainingAttemptsCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/total_attempt"
             android:textSize="@dimen/text_size"
-            android:gravity="center"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -78,7 +77,7 @@
         android:id="@+id/resultTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
+        android:paddingTop="@dimen/result_text_view_padding_top"
         android:text="@string/result_text"
         android:textSize="@dimen/text_size_large"
         android:textStyle="bold"

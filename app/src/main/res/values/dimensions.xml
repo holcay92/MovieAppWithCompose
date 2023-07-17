@@ -6,4 +6,5 @@
     <dimen name="layout_padding">50dp</dimen>
     <dimen name="edit_text_width">250dp</dimen>
     <dimen name="remaining_attempt_padding_value">10dp</dimen>
+    <dimen name="result_text_view_padding_top">30dp</dimen>
 </resources>
