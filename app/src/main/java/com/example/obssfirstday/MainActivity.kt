@@ -27,30 +27,45 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.empty_field_warning), Toast.LENGTH_SHORT)
                     .show()
             } else if (counter == 0) {
-                binding.resultTextView.text = getString(R.string.message_game_over)
-                binding.et1.text?.clear()
-                binding.btnSubmit.isEnabled = false
+                binding.apply {
+                    resultTextView.text = getString(R.string.message_game_over)
+                    et1.text?.clear()
+                    btnSubmit.isEnabled = false
+                }
+
                 showResultDialog()
             } else {
                 counter--
                 if (input > randomNumber) {
-                    binding.resultTextView.text = getString(R.string.message_decrease_your_number)
-                    binding.et1.text?.clear()
-                    binding.remainingAttemptsCount.text = counter.toString()
+                    binding.apply {
+                        resultTextView.text = getString(R.string.message_decrease_your_number)
+                        et1.text?.clear()
+                        remainingAttemptsCount.text = counter.toString()
+                    }
+
                 } else if (input < randomNumber) {
-                    binding.resultTextView.text = getString(R.string.message_increase_your_number)
-                    binding.et1.text?.clear()
-                    binding.remainingAttemptsCount.text = counter.toString()
+                    binding.apply {
+                        resultTextView.text = getString(R.string.message_increase_your_number)
+                        et1.text?.clear()
+                        remainingAttemptsCount.text = counter.toString()
+                    }
+
                 } else {
-                    binding.resultTextView.text =
-                        getString(R.string.message_congratulations) + " $randomNumber"
-                    binding.btnSubmit.isEnabled = false
-                    binding.btnTryAgain.visibility = android.view.View.VISIBLE
+                    binding.apply {
+                        resultTextView.text =
+                            getString(R.string.message_congratulations) + " $randomNumber"
+                        btnSubmit.isEnabled = false
+                        btnTryAgain.visibility = android.view.View.VISIBLE
+                    }
+
                 }
             }
-            if(counter == 0){
-                binding.btnSubmit.isEnabled = false
-                binding.btnTryAgain.visibility = android.view.View.VISIBLE
+            if (counter == 0) {
+                binding.apply {
+                    btnSubmit.isEnabled = false
+                    btnTryAgain.visibility = android.view.View.VISIBLE
+                    resultTextView.text = getString(R.string.message_game_over)
+                }
                 showResultDialog()
             }
         }
@@ -59,11 +74,13 @@ class MainActivity : AppCompatActivity() {
             randomNumber = (0..100).random()
             Log.d("RandomNumber", "New Random number is $randomNumber")
             counter = 5
-            binding.remainingAttemptsCount.text = counter.toString()
-            binding.resultTextView.text = getString(R.string.message_new_game_started)
-            binding.et1.text?.clear()
-            binding.btnTryAgain.visibility = android.view.View.GONE
-            binding.btnSubmit.isEnabled = true
+            binding.apply {
+                remainingAttemptsCount.text = counter.toString()
+                resultTextView.text = getString(R.string.message_new_game_started)
+                et1.text?.clear()
+                btnTryAgain.visibility = android.view.View.GONE
+                btnSubmit.isEnabled = true
+            }
         }
     }
 
@@ -89,15 +106,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun showResultDialog() {
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setMessage("The number was $randomNumber. Do you want to exit?")
-            .setCancelable(false)
-            .setPositiveButton("Yes") { _, _ ->
-                finish()
+        dialogBuilder.setMessage("The number was $randomNumber.")
+            //.setCancelable(false)
+            .setPositiveButton("OK") { dialog, _ ->
+                //finish()
+                dialog.cancel()
             }
-            .setNegativeButton("No") { dialog, _ ->
+            /*.setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
                 binding.btnTryAgain.visibility = android.view.View.VISIBLE
-            }
+            }*/
         val alert = dialogBuilder.create()
         alert.setTitle("OBSS First Day")
         alert.show()
