@@ -14,7 +14,7 @@
         android:layout_margin="5dp"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
             android:id="@+id/itemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <EditText
+        <TextView
             android:id="@+id/itemDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

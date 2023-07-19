@@ -5,14 +5,19 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.db.Item
 import com.example.todolist.db.ItemDatabase
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ItemViewModel
     private lateinit var adapter: ListAdapter
+    private var isListItemSelected = false
+    private lateinit var selectedItem: Item
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,52 +30,89 @@ class MainActivity : AppCompatActivity() {
         val dao = ItemDatabase.getInstance(application).itemDao()
         val factory = ItemViewModelFactory(dao)
         viewModel = factory.create(ItemViewModel::class.java)
+
         adapter = ListAdapter {
-            // todo item click parcelable
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("item", it)
             startActivity(intent)
-
         }
 
-
-        //TODO list manipulation
-        initRecyclerView(adapter, binding)
+        binding.apply {
+            firstInitRecyclerView()
+            initRecyclerView()
+        }
 
         binding.btnCreate.setOnClickListener {
             // go to detail activity
             val intent = Intent(this, DetailActivity::class.java)
             startActivity(intent)
-
         }
 
     }
 
     override fun onResume() {
         super.onResume()
-        initRecyclerView(adapter, binding)
+        Log.d("MainActivityTest", "onResume")
+        initRecyclerView()
+        firstInitRecyclerView()
     }
 
-    private fun initRecyclerView(adapter: ListAdapter, bindingMain: ActivityMainBinding) {
-        bindingMain.rv.layoutManager = LinearLayoutManager(this)
-        bindingMain.rv.adapter = adapter
-
-        //get all items from db
-        displayStudentList()
-
-
+    override fun onStart() {
+        super.onStart()
+        initRecyclerView()
+        firstInitRecyclerView()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun displayStudentList() {
-        viewModel.items.observe(this) {
-            adapter.setList(it)
-            adapter.notifyDataSetChanged()
+    private fun initRecyclerView() {
+        viewModel.items.observe(this) { items ->
+                adapter.setList(items)
+            if (items.isEmpty()) {
+                binding.rv.visibility = View.GONE
+                binding.emptyMessage.visibility = View.VISIBLE
+            } else {
+                displayItemList()
+                binding.rv.visibility = View.VISIBLE
+                binding.emptyMessage.visibility = View.GONE
+            }
+        }
+    }
+    private fun firstInitRecyclerView() {
+        binding.apply {
+            rv.layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = ListAdapter { selectedItem: Item ->
+                listItemClicked(selectedItem)
+            }
+            rv.adapter = adapter
+            displayItemList()
         }
 
+
     }
 
 
+    private fun displayItemList() {
+        Log.d("MainActivityTest", "displayItemList")
+        viewModel.items.observe(this) {
+            Log.d("MainActivityTest", "setListbefore")
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
+            Log.d("MainActivityTest", "setListafter, adapter= $adapter")
+
+        }
+    }
+
+    private fun listItemClicked(item: Item) {
+
+        binding.apply{
+            selectedItem = item
+            isListItemSelected = true
+
+            val intent = Intent(this@MainActivity, DetailActivity::class.java)
+            intent.putExtra("item", item)
+            startActivity(intent)
+
+        }
+    }
 }
 
 
