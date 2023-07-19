@@ -9,10 +9,8 @@ class ItemViewHolder(private val bindingItem: ListItemBinding) :
     fun bind(item: Item, clickListener: (Item) -> Unit) {
 
         bindingItem.apply {
-
-            itemTitle.text = item.title
-            itemDetail.text = item.detail
-
+            itemTitle.setText(item.title)
+            itemDetail.setText(item.detail)
             root.setOnClickListener {
                 clickListener(item)
             }

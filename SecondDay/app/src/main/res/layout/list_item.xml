@@ -14,22 +14,22 @@
         android:layout_margin="5dp"
         android:orientation="vertical">
 
-        <TextView
+        <EditText
             android:id="@+id/itemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="TextView"
-            android:textSize="34sp"
+            android:layout_marginStart="10dp"
+            android:hint="@string/placeholder_title"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
             android:id="@+id/itemDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="TextView"
-            android:textSize="24sp"
+            android:layout_marginStart="10dp"
+            android:hint="@string/placeholder_detail"
+            android:textSize="14sp"
             />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

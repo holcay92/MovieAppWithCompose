@@ -21,7 +21,7 @@ interface ItemDao {
     @Delete
     suspend fun deleteItem(item: Item)
 
-    @Query("SELECT * FROM item_data_table ORDER BY id ASC")
+    @Query("SELECT * FROM item_data_table ORDER BY item_id ASC")
     fun getAllItems(): LiveData<List<Item>>
 
 }

@@ -16,7 +16,6 @@ abstract class ItemDatabase:RoomDatabase() {
         @Volatile
         private var INSTANCE: ItemDatabase? = null
         fun getInstance(context: Context): ItemDatabase {
-
             synchronized(this) {
                 var instance = INSTANCE
                 // if the instance is null then create a new database

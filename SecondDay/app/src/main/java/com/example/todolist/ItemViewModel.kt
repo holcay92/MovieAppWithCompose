@@ -1,22 +1,25 @@
 package com.example.todolist
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.todolist.db.Item
 import com.example.todolist.db.ItemDao
+import kotlinx.coroutines.launch
 
-class ItemViewModel(private val dao: ItemDao): ViewModel() {
+class ItemViewModel(private val dao: ItemDao) : ViewModel() {
 
-    val items = dao.getAllItems()
+    val items: LiveData<List<Item>> = dao.getAllItems()
 
-    suspend fun insert(item: Item) {
+    fun insert(item: Item) = viewModelScope.launch {
         dao.insertItem(item)
     }
 
-    suspend fun update(item: Item) {
+    fun update(item: Item) = viewModelScope.launch {
         dao.updateItem(item)
     }
 
-    suspend fun delete(item: Item) {
+    fun delete(item: Item) = viewModelScope.launch {
         dao.deleteItem(item)
     }
 }
