@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.db.Item
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ListAdapter
     private var isListItemSelected = false
     private lateinit var selectedItem: Item
+    companion object {
+       var itemUpdate :Boolean = false
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,14 +40,10 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("item", it)
             startActivity(intent)
         }
-
-        binding.apply {
             firstInitRecyclerView()
             initRecyclerView()
-        }
 
         binding.btnCreate.setOnClickListener {
-            // go to detail activity
             val intent = Intent(this, DetailActivity::class.java)
             startActivity(intent)
         }
@@ -52,9 +52,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("MainActivityTest", "onResume")
         initRecyclerView()
         firstInitRecyclerView()
+
     }
 
     override fun onStart() {
@@ -102,13 +102,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun listItemClicked(item: Item) {
-
+        itemUpdate = true
         binding.apply{
             selectedItem = item
             isListItemSelected = true
 
             val intent = Intent(this@MainActivity, DetailActivity::class.java)
             intent.putExtra("item", item)
+            intent.putExtra("itemUpdate", itemUpdate)
             startActivity(intent)
 
         }

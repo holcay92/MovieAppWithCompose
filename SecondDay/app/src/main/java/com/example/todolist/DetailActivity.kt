@@ -4,9 +4,10 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.core.content.IntentCompat.getParcelableExtra
 import com.example.todolist.databinding.ActivityDetailBinding
+
 import com.example.todolist.db.Item
 import com.example.todolist.db.ItemDatabase
 
@@ -20,37 +21,45 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-            val item = intent.getParcelableExtra("item", Item::class.java)
-        Log.d("DetailActivityTest", "item: $item")
-            binding.itemTitle.setText(item?.title)
-            binding.itemDetail.setText(item?.detail)
-
-
-
-
         val dao = ItemDatabase.getInstance(application).itemDao()
         val factory = ItemViewModelFactory(dao)
         viewModel = factory.create(ItemViewModel::class.java)
 
+        val selectedItem = intent.getParcelableExtra("item", Item::class.java)
+        val isItemSelected = intent.getBooleanExtra("itemUpdate", false)
+
+        binding.itemTitle.setText(selectedItem?.title)
+        binding.itemDetail.setText(selectedItem?.detail)
+        if (isItemSelected) {
+            binding.btnDelete.visibility = View.VISIBLE
+            binding.btnSave.text = "Update"
+        }
+
         binding.btnSave.setOnClickListener {
-            saveItem()
+            if (isItemSelected) {
+                updateItem()
+            } else {
+                saveItem()
+            }
             clearInput()
             finish()
         }
-
-        binding.btnEdit.setOnClickListener {
-            updateItem()
-            clearInput()
-            finish()
-        }
-
         binding.btnDelete.setOnClickListener {
-            //  viewModel.delete(selectedItem)
+            Log.d("DetailActivityTest", selectedItem.toString())
+            deleteItem(selectedItem!!)
             clearInput()
+            Log.d("DetailActivityTest", "delete")
             finish()
+
+
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.btnSave.text = "Save"
+        binding.btnDelete.visibility = View.GONE
+
     }
 
 
@@ -61,12 +70,17 @@ class DetailActivity : AppCompatActivity() {
         viewModel.insert(item)
 
     }
+    private fun deleteItem(selectedItem: Item) {
+        Log.d("DetailActivityTest", "selectedItem $selectedItem")
+        viewModel.delete(Item(selectedItem.id, selectedItem.title, selectedItem.detail))
+        Log.d("DetailActivityTest", "delete")
+    }
 
     private fun updateItem() {
         val title = binding.itemTitle.text.toString()
         val detail = binding.itemDetail.text.toString()
-        // val item = Item(selectedItem.id, title, detail)
-        //viewModel.update(item)
+        val item = Item(0, title, detail)
+        viewModel.update(item)
     }
 
     private fun clearInput() {
@@ -75,6 +89,8 @@ class DetailActivity : AppCompatActivity() {
             itemDetail.setText("")
         }
     }
+
+
 
 
 }
