@@ -1,12 +1,12 @@
 package com.example.todolist
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.ActivityMainBinding
-import com.example.todolist.db.Item
 import com.example.todolist.db.ItemDatabase
 
 class MainActivity : AppCompatActivity() {
@@ -50,16 +50,25 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         initRecyclerView(adapter, binding)
     }
+
     private fun initRecyclerView(adapter: ListAdapter, bindingMain: ActivityMainBinding) {
         bindingMain.rv.layoutManager = LinearLayoutManager(this)
         bindingMain.rv.adapter = adapter
-       //get all items from db
 
-
+        //get all items from db
+        displayStudentList()
 
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun displayStudentList() {
+        viewModel.items.observe(this) {
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
+        }
+
+    }
 
 
 }
