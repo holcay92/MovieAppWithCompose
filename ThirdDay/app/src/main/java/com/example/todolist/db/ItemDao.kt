@@ -16,10 +16,10 @@ interface ItemDao {
     suspend fun insertItem(item: Item)
 
     @Update
-    suspend fun updateItem(item: Item)
+    suspend fun updateItem(item: Item): Int
 
     @Delete
-    suspend fun deleteItem(item: Item)
+    suspend fun deleteItem(item: Item) : Int
 
     @Query("SELECT * FROM item_data_table ORDER BY item_id ASC")
     fun getAllItems(): LiveData<List<Item>>

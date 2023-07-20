@@ -49,12 +49,11 @@ class RecyclerFragment : Fragment() {
         viewModel = factory.create(ItemViewModel::class.java)
 
         adapter = ListAdapter {
-
             parentFragmentManager.commit {
                 val bundle = bundleOf("item" to it)
                 replace<DetailFragment>(R.id.fragment_container_view, args = bundle)
+                addToBackStack(null)
             }
-
 
             firstInitRecyclerView()
             initRecyclerView()
@@ -71,15 +70,12 @@ class RecyclerFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("MainActivityTest", "onResume Girdi")
         initRecyclerView()
-
         firstInitRecyclerView()
     }
 
     private fun initRecyclerView() {
         viewModel.items.observe(requireActivity()) { items ->
-            Log.d("MainActivityTest", "initRecyclerView 1")
             adapter.setList(items)
             if (items.isEmpty()) {
                 binding.rv.visibility = View.GONE
@@ -104,14 +100,9 @@ class RecyclerFragment : Fragment() {
     }
 
     private fun displayItemList() {
-        Log.d("MainActivityTest", "displayItemList")
         viewModel.items.observe(requireActivity()) {
-            Log.d("MainActivityTest", "setListbefore")
             adapter.setList(it)
-
             adapter.notifyDataSetChanged()
-            Log.d("MainActivityTest", "setListafter, adapter= $adapter")
-
         }
     }
 
@@ -122,13 +113,11 @@ class RecyclerFragment : Fragment() {
             isListItemSelected = true
 
 
-
             parentFragmentManager.commit {
                 val bundle = bundleOf("item" to item ,"itemUpdate" to itemUpdate)
                 replace<DetailFragment>(R.id.fragment_container_view, args = bundle)
                 addToBackStack(null)
             }
-
         }
     }
 

@@ -16,6 +16,7 @@ import com.example.todolist.R
 import com.example.todolist.databinding.FragmentDetailBinding
 import com.example.todolist.db.Item
 import com.example.todolist.db.ItemDatabase
+import kotlinx.coroutines.runBlocking
 
 class DetailFragment : Fragment() {
 
@@ -38,53 +39,47 @@ class DetailFragment : Fragment() {
 
         val selectedItem = requireArguments().getParcelable<Item>("item")
         val isItemSelected = requireArguments().getBoolean("itemUpdate")
+        prepareUI(selectedItem, isItemSelected)
 
-        binding.itemTitle.setText(selectedItem?.title)
-        binding.itemDetail.setText(selectedItem?.detail)
-        if (isItemSelected) {
-            binding.btnDelete.visibility = View.VISIBLE
-            binding.btnSave.text = "Update"
-        }
         binding.btnSave.setOnClickListener {
             if (isItemSelected) {
                 updateItem(selectedItem!!)
             } else {
-
                 saveItem()
             }
             clearInput()
-            //return previous fragment implement
-            //finish() TODO: finish() is not a function of Fragment
-
+            parentFragmentManager.popBackStack()
         }
         binding.btnDelete.setOnClickListener {
             deleteItem(selectedItem!!)
             clearInput()
-            //finish()
+            //todo asynchroneous bug fix
+            parentFragmentManager.popBackStack()
         }
-
-        // setFragmentResult(RecyclerFragment.REQUEST_KEY, bundleOf("key" to "Donus Verim"))
     }
 
     private fun saveItem() {
         val title = binding.itemTitle.text.toString()
         val detail = binding.itemDetail.text.toString()
         val item = Item(0, title, detail)
-        viewModel.insert(item)
-        returnPreviousFragment()
+        runBlocking {
+            viewModel.insert(item)
+        }
     }
 
     private fun deleteItem(selectedItem: Item) {
-        viewModel.delete(Item(selectedItem.id, selectedItem.title, selectedItem.detail))
-        returnPreviousFragment()
+        runBlocking {
+            viewModel.delete(selectedItem)
+        }
     }
 
     private fun updateItem(selectedItem: Item) {
         val title = binding.itemTitle.text.toString()
         val detail = binding.itemDetail.text.toString()
         val item = Item(selectedItem.id, title, detail)
-        viewModel.update(item)
-        returnPreviousFragment()
+        runBlocking {
+            viewModel.update(item)
+        }
     }
 
     private fun clearInput() {
@@ -95,9 +90,18 @@ class DetailFragment : Fragment() {
     }
 
     private fun returnPreviousFragment() {
+        //todo remove this function and implement return previous fragment with popBackStack()
         parentFragmentManager.commit {
             val bundle = bundleOf("text" to "merhaba 2")
             replace<RecyclerFragment>(R.id.fragment_container_view, args = bundle)
+        }
+    }
+    private fun prepareUI(selectedItem: Item?, isItemSelected: Boolean) {
+        binding.itemTitle.setText(selectedItem?.title)
+        binding.itemDetail.setText(selectedItem?.detail)
+        if (isItemSelected) {
+            binding.btnDelete.visibility = View.VISIBLE
+            binding.btnSave.text = "Update"
         }
     }
 }
