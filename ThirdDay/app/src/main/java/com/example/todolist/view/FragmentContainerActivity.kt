@@ -1,7 +1,8 @@
-package com.example.todolist
+package com.example.todolist.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.todolist.R
 import com.example.todolist.databinding.ActivityFragmentContainerBinding
 
 class FragmentContainerActivity : AppCompatActivity() {
@@ -10,6 +11,7 @@ class FragmentContainerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFragmentContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, RecyclerFragment())
             .commit()

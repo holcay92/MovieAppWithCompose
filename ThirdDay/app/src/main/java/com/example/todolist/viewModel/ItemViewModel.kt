@@ -1,4 +1,4 @@
-package com.example.todolist
+package com.example.todolist.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

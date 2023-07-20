@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TodoList</string>
+    <string name="app_name">OBSS</string>
     <string name="placeholder">Placeholder</string>
     <string name="empty_message">It is quiet \n  Do you want to create a new note?</string>
     <string name="placeholder_title">Title</string>
