@@ -82,7 +82,9 @@ class MainActivity : AppCompatActivity() {
             adapter = ListAdapter { selectedItem: Item ->
                 listItemClicked(selectedItem)
             }
+
             rv.adapter = adapter
+
             displayItemList()
         }
 
@@ -95,6 +97,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.items.observe(this) {
             Log.d("MainActivityTest", "setListbefore")
             adapter.setList(it)
+
             adapter.notifyDataSetChanged()
             Log.d("MainActivityTest", "setListafter, adapter= $adapter")
 

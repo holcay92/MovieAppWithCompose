@@ -37,7 +37,7 @@ class DetailActivity : AppCompatActivity() {
 
         binding.btnSave.setOnClickListener {
             if (isItemSelected) {
-                updateItem()
+                updateItem(selectedItem!!)
             } else {
                 saveItem()
             }
@@ -45,12 +45,9 @@ class DetailActivity : AppCompatActivity() {
             finish()
         }
         binding.btnDelete.setOnClickListener {
-            Log.d("DetailActivityTest", selectedItem.toString())
             deleteItem(selectedItem!!)
             clearInput()
-            Log.d("DetailActivityTest", "delete")
             finish()
-
 
         }
     }
@@ -62,7 +59,6 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-
     private fun saveItem() {
         val title = binding.itemTitle.text.toString()
         val detail = binding.itemDetail.text.toString()
@@ -71,15 +67,13 @@ class DetailActivity : AppCompatActivity() {
 
     }
     private fun deleteItem(selectedItem: Item) {
-        Log.d("DetailActivityTest", "selectedItem $selectedItem")
         viewModel.delete(Item(selectedItem.id, selectedItem.title, selectedItem.detail))
-        Log.d("DetailActivityTest", "delete")
     }
 
-    private fun updateItem() {
+    private fun updateItem(selectedItem: Item) {
         val title = binding.itemTitle.text.toString()
         val detail = binding.itemDetail.text.toString()
-        val item = Item(0, title, detail)
+        val item = Item(selectedItem.id, title, detail)
         viewModel.update(item)
     }
 
