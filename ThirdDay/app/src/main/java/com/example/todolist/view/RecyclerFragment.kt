@@ -1,7 +1,6 @@
 package com.example.todolist.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,19 +38,16 @@ class RecyclerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //  setFragmentResultListener(REQUEST_KEY) { requestKey, bundle ->
-        //    Log.i("RESULT HERE", bundle.getString("key") ?: "")
-        //  }
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
         binding.rv.setHasFixedSize(true)
+
         val dao = ItemDatabase.getInstance(requireContext()).itemDao()
         val factory = ItemViewModelFactory(dao)
         viewModel = factory.create(ItemViewModel::class.java)
 
         adapter = ListAdapter {
             parentFragmentManager.commit {
-                val bundle = bundleOf("item" to it)
-                replace<DetailFragment>(R.id.fragment_container_view, args = bundle)
+                replace<DetailFragment>(R.id.fragment_container_view)
                 addToBackStack(null)
             }
 
@@ -61,8 +57,7 @@ class RecyclerFragment : Fragment() {
         }
         binding.btnCreate.setOnClickListener {
             parentFragmentManager.commit {
-                val bundle = bundleOf("text" to "merhaba 2")
-                replace<DetailFragment>(R.id.fragment_container_view, args = bundle)
+                replace<DetailFragment>(R.id.fragment_container_view)
                 addToBackStack(null)
             }
         }
@@ -114,7 +109,7 @@ class RecyclerFragment : Fragment() {
 
 
             parentFragmentManager.commit {
-                val bundle = bundleOf("item" to item ,"itemUpdate" to itemUpdate)
+                val bundle = bundleOf(ITEM to item ,ITEM_UPDATE to itemUpdate)
                 replace<DetailFragment>(R.id.fragment_container_view, args = bundle)
                 addToBackStack(null)
             }
@@ -122,7 +117,8 @@ class RecyclerFragment : Fragment() {
     }
 
     companion object {
-        const val REQUEST_KEY = "result"
+        const val ITEM = "item"
+        const val ITEM_UPDATE = "itemUpdate"
     }
 }
 
