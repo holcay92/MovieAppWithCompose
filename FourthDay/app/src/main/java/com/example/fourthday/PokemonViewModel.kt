@@ -17,7 +17,15 @@ class PokemonViewModel : ViewModel() {
     private val _pokemonListLiveData = MutableLiveData<List<Pokemon>>()
 
 
-    // Function to fetch Pokémon data from the API and update the LiveData
+    fun getNextPage() {
+        //todo
+
+    }
+
+    fun getPreviousPage() {
+        //todo
+
+    }
 
     fun fetchPokemonData() {
         val apiService = RetrofitInstance.pokeApiService
