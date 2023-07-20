@@ -66,6 +66,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.insert(item)
 
     }
+
     private fun deleteItem(selectedItem: Item) {
         viewModel.delete(Item(selectedItem.id, selectedItem.title, selectedItem.detail))
     }
@@ -83,8 +84,4 @@ class DetailActivity : AppCompatActivity() {
             itemDetail.setText("")
         }
     }
-
-
-
-
 }

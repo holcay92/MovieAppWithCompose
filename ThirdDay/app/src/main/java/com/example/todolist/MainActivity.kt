@@ -19,9 +19,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ListAdapter
     private var isListItemSelected = false
     private lateinit var selectedItem: Item
-    companion object {
-       var itemUpdate :Boolean = false
-    }
+
+    var itemUpdate :Boolean = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
