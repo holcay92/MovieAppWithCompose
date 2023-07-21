@@ -1,31 +1,28 @@
 package com.example.fourthday
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fourthday.model.Pokemon
 import com.example.fourthday.model.PokemonResponse
-import com.example.fourthday.service.PokeApiService
 import com.example.fourthday.service.RetrofitInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@HiltViewModel
 class PokemonViewModel : ViewModel() {
-
-    private val apiService = RetrofitInstance.pokeApiService()
-
-    private val _pokemonList = MutableLiveData<PokemonResponse?>()
-
-    val pokemonList: MutableLiveData<PokemonResponse?>
-        get() = _pokemonList
+    // not a list but a single PokemonResponse object
+     var pokemonResponse = MutableLiveData<PokemonResponse?>()
+   init {
+         fetchNextPokemonList()
+   }
 
     private var offset = 0
     private val LIMIT = 20
 
     fun fetchNextPokemonList() {
-        val call = apiService.getPokemonList(LIMIT, offset)
+        val call = RetrofitInstance.pokeApiService().getPokemonList(offset, LIMIT)
 
         call.enqueue(object : Callback<PokemonResponse?> {
 
@@ -34,13 +31,13 @@ class PokemonViewModel : ViewModel() {
                 response: Response<PokemonResponse?>
             ) {
                 if (response.isSuccessful) {
-                    _pokemonList.postValue(response.body())
+                    pokemonResponse.postValue(response.body())
                     Log.d("TAG_X", "onResponse: ${response.body()}")
                 }
             }
 
             override fun onFailure(call: Call<PokemonResponse?>, t: Throwable) {
-                _pokemonList.postValue(null)
+                pokemonResponse.postValue(null)
                 Log.d("TAG_X", "onFailure: ${t.message}")
 
 
@@ -48,7 +45,6 @@ class PokemonViewModel : ViewModel() {
         })
     }
 
-    // Method to load the next set of Pokémon with a new offset
     fun loadNextSet() {
         offset += LIMIT
         fetchNextPokemonList()

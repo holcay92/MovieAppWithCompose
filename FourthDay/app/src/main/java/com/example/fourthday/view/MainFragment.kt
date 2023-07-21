@@ -6,17 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.fourthday.PokemonAdapter
 import com.example.fourthday.PokemonViewModel
-import com.example.fourthday.service.PokeApiService
 import com.example.fourthday.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
-    private lateinit var viewModel: PokemonViewModel
-    private lateinit var adapter: PokemonAdapter
+    private val viewModel by viewModels<PokemonViewModel>()
+    private var adapter =PokemonAdapter()
 
 
     override fun onCreateView(
@@ -30,16 +29,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = PokemonAdapter()
-        binding.rv.adapter = adapter
 
-
-        viewModel = ViewModelProvider(this)[PokemonViewModel::class.java]
-
-        viewModel.fetchNextPokemonList()
-
-        viewModel.pokemonList.observe(viewLifecycleOwner) {
-            Log.d("TAG_X", "onViewCreated: $it")
+        viewModel.pokemonResponse.observe(viewLifecycleOwner) {
+            adapter.updateList(it?.results)
+            Log.d("TAG_X", "onViewCreated viewmodel.observe it.results : ${it?.results}")
         }
     }
 }
