@@ -5,52 +5,58 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fourthday.model.Pokemon
+import com.example.fourthday.model.PokemonResponse
+import com.example.fourthday.service.PokeApiService
 import com.example.fourthday.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class PokemonViewModel : ViewModel() {
 
-    // LiveData to hold the list of Pokémon data
-    private val _pokemonListLiveData = MutableLiveData<List<Pokemon>>()
+    private val apiService = RetrofitInstance.pokeApiService()
 
+    private val _pokemonList = MutableLiveData<PokemonResponse?>()
 
-    fun getNextPage() {
-        //todo
+    val pokemonList: MutableLiveData<PokemonResponse?>
+        get() = _pokemonList
 
-    }
+    private var offset = 0
+    private val LIMIT = 20
 
-    fun getPreviousPage() {
-        //todo
+    fun fetchNextPokemonList() {
+        val call = apiService.getPokemonList(LIMIT, offset)
 
-    }
+        call.enqueue(object : Callback<PokemonResponse?> {
 
-    fun fetchPokemonData() {
-        val apiService = RetrofitInstance.pokeApiService
-
-        // (offset: 0, limit: 20)
-        apiService.getPokemon(offset = 0, limit = 20).enqueue(object : Callback<List<Pokemon>> {
-
-            override fun onResponse(call: Call<List<Pokemon>>, response: Response<List<Pokemon>>) {
+            override fun onResponse(
+                call: Call<PokemonResponse?>,
+                response: Response<PokemonResponse?>
+            ) {
                 if (response.isSuccessful) {
-                    Log.d("PokemonViewModel", "Response successful")
-                    val pokemonResponse = response.body()
-                    _pokemonListLiveData.postValue(pokemonResponse!!)
-                } else {
-                    // Handle error response
-                    Log.e(
-                        "PokemonViewModel",
-                        "Error fetching Pokémon data ${response.code()} message: ${response.message()} "
-                    )
+                    _pokemonList.postValue(response.body())
+                    Log.d("TAG_X", "onResponse: ${response.body()}")
                 }
             }
 
-            override fun onFailure(call: Call<List<Pokemon>>, t: Throwable) {
-              Log.e("PokemonViewModel", "Error fetching Pokémon data", t)
+            override fun onFailure(call: Call<PokemonResponse?>, t: Throwable) {
+                _pokemonList.postValue(null)
+                Log.d("TAG_X", "onFailure: ${t.message}")
+
+
             }
         })
+    }
 
+    // Method to load the next set of Pokémon with a new offset
+    fun loadNextSet() {
+        offset += LIMIT
+        fetchNextPokemonList()
+    }
+
+    // Method to go back to the previous set of Pokémon with a new offset
+    fun loadPreviousSet() {
+        offset = offset.coerceAtLeast(LIMIT)
+        fetchNextPokemonList()
     }
 }

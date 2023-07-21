@@ -4,41 +4,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fourthday.databinding.ItemPokeBinding
 import com.example.fourthday.model.Pokemon
-import com.example.fourthday.model.Result
+import com.example.fourthday.R
 
-
-
-class PokemonAdapter : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
-
-   private val pokemonList: MutableList<Pokemon> = mutableListOf()
+class PokemonAdapter : ListAdapter<Pokemon, PokemonAdapter.PokemonViewHolder>(PokemonDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val itemView = ItemPokeBinding.inflate(inflater, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_poke, parent, false)
         return PokemonViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        val pokemon = pokemonList[position]
+        val pokemon = getItem(position)
         holder.bind(pokemon)
     }
 
-    override fun getItemCount() = pokemonList.size
+    class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val nameTextView: TextView = itemView.findViewById(R.id.pokeTitle)
 
 
-    fun updateData(newPokemonList: List<Pokemon>) {
-        pokemonList.clear()
-        pokemonList.addAll(newPokemonList)
-        notifyDataSetChanged()
+        fun bind(pokemon: Pokemon) {
+            nameTextView.text = pokemon.name
+        }
     }
 
-    inner class PokemonViewHolder(private val binding: ItemPokeBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(pokemon: Pokemon) {
-            binding.pokeTitle.text = pokemon.name
+    class PokemonDiffCallback : DiffUtil.ItemCallback<Pokemon>() {
+        override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
+            return oldItem.url == newItem.url
+        }
+
+        override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
+            return oldItem == newItem
         }
     }
 }
-
