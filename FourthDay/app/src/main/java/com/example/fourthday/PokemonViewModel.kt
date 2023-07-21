@@ -40,7 +40,6 @@ class PokemonViewModel : ViewModel() {
                 pokemonResponse.postValue(null)
                 Log.d("TAG_X", "onFailure: ${t.message}")
 
-
             }
         })
     }

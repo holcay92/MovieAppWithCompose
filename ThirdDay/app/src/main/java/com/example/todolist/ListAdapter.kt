@@ -7,8 +7,7 @@ import com.example.todolist.databinding.ListItemBinding
 import com.example.todolist.db.Item
 
 
-class ListAdapter(private val clickListener: (Item) -> Unit) :
-    RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+class ListAdapter(private val clickListener: (Item) -> Unit) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
     private val itemList = arrayListOf<Item>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
