@@ -3,15 +3,18 @@ package com.example.fourthday
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.fourthday.di.NetworkModule
 import com.example.fourthday.model.PokemonResponse
+import com.example.fourthday.service.PokeApiService
 import com.example.fourthday.service.RetrofitInstance
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 @HiltViewModel
-class PokemonViewModel : ViewModel() {
+class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiService): ViewModel() {
     // not a list but a single PokemonResponse object
      var pokemonResponse = MutableLiveData<PokemonResponse?>()
    init {
@@ -22,7 +25,7 @@ class PokemonViewModel : ViewModel() {
     private val LIMIT = 20
 
     fun fetchNextPokemonList() {
-        val call = RetrofitInstance.pokeApiService().getPokemonList(offset, LIMIT)
+        val call =pokeApiService.getPokemonList(LIMIT, offset)
 
         call.enqueue(object : Callback<PokemonResponse?> {
 

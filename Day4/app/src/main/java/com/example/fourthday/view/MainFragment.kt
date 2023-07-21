@@ -10,13 +10,18 @@ import androidx.fragment.app.viewModels
 import com.example.fourthday.PokemonAdapter
 import com.example.fourthday.PokemonViewModel
 import com.example.fourthday.databinding.FragmentMainBinding
+import com.example.fourthday.service.PokeApiService
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private val viewModel by viewModels<PokemonViewModel>()
     private var adapter =PokemonAdapter()
 
+    @Inject lateinit var pokeApiService: PokeApiService
 
     override fun onCreateView(
         inflater: LayoutInflater,
