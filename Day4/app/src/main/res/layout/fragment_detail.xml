@@ -29,8 +29,8 @@
 
             <ImageView
                 android:id="@+id/pokeImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:padding="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

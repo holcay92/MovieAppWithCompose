@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.fourthday.viewModel.PokemonViewModel
 import com.example.fourthday.databinding.FragmentMainBinding
+import com.example.fourthday.viewModel.PokemonViewModel
+
 import com.example.fourthday.model.Pokemon
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,9 +37,11 @@ class MainFragment : Fragment() {
         adapter = PokemonAdapter(
             object : PokemonAdapter.OnItemClickListener {
                 override fun onItemClick(pokemon: Pokemon) {
-                    val navigation =
-                        MainFragmentDirections.actionMainFragmentToDetailFragment(pokemon.name!!,pokemon.url!!)
-                    findNavController().navigate(navigation)
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                        pokemon.name!!,
+                        pokemon.url!!
+                    )
+                    findNavController().navigate(action)
 
                     Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $pokemon")
                 }
@@ -47,7 +50,10 @@ class MainFragment : Fragment() {
         binding.rv.adapter = adapter
         viewModel.pokemonResponse.observe(viewLifecycleOwner) {
             adapter.updateList(it?.results)
-            Log.d("TAG_X", "Main Fragment onViewCreated viewmodel.observe it.results : ${it?.results}")
+            Log.d(
+                "TAG_X",
+                "Main Fragment onViewCreated viewmodel.observe it.results : ${it?.results}"
+            )
 
 
             binding.apply {

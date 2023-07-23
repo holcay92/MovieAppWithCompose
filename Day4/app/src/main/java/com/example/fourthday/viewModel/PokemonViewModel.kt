@@ -30,7 +30,6 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
 
     private fun fetchNextPokemonList() {
         val call = pokeApiService.getPokemonList(LIMIT, offset)
-
         call.enqueue(object : Callback<PokemonResponse?> {
 
             override fun onResponse(
