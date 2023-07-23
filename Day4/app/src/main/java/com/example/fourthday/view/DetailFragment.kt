@@ -1,10 +1,13 @@
 package com.example.fourthday.view
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -29,7 +32,7 @@ class DetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         //take the argument from the navigation
         val name = DetailFragmentArgs.fromBundle(requireArguments()).pokemonName
@@ -38,7 +41,7 @@ class DetailFragment : Fragment() {
         val id = url.substring(34, url.length - 1).toInt()
         viewModel.fetchPokemonDetail(id)
         Log.d("TAG_X", "Detail Fragment onViewCreated id: $id")
-       binding.pokeDetail.text = url
+        binding.pokeDetail.text = url
 
 
         viewModel.pokemonDetailResponse.observe(viewLifecycleOwner) {
@@ -50,9 +53,9 @@ class DetailFragment : Fragment() {
     private fun updateUI() {
         val response = viewModel.pokemonDetailResponse.value
         binding.apply {
-           response?.sprites?.versions?.generation_i?.red_blue?.front_transparent?.let {
-               Glide.with(requireContext()).load(it).into(pokeImage)
-           }
+            response?.sprites?.versions?.generation_i?.red_blue?.front_transparent?.let {
+                Glide.with(requireContext()).load(it).fitCenter().into(pokeImage)
+            }
             pokeTitle.text = response?.name
             pokeDetail.text = response?.height.toString()
             pokeDetail2.text = response?.weight.toString()

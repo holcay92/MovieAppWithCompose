@@ -39,6 +39,7 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
             ) {
                 if (response.isSuccessful) {
                     pokemonResponse.value = (response.body())
+
                     val callDetail = pokeApiService.getPokemonDetail(1)
 
                     callDetail.enqueue(object : Callback<PokemonDetail?> { // this is for detail fragment
@@ -46,19 +47,14 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
                             call: Call<PokemonDetail?>,
                             responseDetail: Response<PokemonDetail?>
                         ) {
-                            // Handle the response for the getPokemonDetail API call here
                             if (responseDetail.isSuccessful) {
                                 pokemonDetailResponse.value = (responseDetail.body())
-                               // Log.d("TAG_X", "PokemonViewModel onResponseDetail: ${response.body()}")
                             }
                         }
 
                         override fun onFailure(call: Call<PokemonDetail?>, t: Throwable) {
-                            // Handle the failure for the getPokemonDetail API call here
-                            Log.d("TAG_X", "PokemonViewModel onFailureDetail: ${t.message}")
                         }
                     })
-                    Log.d("TAG_X", "PokemonViewModel onResponse11: ${response.body()}")
                 }
             }
 
@@ -77,7 +73,7 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
                 call: Call<PokemonDetail?>,
                 response: Response<PokemonDetail?>
             ) {
-                // Handle the response for the getPokemonDetail API call here
+
                 if (response.isSuccessful) {
                     pokemonDetailResponse.value = (response.body())
                     Log.d("TAG_X", "onResponseDetail: ${response.body()}")
@@ -85,7 +81,6 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
             }
 
             override fun onFailure(call: Call<PokemonDetail?>, t: Throwable) {
-                // Handle the failure for the getPokemonDetail API call here
                 Log.d("TAG_X", "onFailureDetail: ${t.message}")
             }
         })
@@ -96,7 +91,6 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
         fetchNextPokemonList()
     }
 
-    // Method to go back to the previous set of Pokémon with a new offset
     fun loadPreviousSet() {
         if (offset > 0) {
             offset -= LIMIT
