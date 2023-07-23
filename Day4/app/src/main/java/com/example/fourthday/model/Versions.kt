@@ -1,6 +1,8 @@
 package com.example.fourthday.model
 
-data class Versions(
-    val generation_i: GenerationI,
+import com.google.gson.annotations.SerializedName
 
-)
+data class Versions(
+    @SerializedName("generation-i") val generation_i: GenerationI,
+
+    )

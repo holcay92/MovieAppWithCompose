@@ -1,5 +1,7 @@
 package com.example.fourthday.model
 
+import com.google.gson.annotations.SerializedName
+
 data class GenerationI(
-    val red_blue: RedBlue,//show
+    @SerializedName("red-blue") val red_blue: RedBlue,//show
 )

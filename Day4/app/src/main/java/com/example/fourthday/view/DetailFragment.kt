@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.fourthday.databinding.FragmentDetailBinding
 import com.example.fourthday.viewModel.PokemonDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -41,21 +42,16 @@ class DetailFragment : Fragment() {
 
 
         viewModel.pokemonDetailResponse.observe(viewLifecycleOwner) {
-            Log.d("TAG_X", "Detail Fragment viewmodel before : ${it}")
             updateUI()
-            Log.d("TAG_X", "Detail Fragment viewmodel : ${it}")
         }
 
     }
 
     private fun updateUI() {
         val response = viewModel.pokemonDetailResponse.value
-        Log.d("TAG_X", "updateUI: $response")
         binding.apply {
-           //put image with glide
            response?.sprites?.versions?.generation_i?.red_blue?.front_transparent?.let {
                Glide.with(requireContext()).load(it).into(pokeImage)
-               Log.d("TAG_X", "updateUI glide : $it")
            }
             pokeTitle.text = response?.name
             pokeDetail.text = response?.height.toString()
@@ -64,7 +60,6 @@ class DetailFragment : Fragment() {
             pokeDetail4.text = response?.moves?.get(1)?.move?.name.toString()
             pokeDetail5.text = response?.moves?.get(2)?.move?.name.toString()
 
-            //pokeDetail3.text = response?.baseExperience.toString()
         }
     }
 
