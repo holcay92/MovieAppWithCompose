@@ -3,6 +3,7 @@ package com.example.fourthday.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.fourthday.model.PokemonDetail
 import com.example.fourthday.model.PokemonResponse
 import com.example.fourthday.service.PokeApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,21 +13,23 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiService): ViewModel() {
+class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiService) :
+    ViewModel() {
     // not a list but a single PokemonResponse object
-     var pokemonResponse = MutableLiveData<PokemonResponse?>()
+    var pokemonResponse = MutableLiveData<PokemonResponse?>()
+    var pokemonDetailResponse = MutableLiveData<PokemonDetail?>()
 
-   init {
+    init {
 
-         fetchNextPokemonList()
-       Log.d("TAG_X", "PokemonViewModel fetchNextPokemonList init: ${pokemonResponse.value}")
-   }
+        fetchNextPokemonList()
+        Log.d("TAG_X", "PokemonViewModel fetchNextPokemonList init: ${pokemonResponse.value}")
+    }
 
     private var offset = 0
     private val LIMIT = 20
 
     private fun fetchNextPokemonList() {
-        val call =pokeApiService.getPokemonList(LIMIT, offset)
+        val call = pokeApiService.getPokemonList(LIMIT, offset)
 
         call.enqueue(object : Callback<PokemonResponse?> {
 
@@ -35,15 +38,55 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
                 response: Response<PokemonResponse?>
             ) {
                 if (response.isSuccessful) {
-                    pokemonResponse.value=(response.body())
-                    Log.d("TAG_X", "onResponse11: ${response.body()}")
+                    pokemonResponse.value = (response.body())
+                    val callDetail = pokeApiService.getPokemonDetail(1)
+
+                    callDetail.enqueue(object : Callback<PokemonDetail?> { // this is for detail fragment
+                        override fun onResponse(
+                            call: Call<PokemonDetail?>,
+                            responseDetail: Response<PokemonDetail?>
+                        ) {
+                            // Handle the response for the getPokemonDetail API call here
+                            if (responseDetail.isSuccessful) {
+                                pokemonDetailResponse.value = (responseDetail.body())
+                               // Log.d("TAG_X", "PokemonViewModel onResponseDetail: ${response.body()}")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<PokemonDetail?>, t: Throwable) {
+                            // Handle the failure for the getPokemonDetail API call here
+                            Log.d("TAG_X", "PokemonViewModel onFailureDetail: ${t.message}")
+                        }
+                    })
+                    Log.d("TAG_X", "PokemonViewModel onResponse11: ${response.body()}")
                 }
             }
 
             override fun onFailure(call: Call<PokemonResponse?>, t: Throwable) {
                 pokemonResponse.postValue(null)
-                Log.d("TAG_X", "onFailure: ${t.message}")
+                Log.d("TAG_X", "PokemonViewModel onFailure: ${t.message}")
 
+            }
+        })
+    }
+
+    private fun getPokemonDetail(offset: Int) {
+        val callDetail = pokeApiService.getPokemonDetail(offset)
+        callDetail.enqueue(object : Callback<PokemonDetail?> {
+            override fun onResponse(
+                call: Call<PokemonDetail?>,
+                response: Response<PokemonDetail?>
+            ) {
+                // Handle the response for the getPokemonDetail API call here
+                if (response.isSuccessful) {
+                    pokemonDetailResponse.value = (response.body())
+                    Log.d("TAG_X", "onResponseDetail: ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<PokemonDetail?>, t: Throwable) {
+                // Handle the failure for the getPokemonDetail API call here
+                Log.d("TAG_X", "onFailureDetail: ${t.message}")
             }
         })
     }
@@ -55,11 +98,11 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
 
     // Method to go back to the previous set of Pokémon with a new offset
     fun loadPreviousSet() {
-       if(offset>0){
-           offset -= LIMIT
-           fetchNextPokemonList()
-       }
-        else return
-
+        if (offset > 0) {
+            offset -= LIMIT
+            fetchNextPokemonList()
+        } else return
     }
 }
+
+

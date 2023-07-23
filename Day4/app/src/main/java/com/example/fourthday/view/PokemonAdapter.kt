@@ -14,15 +14,15 @@ class PokemonAdapter(private val listener: OnItemClickListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val itemView =
             ItemPokeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        Log.d("TAG_X", "onCreateViewHolder in the adapter: $pokemonList")
-        Log.d("TAG_X", "onCreateViewHolder in the adapter itemView: $itemView")
+      //  Log.d("TAG_X", "onCreateViewHolder in the adapter: $pokemonList")
+
         return PokemonViewHolder(itemView)
     }
 
     override fun getItemCount() = pokemonList.size
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        Log.d("TAG_X", "onBindViewHolder in the adapter: $pokemonList")
+       // Log.d("TAG_X", "onBindViewHolder in the adapter: $pokemonList")
         holder.bind(pokemonList[position])
         holder.itemView.setOnClickListener {
             listener?.onItemClick(pokemonList[position])
@@ -35,16 +35,16 @@ class PokemonAdapter(private val listener: OnItemClickListener) :
             val bindingItem = ItemPokeBinding.bind(itemView)
             bindingItem.apply {
                 pokeTitle.text = pokemon.name
-                Log.d("TAG_X", "bind in the adapter pokemon.name : ${pokemon.name}")
+               // Log.d("TAG_X", "bind in the adapter pokemon.name : ${pokemon.name}")
             }
         }
     }
 
     fun updateList(list: List<Pokemon>?) {
         pokemonList.clear()
-        Log.d("TAG_X", "updateList in the adapter: $list")
+       // Log.d("TAG_X", "updateList in the adapter: $list")
         pokemonList.addAll(list ?: emptyList())
-        Log.d("TAG_X", "updateList in the adapter pokemonlist: $pokemonList")
+        Log.d("TAG_X", "Adapter Pokemon updateList in the adapter pokemonlist: $pokemonList")
         notifyDataSetChanged()
     }
 

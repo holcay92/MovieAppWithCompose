@@ -22,6 +22,10 @@
         <argument
             android:name="pokemonName"
             app:argType="string"
-            android:defaultValue="OBSS" />
+            android:defaultValue="halil" />
+        <argument
+            android:name="pokemonUrl"
+            app:argType="string"
+            android:defaultValue="pokeapi.co/api/v2/pokemon/12" />
     </fragment>
 </navigation>

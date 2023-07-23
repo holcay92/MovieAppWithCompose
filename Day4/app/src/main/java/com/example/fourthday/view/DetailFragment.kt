@@ -1,15 +1,22 @@
 package com.example.fourthday.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.fourthday.databinding.FragmentDetailBinding
+import com.example.fourthday.viewModel.PokemonDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
+    private val viewModel by viewModels<PokemonDetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +33,39 @@ class DetailFragment : Fragment() {
         //take the argument from the navigation
         val name = DetailFragmentArgs.fromBundle(requireArguments()).pokemonName
         binding.pokeTitle.text = name
+        val url = DetailFragmentArgs.fromBundle(requireArguments()).pokemonUrl
+        val id = url.substring(34, url.length - 1).toInt()
+        viewModel.fetchPokemonDetail(id)
+        Log.d("TAG_X", "Detail Fragment onViewCreated id: $id")
+       binding.pokeDetail.text = url
 
+
+        viewModel.pokemonDetailResponse.observe(viewLifecycleOwner) {
+            Log.d("TAG_X", "Detail Fragment viewmodel before : ${it}")
+            updateUI()
+            Log.d("TAG_X", "Detail Fragment viewmodel : ${it}")
+        }
+
+    }
+
+    private fun updateUI() {
+        val response = viewModel.pokemonDetailResponse.value
+        Log.d("TAG_X", "updateUI: $response")
+        binding.apply {
+           //put image with glide
+           response?.sprites?.versions?.generation_i?.red_blue?.front_transparent?.let {
+               Glide.with(requireContext()).load(it).into(pokeImage)
+               Log.d("TAG_X", "updateUI glide : $it")
+           }
+            pokeTitle.text = response?.name
+            pokeDetail.text = response?.height.toString()
+            pokeDetail2.text = response?.weight.toString()
+            pokeDetail3.text = response?.moves?.get(0)?.move?.name.toString()
+            pokeDetail4.text = response?.moves?.get(1)?.move?.name.toString()
+            pokeDetail5.text = response?.moves?.get(2)?.move?.name.toString()
+
+            //pokeDetail3.text = response?.baseExperience.toString()
+        }
     }
 
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.fourthday.viewModel.PokemonViewModel
 import com.example.fourthday.databinding.FragmentMainBinding
 import com.example.fourthday.model.Pokemon
@@ -32,30 +32,31 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rv.layoutManager = LinearLayoutManager(requireContext())
+        binding.rv.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = PokemonAdapter(
             object : PokemonAdapter.OnItemClickListener {
                 override fun onItemClick(pokemon: Pokemon) {
-                    val navigation = MainFragmentDirections.actionMainFragmentToDetailFragment(pokemon.name!!)
+                    val navigation =
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(pokemon.name!!,pokemon.url!!)
                     findNavController().navigate(navigation)
-                    Log.d("TAG_X", "onItemClick in the fragment: $pokemon")
+
+                    Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $pokemon")
                 }
             }
         )
         binding.rv.adapter = adapter
-
-
         viewModel.pokemonResponse.observe(viewLifecycleOwner) {
             adapter.updateList(it?.results)
-            Log.d("TAG_X", "onViewCreated viewmodel.observe it.results12 : ${it?.results}")
+            Log.d("TAG_X", "Main Fragment onViewCreated viewmodel.observe it.results : ${it?.results}")
 
 
-            binding.btnNext.setOnClickListener {
-                viewModel.loadNextSet()
-            }
-
-            binding.btnPrevious.setOnClickListener {
-                viewModel.loadPreviousSet()
+            binding.apply {
+                btnNext.setOnClickListener {
+                    viewModel.loadNextSet()
+                }
+                btnPrevious.setOnClickListener {
+                    viewModel.loadPreviousSet()
+                }
             }
         }
     }

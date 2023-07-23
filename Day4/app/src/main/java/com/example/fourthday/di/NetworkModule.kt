@@ -16,12 +16,10 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
-
     @Provides
     fun logging() :HttpLoggingInterceptor{
        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
-
     @Provides
      fun client(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -29,7 +27,6 @@ class NetworkModule {
             .connectTimeout(20, TimeUnit.SECONDS)// modified for long time request
             .readTimeout(20, TimeUnit.SECONDS)// modified for long time request
             .build()
-
     }
     @Provides
      fun retrofit(): Retrofit {
@@ -38,12 +35,9 @@ class NetworkModule {
             .client(client())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-
     }
     @Provides
     fun pokeApiService(): PokeApiService {
         return retrofit().create(PokeApiService::class.java)
     }
-
 }

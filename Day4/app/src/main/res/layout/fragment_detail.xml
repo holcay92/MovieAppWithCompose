@@ -26,12 +26,13 @@
 
             <ImageView
                 android:id="@+id/pokeImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:padding="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@color/white" />
+                tools:src="@color/white"
+                android:src="@color/cardTextColor"/>
 
 
             <TextView
@@ -77,6 +78,26 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/pokeImage"
                 app:layout_constraintTop_toBottomOf="@+id/pokeDetail2"
+                tools:text="pokeDetail" />
+            <TextView
+                android:id="@+id/pokeDetail4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/cardTextColor"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/pokeImage"
+                app:layout_constraintTop_toBottomOf="@+id/pokeDetail3"
+                tools:text="pokeDetail" />
+            <TextView
+                android:id="@+id/pokeDetail5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/cardTextColor"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/pokeImage"
+                app:layout_constraintTop_toBottomOf="@+id/pokeDetail4"
                 tools:text="pokeDetail" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
