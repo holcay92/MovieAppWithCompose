@@ -23,9 +23,9 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-
-
-
+        //take the argument from the navigation
+        val name = DetailFragmentArgs.fromBundle(requireArguments()).pokemonName
+        binding.pokeTitle.text = name
 
     }
 

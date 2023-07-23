@@ -17,8 +17,11 @@ import javax.inject.Inject
 class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiService): ViewModel() {
     // not a list but a single PokemonResponse object
      var pokemonResponse = MutableLiveData<PokemonResponse?>()
+
    init {
+
          fetchNextPokemonList()
+       Log.d("TAG_X", "PokemonViewModel fetchNextPokemonList init: ${pokemonResponse.value}")
    }
 
     private var offset = 0
@@ -34,8 +37,8 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
                 response: Response<PokemonResponse?>
             ) {
                 if (response.isSuccessful) {
-                    pokemonResponse.postValue(response.body())
-                    Log.d("TAG_X", "onResponse: ${response.body()}")
+                    pokemonResponse.value=(response.body())
+                    Log.d("TAG_X", "onResponse11: ${response.body()}")
                 }
             }
 

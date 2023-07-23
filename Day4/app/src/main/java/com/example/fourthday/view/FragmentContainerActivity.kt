@@ -14,8 +14,5 @@ class FragmentContainerActivity : AppCompatActivity() {
         binding = ActivityFragmentContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container_view, MainFragment())
-            .commit()
     }
 }

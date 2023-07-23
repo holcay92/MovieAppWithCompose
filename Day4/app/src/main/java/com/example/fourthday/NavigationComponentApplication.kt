@@ -6,8 +6,4 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class NavigationComponentApplication : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-
 }
