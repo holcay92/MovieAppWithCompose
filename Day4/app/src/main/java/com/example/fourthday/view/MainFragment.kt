@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fourthday.PokemonAdapter
-import com.example.fourthday.PokemonViewModel
+import com.example.fourthday.viewModel.PokemonViewModel
 import com.example.fourthday.databinding.FragmentMainBinding
 import com.example.fourthday.model.Pokemon
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +36,6 @@ class MainFragment : Fragment() {
         adapter = PokemonAdapter(
             object : PokemonAdapter.OnItemClickListener {
                 override fun onItemClick(pokemon: Pokemon) {
-
                     val navigation = MainFragmentDirections.actionMainFragmentToDetailFragment(pokemon.name!!)
                     findNavController().navigate(navigation)
                     Log.d("TAG_X", "onItemClick in the fragment: $pokemon")
@@ -52,6 +50,13 @@ class MainFragment : Fragment() {
             Log.d("TAG_X", "onViewCreated viewmodel.observe it.results12 : ${it?.results}")
 
 
+            binding.btnNext.setOnClickListener {
+                viewModel.loadNextSet()
+            }
+
+            binding.btnPrevious.setOnClickListener {
+                viewModel.loadPreviousSet()
+            }
         }
     }
 }

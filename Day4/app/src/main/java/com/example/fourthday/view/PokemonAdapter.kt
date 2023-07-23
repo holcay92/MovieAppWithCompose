@@ -1,14 +1,11 @@
-package com.example.fourthday
+package com.example.fourthday.view
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fourthday.databinding.ItemPokeBinding
 import com.example.fourthday.model.Pokemon
-import com.example.fourthday.model.PokemonResponse
 
 
 class PokemonAdapter(private val listener: OnItemClickListener) :

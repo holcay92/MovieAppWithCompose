@@ -1,12 +1,10 @@
-package com.example.fourthday
+package com.example.fourthday.viewModel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fourthday.di.NetworkModule
 import com.example.fourthday.model.PokemonResponse
 import com.example.fourthday.service.PokeApiService
-import com.example.fourthday.service.RetrofitInstance
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +25,7 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
     private var offset = 0
     private val LIMIT = 20
 
-    fun fetchNextPokemonList() {
+    private fun fetchNextPokemonList() {
         val call =pokeApiService.getPokemonList(LIMIT, offset)
 
         call.enqueue(object : Callback<PokemonResponse?> {
@@ -57,7 +55,11 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
 
     // Method to go back to the previous set of Pokémon with a new offset
     fun loadPreviousSet() {
-        offset = offset.coerceAtLeast(LIMIT)
-        fetchNextPokemonList()
+       if(offset>0){
+           offset -= LIMIT
+           fetchNextPokemonList()
+       }
+        else return
+
     }
 }
