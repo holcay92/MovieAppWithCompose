@@ -1,9 +1,12 @@
 package com.example.fourthday.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -23,7 +26,7 @@ class FragmentContainerActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             Handler(Looper.getMainLooper()).postDelayed({
-              val action = SplashFragmentDirections.actionSplashFragmentToMainFragment()
+                val action = SplashFragmentDirections.actionSplashFragmentToMainFragment()
                 findNavController(R.id.fragmentContainerView).navigate(action)
 
             }, SPLASH_DELAY.toLong())
@@ -33,4 +36,6 @@ class FragmentContainerActivity : AppCompatActivity() {
     companion object {
         private const val SPLASH_DELAY = 1000
     }
+
+
 }

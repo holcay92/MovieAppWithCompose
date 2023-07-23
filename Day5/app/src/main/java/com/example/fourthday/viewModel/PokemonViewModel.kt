@@ -1,11 +1,15 @@
 package com.example.fourthday.viewModel
 
+import android.app.Dialog
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.fourthday.R
 import com.example.fourthday.model.PokemonDetail
 import com.example.fourthday.model.PokemonResponse
 import com.example.fourthday.service.PokeApiService
+import com.example.fourthday.view.MainFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -96,6 +100,8 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
             fetchNextPokemonList()
         } else return
     }
+
+
 }
 
 
