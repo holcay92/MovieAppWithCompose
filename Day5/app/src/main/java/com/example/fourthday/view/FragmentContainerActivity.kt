@@ -26,7 +26,7 @@ class FragmentContainerActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             Handler(Looper.getMainLooper()).postDelayed({
-                val action = SplashFragmentDirections.actionSplashFragmentToMainFragment()
+                val action = SplashFragmentDirections.actionSplashFragmentToSplashAnimation()
                 findNavController(R.id.fragmentContainerView).navigate(action)
 
             }, SPLASH_DELAY.toLong())
