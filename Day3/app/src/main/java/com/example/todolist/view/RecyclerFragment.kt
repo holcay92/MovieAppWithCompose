@@ -1,21 +1,21 @@
 package com.example.todolist.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import com.example.todolist.databinding.FragmentRecyclerBinding
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist.viewModel.ItemViewModel
-import com.example.todolist.viewModel.ItemViewModelFactory
 import com.example.todolist.ListAdapter
 import com.example.todolist.R
+import com.example.todolist.databinding.FragmentRecyclerBinding
 import com.example.todolist.db.Item
 import com.example.todolist.db.ItemDatabase
+import com.example.todolist.viewModel.ItemViewModel
+import com.example.todolist.viewModel.ItemViewModelFactory
 
 class RecyclerFragment : Fragment() {
 
@@ -30,7 +30,7 @@ class RecyclerFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentRecyclerBinding.inflate(inflater, container, false)
         return binding.root
@@ -53,11 +53,12 @@ class RecyclerFragment : Fragment() {
 
             firstInitRecyclerView()
             initRecyclerView()
-
         }
         binding.btnCreate.setOnClickListener {
             parentFragmentManager.commit {
-                replace<DetailFragment>(R.id.fragment_container_view)
+                selectedItem = Item(0, "", "")
+                val bundle = bundleOf(ITEM to selectedItem, ITEM_UPDATE to itemUpdate)
+                replace<DetailFragment>(R.id.fragment_container_view, args = bundle)
                 addToBackStack(null)
             }
         }
@@ -107,9 +108,8 @@ class RecyclerFragment : Fragment() {
             selectedItem = item
             isListItemSelected = true
 
-
             parentFragmentManager.commit {
-                val bundle = bundleOf(ITEM to item ,ITEM_UPDATE to itemUpdate)
+                val bundle = bundleOf(ITEM to item, ITEM_UPDATE to itemUpdate)
                 replace<DetailFragment>(R.id.fragment_container_view, args = bundle)
                 addToBackStack(null)
             }
@@ -121,6 +121,3 @@ class RecyclerFragment : Fragment() {
         const val ITEM_UPDATE = "itemUpdate"
     }
 }
-
-
-
