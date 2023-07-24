@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fourthday.databinding.ItemPokeBinding
 import com.example.fourthday.model.Pokemon
 
-
 class PokemonAdapter(private val listener: OnItemClickListener) :
     RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
     private var pokemonList: ArrayList<Pokemon> = arrayListOf()
@@ -33,7 +32,7 @@ class PokemonAdapter(private val listener: OnItemClickListener) :
             val bindingItem = ItemPokeBinding.bind(itemView)
             bindingItem.apply {
                 pokeTitle.text = pokemon.name
-               // Log.d("TAG_X", "bind in the adapter pokemon.name : ${pokemon.name}")
+                // Log.d("TAG_X", "bind in the adapter pokemon.name : ${pokemon.name}")
             }
         }
     }

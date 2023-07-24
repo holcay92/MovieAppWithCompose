@@ -1,15 +1,11 @@
 package com.example.fourthday.viewModel
 
-import android.app.Dialog
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fourthday.R
 import com.example.fourthday.model.PokemonDetail
 import com.example.fourthday.model.PokemonResponse
 import com.example.fourthday.service.PokeApiService
-import com.example.fourthday.view.MainFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +31,7 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
 
             override fun onResponse(
                 call: Call<PokemonResponse?>,
-                response: Response<PokemonResponse?>
+                response: Response<PokemonResponse?>,
             ) {
                 if (response.isSuccessful) {
                     pokemonResponse.value = (response.body())
@@ -46,7 +42,7 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
                         Callback<PokemonDetail?> { // this is for detail fragment
                         override fun onResponse(
                             call: Call<PokemonDetail?>,
-                            responseDetail: Response<PokemonDetail?>
+                            responseDetail: Response<PokemonDetail?>,
                         ) {
                             if (responseDetail.isSuccessful) {
                                 pokemonDetailResponse.value = (responseDetail.body())
@@ -67,13 +63,12 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
     }
 
     private fun getPokemonDetail() {
-
         for (i in offset..offset + LIMIT) {
             val callDetail = pokeApiService.getPokemonDetail(i)
             callDetail.enqueue(object : Callback<PokemonDetail?> {
                 override fun onResponse(
                     call: Call<PokemonDetail?>,
-                    response: Response<PokemonDetail?>
+                    response: Response<PokemonDetail?>,
                 ) {
                     if (response.isSuccessful) {
                         pokemonDetailResponse.value = (response.body())
@@ -84,7 +79,6 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
                     Log.d("TAG_X", "onFailureDetail: ${t.message}")
                 }
             })
-
         }
         Log.d("TAG_X", "getPokemonDetail test end of loop: ${pokemonDetailResponse.value}")
     }
@@ -94,7 +88,7 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
         fetchNextPokemonList()
         Log.d(
             "TAG_X",
-            "PokemonViewModel fetchNextPokemonList init test next btn: ${pokemonDetailResponse.value}"
+            "PokemonViewModel fetchNextPokemonList init test next btn: ${pokemonDetailResponse.value}",
         )
     }
 
@@ -102,8 +96,8 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
         if (offset > 0) {
             offset -= LIMIT
             fetchNextPokemonList()
-        } else return
+        } else {
+            return
+        }
     }
 }
-
-

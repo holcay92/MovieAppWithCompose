@@ -7,5 +7,5 @@ data class PokemonDetail(
     @SerializedName("moves") val moves: List<Move>?,
     @SerializedName("name") val name: String?,
     @SerializedName("sprites") val sprites: Sprites?,
-    @SerializedName("weight") val weight: Int?
+    @SerializedName("weight") val weight: Int?,
 )

@@ -16,20 +16,19 @@ class PokemonDetailViewModel @Inject constructor(
     private val pokeApiService: PokeApiService,
 
 ) : ViewModel() {
-   // private val id: Int = 1
-    var pokemonDetailResponse =MutableLiveData<PokemonDetail?>()
-
+    // private val id: Int = 1
+    var pokemonDetailResponse = MutableLiveData<PokemonDetail?>()
 
     init {
-        //fetchPokemonDetail(id)
+        // fetchPokemonDetail(id)
     }
 
-    fun fetchPokemonDetail(id:Int) {
+    fun fetchPokemonDetail(id: Int) {
         val call = pokeApiService.getPokemonDetail(id)
         call.enqueue(object : Callback<PokemonDetail?> {
             override fun onResponse(
                 call: Call<PokemonDetail?>,
-                response: Response<PokemonDetail?>
+                response: Response<PokemonDetail?>,
             ) {
                 if (response.isSuccessful) {
                     pokemonDetailResponse.value = response.body()
@@ -39,7 +38,6 @@ class PokemonDetailViewModel @Inject constructor(
             override fun onFailure(call: Call<PokemonDetail?>, t: Throwable) {
                 pokemonDetailResponse.postValue(null)
                 Log.d("TAG_X", "PokemonDetailViewModel onFailure: ${t.message}")
-
             }
         })
     }

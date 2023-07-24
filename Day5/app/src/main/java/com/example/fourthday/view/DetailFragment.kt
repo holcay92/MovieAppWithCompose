@@ -1,20 +1,15 @@
 package com.example.fourthday.view
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.fourthday.databinding.FragmentDetailBinding
 import com.example.fourthday.viewModel.PokemonDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -25,7 +20,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -40,11 +35,9 @@ class DetailFragment : Fragment() {
         viewModel.fetchPokemonDetail(id)
         binding.pokeDetail.text = url
 
-
         viewModel.pokemonDetailResponse.observe(viewLifecycleOwner) {
             updateUI()
         }
-
     }
 
     private fun updateUI() {
@@ -59,7 +52,6 @@ class DetailFragment : Fragment() {
             pokeDetail3.text = response?.moves?.get(0)?.move?.name.toString()
             pokeDetail4.text = response?.moves?.get(1)?.move?.name.toString()
             pokeDetail5.text = response?.moves?.get(2)?.move?.name.toString()
-
         }
     }
 }

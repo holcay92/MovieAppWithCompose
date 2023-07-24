@@ -8,20 +8,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.fourthday.R
 import com.example.fourthday.databinding.FragmentMainBinding
-import com.example.fourthday.viewModel.PokemonViewModel
-
 import com.example.fourthday.model.Pokemon
+import com.example.fourthday.viewModel.PokemonViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -34,7 +30,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         showProgressDialog()
@@ -49,12 +45,12 @@ class MainFragment : Fragment() {
                 override fun onItemClick(pokemon: Pokemon) {
                     val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
                         pokemon.name!!,
-                        pokemon.url!!
+                        pokemon.url!!,
                     )
                     findNavController().navigate(action)
                     Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $pokemon")
                 }
-            }
+            },
         )
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -63,11 +59,10 @@ class MainFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
-            onBackPressedCallback
+            onBackPressedCallback,
         )
         binding.rv.adapter = adapter
         viewModel.pokemonResponse.observe(viewLifecycleOwner) {
-
             adapter.updateList(it?.results)
             hideProgressDialog()
         }
@@ -110,7 +105,6 @@ class MainFragment : Fragment() {
             requireActivity().finish() // Exit the app
         }
         builder.setNegativeButton("No") { _, _ ->
-
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)

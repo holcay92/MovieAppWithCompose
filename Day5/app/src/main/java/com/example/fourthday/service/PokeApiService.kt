@@ -1,6 +1,5 @@
 package com.example.fourthday.service
 
-import com.example.fourthday.model.Pokemon
 import com.example.fourthday.model.PokemonDetail
 import com.example.fourthday.model.PokemonResponse
 import retrofit2.Call
@@ -15,5 +14,4 @@ interface PokeApiService {
 
     @GET("pokemon/{id}")
     fun getPokemonDetail(@Path("id") id: Int): Call<PokemonDetail>
-
 }
