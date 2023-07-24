@@ -2,6 +2,7 @@ package com.example.fourthday.view
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.fourthday.viewModel.PokemonViewModel
 
 import com.example.fourthday.model.Pokemon
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -32,6 +34,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
+        showProgressDialog()
         return binding.root
     }
 
@@ -52,39 +55,38 @@ class MainFragment : Fragment() {
         )
         binding.rv.adapter = adapter
         viewModel.pokemonResponse.observe(viewLifecycleOwner) {
-            showProgressDialog()
+
             adapter.updateList(it?.results)
-            Log.d(
-                "TAG_X",
-                "Main Fragment onViewCreated viewmodel.observe it.results : ${it?.results}"
-            )
-            //hideProgressDialog()
+          hideProgressDialog()
         }
 
         binding.apply {
             btnNext.setOnClickListener {
                 showProgressDialog()
                 viewModel.loadNextSet()
-               // hideProgressDialog()
+                hideProgressDialog()
             }
             btnPrevious.setOnClickListener {
+                showProgressDialog()
                 viewModel.loadPreviousSet()
+                hideProgressDialog()
             }
         }
     }
 
     private fun showProgressDialog() {
-
         progressDialog = Dialog(requireContext())
-        Log.d("TAG_X", "Main Fragment showProgressDialog in the fragment: $progressDialog")
         progressDialog.setContentView(R.layout.progress_dialog)
         progressDialog.setCancelable(false)
         progressDialog.show()
-        Log.d("TAG_X", "Main Fragment showProgressDialog in the fragment1: $progressDialog")
     }
 
     private fun hideProgressDialog() {
-        progressDialog.dismiss()
+        val handler = Handler()
+        val progressBarDelay = 500L
+        handler.postDelayed({
+            progressDialog.dismiss()
+        }, progressBarDelay)
     }
 
 
