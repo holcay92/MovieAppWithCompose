@@ -1,5 +1,6 @@
 package com.example.fourthday.view
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
@@ -7,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,11 +56,20 @@ class MainFragment : Fragment() {
                 }
             }
         )
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                alertDialog()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback
+        )
         binding.rv.adapter = adapter
         viewModel.pokemonResponse.observe(viewLifecycleOwner) {
 
             adapter.updateList(it?.results)
-          hideProgressDialog()
+            hideProgressDialog()
         }
 
         binding.apply {
@@ -89,5 +101,19 @@ class MainFragment : Fragment() {
         }, progressBarDelay)
     }
 
+    private fun alertDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Alert")
+        builder.setMessage("Do you want to exit?")
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton("Yes") { _, _ ->
+            requireActivity().finish() // Exit the app
+        }
+        builder.setNegativeButton("No") { _, _ ->
 
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
 }

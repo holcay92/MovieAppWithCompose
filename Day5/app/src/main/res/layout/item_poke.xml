@@ -33,8 +33,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="5dp"
-                tools:src="@color/white"
-                android:src="@color/cardTextColor"/>
+                android:background="@drawable/rounded_bg" />
 
 
             <TextView
