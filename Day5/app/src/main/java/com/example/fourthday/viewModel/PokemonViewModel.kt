@@ -19,14 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiService) :
     ViewModel() {
-    // not a list but a single PokemonResponse object
     var pokemonResponse = MutableLiveData<PokemonResponse?>()
     var pokemonDetailResponse = MutableLiveData<PokemonDetail?>()
 
     init {
-
         fetchNextPokemonList()
-        Log.d("TAG_X", "PokemonViewModel fetchNextPokemonList init: ${pokemonResponse.value}")
     }
 
     private var offset = 0
@@ -45,13 +42,15 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
 
                     val callDetail = pokeApiService.getPokemonDetail(1)
 
-                    callDetail.enqueue(object : Callback<PokemonDetail?> { // this is for detail fragment
+                    callDetail.enqueue(object :
+                        Callback<PokemonDetail?> { // this is for detail fragment
                         override fun onResponse(
                             call: Call<PokemonDetail?>,
                             responseDetail: Response<PokemonDetail?>
                         ) {
                             if (responseDetail.isSuccessful) {
                                 pokemonDetailResponse.value = (responseDetail.body())
+                                getPokemonDetail()
                             }
                         }
 
@@ -63,35 +62,40 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
 
             override fun onFailure(call: Call<PokemonResponse?>, t: Throwable) {
                 pokemonResponse.postValue(null)
-                Log.d("TAG_X", "PokemonViewModel onFailure: ${t.message}")
-
             }
         })
     }
 
-    private fun getPokemonDetail(offset: Int) {
-        val callDetail = pokeApiService.getPokemonDetail(offset)
-        callDetail.enqueue(object : Callback<PokemonDetail?> {
-            override fun onResponse(
-                call: Call<PokemonDetail?>,
-                response: Response<PokemonDetail?>
-            ) {
+    private fun getPokemonDetail() {
 
-                if (response.isSuccessful) {
-                    pokemonDetailResponse.value = (response.body())
-                    Log.d("TAG_X", "onResponseDetail: ${response.body()}")
+        for (i in offset..offset + LIMIT) {
+            val callDetail = pokeApiService.getPokemonDetail(i)
+            callDetail.enqueue(object : Callback<PokemonDetail?> {
+                override fun onResponse(
+                    call: Call<PokemonDetail?>,
+                    response: Response<PokemonDetail?>
+                ) {
+                    if (response.isSuccessful) {
+                        pokemonDetailResponse.value = (response.body())
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<PokemonDetail?>, t: Throwable) {
-                Log.d("TAG_X", "onFailureDetail: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<PokemonDetail?>, t: Throwable) {
+                    Log.d("TAG_X", "onFailureDetail: ${t.message}")
+                }
+            })
+
+        }
+        Log.d("TAG_X", "getPokemonDetail test end of loop: ${pokemonDetailResponse.value}")
     }
 
     fun loadNextSet() {
         offset += LIMIT
         fetchNextPokemonList()
+        Log.d(
+            "TAG_X",
+            "PokemonViewModel fetchNextPokemonList init test next btn: ${pokemonDetailResponse.value}"
+        )
     }
 
     fun loadPreviousSet() {
@@ -100,8 +104,6 @@ class PokemonViewModel @Inject constructor(private val pokeApiService: PokeApiSe
             fetchNextPokemonList()
         } else return
     }
-
-
 }
 
 

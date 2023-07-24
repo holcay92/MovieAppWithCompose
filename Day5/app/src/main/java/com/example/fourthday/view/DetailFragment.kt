@@ -33,14 +33,11 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //take the argument from the navigation
         val name = DetailFragmentArgs.fromBundle(requireArguments()).pokemonName
         binding.pokeTitle.text = name
         val url = DetailFragmentArgs.fromBundle(requireArguments()).pokemonUrl
         val id = url.substring(34, url.length - 1).toInt()
         viewModel.fetchPokemonDetail(id)
-        Log.d("TAG_X", "Detail Fragment onViewCreated id: $id")
         binding.pokeDetail.text = url
 
 
@@ -65,6 +62,4 @@ class DetailFragment : Fragment() {
 
         }
     }
-
-
 }

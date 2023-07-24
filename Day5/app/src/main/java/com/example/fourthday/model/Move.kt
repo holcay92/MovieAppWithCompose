@@ -1,5 +1,7 @@
 package com.example.fourthday.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Move(
-    val move: MoveX,//show
+    @SerializedName("move") val move: MoveX?,//show
 )

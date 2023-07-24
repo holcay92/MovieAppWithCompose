@@ -1,5 +1,7 @@
 package com.example.fourthday.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Sprites(
-    val versions: Versions
+    @SerializedName("versions") val versions: Versions?
 )

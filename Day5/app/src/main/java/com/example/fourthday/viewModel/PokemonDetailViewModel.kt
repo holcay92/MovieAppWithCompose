@@ -22,23 +22,17 @@ class PokemonDetailViewModel @Inject constructor(
 
     init {
         //fetchPokemonDetail(id)
-
-        Log.d("TAG_X", "PokemonDetailViewModel fetchNextPokemonList init: ${pokemonDetailResponse}")
     }
 
     fun fetchPokemonDetail(id:Int) {
         val call = pokeApiService.getPokemonDetail(id)
-        Log.d("TAG_X", "PokemonDetailViewModel fetchPokemonDetail call: : $call")
-
         call.enqueue(object : Callback<PokemonDetail?> {
             override fun onResponse(
                 call: Call<PokemonDetail?>,
                 response: Response<PokemonDetail?>
             ) {
-                Log.d("TAG_X", "PokemonDetailViewModel onResponse: $response")
                 if (response.isSuccessful) {
                     pokemonDetailResponse.value = response.body()
-                    Log.d("TAG_X", "PokemonDetailViewModel onResponse11: ${response.body()}")
                 }
             }
 

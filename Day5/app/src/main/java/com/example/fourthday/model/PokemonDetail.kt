@@ -1,9 +1,11 @@
 package com.example.fourthday.model
 
+import com.google.gson.annotations.SerializedName
+
 data class PokemonDetail(
-    val height: Int,
-    val moves: List<Move>,
-    val name: String,
-    val sprites: Sprites,
-    val weight: Int
+    @SerializedName("height") val height: Int?,
+    @SerializedName("moves") val moves: List<Move>?,
+    @SerializedName("name") val name: String?,
+    @SerializedName("sprites") val sprites: Sprites?,
+    @SerializedName("weight") val weight: Int?
 )
