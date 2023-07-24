@@ -1,10 +1,12 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.viewModel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,8 +19,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.movieSearchResponse.observe(this) {
-            Log.d("TAG_X", "MainActivity: $it")
+        if (savedInstanceState == null) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                val action = SplashFragmentDirections.actionSplashFragmentToMainFragment()
+                findNavController(R.id.fragmentContainerView).navigate(action)
+            }, SPLASH_DELAY.toLong())
         }
+    }
+
+    companion object {
+        private const val SPLASH_DELAY = 2000
     }
 }
