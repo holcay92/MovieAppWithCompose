@@ -1,4 +1,4 @@
-package com.example.movieapp.model
+package com.example.movieapp.model.popularMovie
 
 data class PopularResponse(
     val page: Int,

@@ -1,21 +1,23 @@
 package com.example.movieapp.view
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.databinding.MovieItemBinding
-import com.example.movieapp.model.MovieSearchResponse
+import com.example.movieapp.model.popularMovie.ResultPopular
 
-class MovieAdapter(private val listener: OnItemClickListener) :
-    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private var movieList = ArrayList<MovieSearchResponse>()
+class PopularMovieAdapter(private val listener: OnItemClickListener) :
+    RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
+    private var movieList = ArrayList<ResultPopular>()
 
     class MovieViewHolder(bindingItem: MovieItemBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
-        fun bind(movie: MovieSearchResponse) {
+        fun bind(popularMovie: ResultPopular) {
             val bindingItem = MovieItemBinding.bind(itemView)
             bindingItem.apply {
-                //todo
+                movieTitle?.text = popularMovie.title
+                Log.d("TAG_X", "bind in the adapter popularMovie.title : ${popularMovie.title}")
             }
         }
     }
@@ -36,7 +38,14 @@ class MovieAdapter(private val listener: OnItemClickListener) :
         }
     }
 
+    fun updateList(list: List<ResultPopular>?) {
+        movieList.clear()
+        movieList.addAll(list ?: emptyList())
+        Log.d("TAG_X", "Adapter Pokemon updateList in the adapter pokemonlist: $movieList")
+        notifyDataSetChanged()
+    }
+
     interface OnItemClickListener {
-        fun onItemClick(movie: MovieSearchResponse)
+        fun onItemClick(movie: ResultPopular)
     }
 }

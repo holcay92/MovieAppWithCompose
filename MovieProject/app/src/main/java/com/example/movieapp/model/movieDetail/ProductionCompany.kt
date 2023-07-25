@@ -1,4 +1,4 @@
-package com.example.movieapp.model
+package com.example.movieapp.model.movieDetail
 
 data class ProductionCompany(
     val id: Int,

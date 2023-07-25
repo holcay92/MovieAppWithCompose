@@ -1,4 +1,4 @@
-package com.example.movieapp.model
+package com.example.movieapp.model.movieImages
 
 data class Logo(
     val aspect_ratio: Double,

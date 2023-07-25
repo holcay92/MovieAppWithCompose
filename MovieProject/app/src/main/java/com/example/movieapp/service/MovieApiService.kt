@@ -1,10 +1,10 @@
 package com.example.movieapp.service
 
-import com.example.movieapp.model.MovieDetail
-import com.example.movieapp.model.MovieImages
-import com.example.movieapp.model.MovieSearchResponse
-import com.example.movieapp.model.PopularResponse
-import com.example.movieapp.model.TopRated
+import com.example.movieapp.model.movieDetail.MovieDetail
+import com.example.movieapp.model.movieImages.MovieImages
+import com.example.movieapp.model.movieSearchResponse.MovieSearchResponse
+import com.example.movieapp.model.popularMovie.PopularResponse
+import com.example.movieapp.model.topRated.TopRated
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

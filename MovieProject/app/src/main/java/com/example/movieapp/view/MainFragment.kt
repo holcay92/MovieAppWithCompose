@@ -3,21 +3,27 @@ package com.example.movieapp.view
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
-import com.example.movieapp.viewModel.MovieViewModel
+import com.example.movieapp.model.popularMovie.ResultPopular
+import com.example.movieapp.viewModel.PopularMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
-    private val viewModel by viewModels<MovieViewModel>()
+    private val viewModel by viewModels<PopularMovieViewModel>()
     private lateinit var progressDialog: Dialog
+    private lateinit var adapter: PopularMovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,8 +31,29 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        showProgressDialog()
+        // showProgressDialog()
+        Log.d("TAG_X", "Main Fragment onCreateView in the fragment")
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        adapter = PopularMovieAdapter(
+            object : PopularMovieAdapter.OnItemClickListener {
+                override fun onItemClick(movie: ResultPopular) {
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment()
+                    findNavController().navigate(action)
+                    Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $movie")
+                }
+            },
+        )
+        binding.rvPopularMovies.adapter = adapter
+
+        viewModel.popularMovieResponse.observe(viewLifecycleOwner) {
+            adapter.updateList(it)
+            Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+        }
     }
 
     private fun showProgressDialog() {

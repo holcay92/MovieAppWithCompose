@@ -1,6 +1,6 @@
-package com.example.movieapp.model
+package com.example.movieapp.model.movieImages
 
-data class Poster(
+data class Backdrop(
     val aspect_ratio: Double,
     val file_path: String,
     val height: Int,

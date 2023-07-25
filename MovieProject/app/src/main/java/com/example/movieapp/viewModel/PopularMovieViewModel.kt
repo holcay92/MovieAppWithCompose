@@ -3,7 +3,8 @@ package com.example.movieapp.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.movieapp.model.PopularResponse
+import com.example.movieapp.model.popularMovie.PopularResponse
+import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
@@ -12,9 +13,9 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val movieApiService: MovieApiService) :
+class PopularMovieViewModel @Inject constructor(private val movieApiService: MovieApiService) :
     ViewModel() {
-    var movieSearchResponse = MutableLiveData<PopularResponse?>()
+    var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
 
     init {
         fetchMovieList()
@@ -29,14 +30,14 @@ class MovieViewModel @Inject constructor(private val movieApiService: MovieApiSe
                     call: Call<PopularResponse?>,
                     response: Response<PopularResponse?>,
                 ) {
-                    Log.d("TAG_X", "MovieViewModel onResponse: ${response.body()}")
+                    Log.d("TAG_X", "MovieViewModel onResponse: ${response.body()?.results}")
                     if (response.isSuccessful) {
-                        movieSearchResponse.value = response.body()
+                        popularMovieResponse.value = response.body()?.results
                     }
                 }
 
                 override fun onFailure(call: Call<PopularResponse?>, t: Throwable) {
-                    movieSearchResponse.postValue(null)
+                    popularMovieResponse.postValue(null)
                 }
             },
         )

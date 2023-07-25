@@ -1,6 +1,6 @@
-package com.example.movieapp.model
+package com.example.movieapp.model.movieSearchResponse
 
-data class ResultPopular(
+data class Result(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,

@@ -6,7 +6,6 @@
 -detail frag ui
 -filter ui
 -favourite ui
--below navigation menu
 -video player fragment
 -animation between fragments
 -add fav icon

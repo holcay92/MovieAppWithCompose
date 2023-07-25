@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General-->
+    <dimen name="layoutPadding">10dp</dimen>
+
+    <!-- detail fragment -->
+    <dimen name="detailFragmentCardViewMargin">10dp</dimen>
+    <dimen name="detailFragmentCardViewCornerRadius">10dp</dimen>
+    <dimen name="detailFragmentCardViewElevation">20dp</dimen>
+    <dimen name="detailFragmentCardViewDetailTextSize">20sp</dimen>
+</resources>
