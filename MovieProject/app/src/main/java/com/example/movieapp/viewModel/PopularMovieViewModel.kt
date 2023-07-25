@@ -17,8 +17,6 @@ import javax.inject.Inject
 class PopularMovieViewModel @Inject constructor(private val movieApiService: MovieApiService) :
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
-    var movieImages = MutableLiveData<MovieImages?>()
-
     init {
         fetchMovieList()
     }

@@ -1,32 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/tmdb_dark_blue"
-    android:orientation="horizontal"
-    tools:context=".view.MainFragment">
+    tools:context=".view.MainFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPopularMovies"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/popular_movies"
+                android:textColor="@color/tmdb_light_blue"
+                android:textSize="@dimen/mainFragmentMoreFieldTextSize"
+                android:textStyle="bold"
+                android:gravity="start" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/btnMorePopularMovies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="end"
+                android:src="@drawable/arrow_forward"
+                android:background="@color/tmdb_dark_blue"
+                />
+
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPopularMovies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@color/tmdb_dark_blue"
             android:orientation="horizontal"
-            android:padding="10dp"
             android:scrollbars="horizontal"
             tools:itemCount="2"
             tools:listitem="@layout/movie_item" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/top_rated_movies"
+                    android:textColor="@color/tmdb_light_blue"
+                    android:textSize="@dimen/mainFragmentMoreFieldTextSize"
+                    android:textStyle="bold"
+                    android:gravity="start" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/btnMoreTopRatedMovies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:src="@drawable/arrow_forward"
+                    android:background="@color/tmdb_dark_blue"
+                    />
+
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTopRatedMovies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/tmdb_dark_blue"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                tools:itemCount="2"
+                tools:listitem="@layout/movie_item" />
+        </LinearLayout>
+
 
 
     </LinearLayout>
 
 
-</FrameLayout>
+</ScrollView>

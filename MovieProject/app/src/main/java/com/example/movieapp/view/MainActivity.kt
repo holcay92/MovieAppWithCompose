@@ -9,23 +9,41 @@ import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.movieapp.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.movieapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        findViewById<BottomNavigationView>(R.id.bottomNavigation).visibility = View.GONE
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.bottomNavigation.visibility = View.GONE
 
         if (savedInstanceState == null) {
             Handler(Looper.getMainLooper()).postDelayed({
                 val action = SplashFragmentDirections.actionSplashFragmentToMainFragment()
                 findNavController(R.id.fragmentContainerView).navigate(action)
-                findViewById<BottomNavigationView>(R.id.bottomNavigation).visibility = View.VISIBLE
+                binding.bottomNavigation.visibility = View.VISIBLE
             }, SPLASH_DELAY.toLong())
+        }
+
+        // home button ob the bottom navigation
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> {
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.mainFragment)
+                    true
+                }
+
+                R.id.favorites -> {
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.detailFragment)
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 

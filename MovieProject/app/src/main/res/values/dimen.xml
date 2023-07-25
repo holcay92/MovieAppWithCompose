@@ -5,6 +5,7 @@
 
     <!-- main fragment -->
     <dimen name="mainFragmentCardViewTitleTextSize">14sp</dimen>
+    <dimen name="mainFragmentMoreFieldTextSize">10sp</dimen>
 
     <!-- detail fragment -->
     <dimen name="detailFragmentCardViewMargin">10dp</dimen>

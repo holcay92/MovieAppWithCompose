@@ -1,6 +1,6 @@
 package com.example.movieapp.model.topRated
 
-data class TopRatedResult(
+data class ResultTopRated(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,

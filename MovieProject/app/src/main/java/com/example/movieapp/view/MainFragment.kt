@@ -15,15 +15,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
+import com.example.movieapp.model.topRated.ResultTopRated
 import com.example.movieapp.viewModel.PopularMovieViewModel
+import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
-    private val viewModel by viewModels<PopularMovieViewModel>()
+    private val viewModelPopular by viewModels<PopularMovieViewModel>()
+    private val viewModelTR by viewModels<TopRatedMovieViewModel>()
     private lateinit var progressDialog: Dialog
-    private lateinit var adapter: PopularMovieAdapter
+    private lateinit var adapterPopular: PopularMovieAdapter
+    private lateinit var adapterTR: TopRatedMovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +44,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPopularMovies.layoutManager =
             GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
-        adapter = PopularMovieAdapter(
+        adapterPopular = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: ResultPopular) {
                     val action = MainFragmentDirections.actionMainFragmentToDetailFragment()
@@ -49,10 +53,28 @@ class MainFragment : Fragment() {
                 }
             },
         )
-        binding.rvPopularMovies.adapter = adapter
+        binding.rvPopularMovies.adapter = adapterPopular
 
-        viewModel.popularMovieResponse.observe(viewLifecycleOwner) {
-            adapter.updateList(it)
+        binding.rvTopRatedMovies.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
+        adapterTR = TopRatedMovieAdapter(
+            object : TopRatedMovieAdapter.OnItemClickListener {
+                override fun onItemClick(movie: ResultTopRated) {
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment()
+                    findNavController().navigate(action)
+                    Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $movie")
+                }
+            },
+        )
+        binding.rvTopRatedMovies.adapter = adapterTR
+
+        viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
+            adapterTR.updateList(it)
+            Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+        }
+
+        viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
+            adapterPopular.updateList(it)
             Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
         }
     }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/pokemonListFragment"
+        android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/home_button"
         android:title="Home"/>
     <item
-        android:id="@+id/favoritePokemonList2"
+        android:id="@+id/favorites"
         android:enabled="true"
         android:icon="@drawable/favorite_icon"
         android:title="Favorites" />
