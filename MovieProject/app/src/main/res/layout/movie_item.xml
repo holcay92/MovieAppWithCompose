@@ -2,46 +2,47 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     android:padding="10dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
         app:cardCornerRadius="10dp"
         app:cardElevation="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="1">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/tmdb_light_blue"
-            android:gravity="start|center"
-            android:orientation="horizontal"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="10dp">
 
 
             <ImageView
                 android:id="@+id/movieImage"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/rounded_bg"
-                android:padding="10dp" />
+                />
 
 
             <TextView
                 android:id="@+id/movieTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
+                android:layout_height="match_parent"
                 android:textColor="@color/tmdb_dark_blue"
-                android:textSize="20sp"
+                android:textSize="@dimen/mainFragmentCardViewTitleTextSize"
                 android:textStyle="bold"
+                android:gravity="center"
                 tools:text="MovieTitle" />
 
         </LinearLayout>

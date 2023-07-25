@@ -50,10 +50,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="Title: "
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieTitle: " />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/movieTitle"
@@ -150,10 +150,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="Release Date: "
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieTitle: " />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/movieReleaseDate"

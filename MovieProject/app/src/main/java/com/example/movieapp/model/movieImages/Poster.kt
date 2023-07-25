@@ -7,5 +7,5 @@ data class Poster(
     val iso_639_1: String,
     val vote_average: Double,
     val vote_count: Int,
-    val width: Int
+    val width: Int,
 )

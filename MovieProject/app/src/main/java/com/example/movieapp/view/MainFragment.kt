@@ -38,7 +38,8 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPopularMovies.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
         adapter = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: ResultPopular) {

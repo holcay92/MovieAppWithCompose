@@ -3,6 +3,7 @@ package com.example.movieapp.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.movieapp.model.movieImages.MovieImages
 import com.example.movieapp.model.popularMovie.PopularResponse
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.service.MovieApiService
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class PopularMovieViewModel @Inject constructor(private val movieApiService: MovieApiService) :
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
+    var movieImages = MutableLiveData<MovieImages?>()
 
     init {
         fetchMovieList()

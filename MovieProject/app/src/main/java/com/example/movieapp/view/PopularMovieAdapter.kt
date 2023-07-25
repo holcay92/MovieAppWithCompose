@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.movieapp.databinding.MovieItemBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 
@@ -17,6 +18,9 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
             val bindingItem = MovieItemBinding.bind(itemView)
             bindingItem.apply {
                 movieTitle?.text = popularMovie.title
+                Glide.with(itemView.context)
+                    .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
+                    .into(movieImage!!)
                 Log.d("TAG_X", "bind in the adapter popularMovie.title : ${popularMovie.title}")
             }
         }
