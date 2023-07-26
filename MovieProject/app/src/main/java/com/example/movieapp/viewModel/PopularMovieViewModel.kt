@@ -7,6 +7,7 @@ import com.example.movieapp.model.popularMovie.PopularResponse
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,6 +45,6 @@ class PopularMovieViewModel @Inject constructor(private val movieApiService: Mov
     }
 
     fun getNextPage(page: Int) {
-        fetchMovieList(page)
+        runBlocking { fetchMovieList(page) }
     }
 }

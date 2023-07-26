@@ -4,17 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.movieapp.databinding.MovieItemBinding
+import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 
 class PopularMovieAdapter(private val listener: OnItemClickListener) :
     RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
     private var movieList = ArrayList<ResultPopular>()
 
-    class MovieViewHolder(bindingItem: MovieItemBinding) :
+    class MovieViewHolder(bindingItem: MovieItemPopularBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
         fun bind(popularMovie: ResultPopular) {
-            val bindingItem = MovieItemBinding.bind(itemView)
+            val bindingItem = MovieItemPopularBinding.bind(itemView)
             bindingItem.apply {
                 movieTitle?.text = popularMovie.title
                 Glide.with(itemView.context)
@@ -26,7 +26,7 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val itemView =
-            MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MovieItemPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MovieViewHolder(itemView)
     }

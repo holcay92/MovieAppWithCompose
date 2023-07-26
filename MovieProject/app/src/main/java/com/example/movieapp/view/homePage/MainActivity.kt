@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.favorites -> {
-                    // findNavController(R.id.fragmentContainerView).navigate(R.id.favoriteFragment)
+                     //findNavController(R.id.fragmentContainerView).navigate(R.id.favoriteFragment)
                     true
                 }
 

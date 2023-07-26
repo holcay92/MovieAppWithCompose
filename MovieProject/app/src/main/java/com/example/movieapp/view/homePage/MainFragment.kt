@@ -23,6 +23,7 @@ import com.example.movieapp.view.adapters.TopRatedMovieAdapter
 import com.example.movieapp.viewModel.PopularMovieViewModel
 import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -39,14 +40,14 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        // showProgressDialog()
+        showProgressDialog()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPopularMovies.layoutManager =
-            GridLayoutManager(requireContext(),2, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -58,7 +59,9 @@ class MainFragment : Fragment() {
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     var page = 1
                     page++
+                    // showProgressDialog()
                     viewModelPopular.getNextPage(page)
+                    // hideProgressDialog()
                     Log.d("TAG_X", "Main Fragment onScrolled in the fragment: $totalItemCount")
                 }
             }
@@ -94,15 +97,18 @@ class MainFragment : Fragment() {
         )
         binding.rvTopRatedMovies.adapter = adapterTR
 
-        viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
-            adapterTR.updateList(it)
-            Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
-        }
+        runBlocking {
+            viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
+                adapterTR.updateList(it)
+                Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+            }
 
-        viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
-            adapterPopular.updateList(it)
-            Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+            viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
+                adapterPopular.updateList(it)
+                Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+            }
         }
+        hideProgressDialog()
     }
 
     private fun showProgressDialog() {

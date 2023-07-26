@@ -83,15 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <ImageButton
-                android:id="@+id/btnMorePopularMovies"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="end"
-                android:src="@drawable/arrow_forward"
-                android:background="@color/tmdb_dark_blue"
-                />
+
 
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
