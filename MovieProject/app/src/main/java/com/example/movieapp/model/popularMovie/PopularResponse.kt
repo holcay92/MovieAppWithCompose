@@ -1,8 +1,7 @@
 package com.example.movieapp.model.popularMovie
 
+import com.google.gson.annotations.SerializedName
+
 data class PopularResponse(
-    val page: Int,
-    val results: List<ResultPopular>,
-    val total_pages: Int,
-    val total_results: Int,
+    @SerializedName("results") val results: List<ResultPopular>?,
 )
