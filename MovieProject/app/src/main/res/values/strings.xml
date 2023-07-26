@@ -5,4 +5,11 @@
     <string name="please_wait">Please Wait..</string>
     <string name="popular_movies">Popular Movies</string>
     <string name="top_rated_movies">Top Rated</string>
+    <string name="title">Title:</string>
+    <string name="vote">Vote:</string>
+    <string name="budget">Budget</string>
+    <string name="release_date">Release Date:</string>
+    <string name="adult">Adult :</string>
+    <string name="original_title">Original Title:</string>
+    <string name="overview">Overview:</string>
 </resources>

@@ -18,11 +18,11 @@ class PopularMovieViewModel @Inject constructor(private val movieApiService: Mov
     var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
 
     init {
-        fetchMovieList()
+        fetchMovieList(1)
     }
 
-    private fun fetchMovieList() {
-        val call = movieApiService.getPopularMovies()
+    private fun fetchMovieList(page: Int) {
+        val call = movieApiService.getPopularMovies(page)
 
         call.enqueue(
             object : Callback<PopularResponse?> {
@@ -41,5 +41,9 @@ class PopularMovieViewModel @Inject constructor(private val movieApiService: Mov
                 }
             },
         )
+    }
+
+    fun getNextPage(page: Int) {
+        fetchMovieList(page)
     }
 }

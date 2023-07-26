@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.Constants
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
@@ -39,14 +40,29 @@ class MainFragment : Fragment() {
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         // showProgressDialog()
-        Log.d("TAG_X", "Main Fragment onCreateView in the fragment")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPopularMovies.layoutManager =
-            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(requireContext(),2, LinearLayoutManager.VERTICAL, false)
+        binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    var page = 1
+                    page++
+                    viewModelPopular.getNextPage(page)
+                    Log.d("TAG_X", "Main Fragment onScrolled in the fragment: $totalItemCount")
+                }
+            }
+        })
         adapterPopular = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: ResultPopular) {

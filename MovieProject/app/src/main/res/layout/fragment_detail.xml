@@ -5,12 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tmdb_dark_blue"
+    tools:context=".view.DetailFragment"
     android:padding="@dimen/layoutPadding">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".view.DetailFragment">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -21,16 +17,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="5dp">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="600dp"
                     android:paddingBottom="20dp"
-                    tools:background="@color/tmdb_dark_blue"/>
+                    tools:background="@color/tmdb_dark_blue" />
+
+                <ImageButton
+                    android:id="@+id/favButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:backgroundTint="@color/tmdb_light_blue"
+                    android:src="@drawable/add_fav_empty_icon"
+                    android:layout_gravity="end"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -49,10 +53,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Title: "
+                            android:text="@string/title"
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
                         <TextView
                             android:id="@+id/movieTitle"
@@ -83,43 +92,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/original_title"
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieTitle: " />
+                            android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/movieAdult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/tmdb_dark_blue"
-                            android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieAdult" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                    android:backgroundTint="@color/tmdb_light_blue"
-                    app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-                    app:cardElevation="@dimen/detailFragmentCardViewElevation">
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <Space
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/tmdb_dark_blue"
-                            android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieTitle: " />
+                            android:layout_weight="1" />
 
                         <TextView
                             android:id="@+id/movieOriginalTitle"
@@ -149,10 +130,54 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Release Date: "
+                            android:text="@string/adult"
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/movieAdult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/tmdb_dark_blue"
+                            android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
+                            android:textStyle="bold"
+                            tools:text="movieAdult" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detailFragmentCardViewMargin"
+                    android:backgroundTint="@color/tmdb_light_blue"
+                    app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
+                    app:cardElevation="@dimen/detailFragmentCardViewElevation">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_date"
+                            android:textColor="@color/tmdb_dark_blue"
+                            android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
                         <TextView
                             android:id="@+id/movieReleaseDate"
@@ -183,19 +208,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/budget"
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieTitle: " />
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
                         <TextView
                             android:id="@+id/movieBudget"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:text="@string/budget"
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieBudget" />
+                            android:textStyle="bold" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.cardview.widget.CardView>
 
@@ -216,10 +246,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/vote"
                             android:textColor="@color/tmdb_dark_blue"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                            android:textStyle="bold"
-                            tools:text="movieTitle: " />
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
                         <TextView
                             android:id="@+id/movieVote"
@@ -235,26 +270,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:paddingTop="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Overview:"
+                        android:paddingBottom="10dp"
+                        android:text="@string/overview"
                         android:textColor="@color/tmdb_dark_blue"
                         android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                         android:textStyle="bold" />
+
 
                     <TextView
                         android:id="@+id/movieOverview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="100dp"
                         android:textColor="@color/tmdb_dark_blue"
                         android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
+                        android:paddingStart="30dp"
+                        android:paddingEnd="10dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
                         tools:text="@string/app_name" />
 
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-    </FrameLayout>
 </ScrollView>

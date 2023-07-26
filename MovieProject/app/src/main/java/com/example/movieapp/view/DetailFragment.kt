@@ -1,7 +1,6 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,32 +28,20 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        Log.d("TAG_X", "Detail Fragment onCreateView in the fragment")
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("TAG_X", "Detail Fragment onViewCreated in the fragment")
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
-        Log.d("TAG_X", "Detail Fragment onViewCreated in the fragment id: $id")
         adapter = MovieImageAdapter()
         binding.viewPager.adapter = adapter
         viewModelForImage.fetchMovieImageList(id)
         viewModelForImage.imageResponse.observe(viewLifecycleOwner) {
             adapter.updateList(it)
-            Log.d(
-                "TAG_X",
-                "Detail Fragment onViewCreated in the fragment after viewModelForImage.fetchMovieImageList(id), id: $id",
-            )
         }
         viewModelForDetail.fetchMovieDetail(id)
-        Log.d(
-            "TAG_X",
-            "Detail Fragment onViewCreated in the fragment after viewModelForImage.fetchMovieImageList(id), id: $id",
-        )
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI()
         }
@@ -69,7 +56,7 @@ class DetailFragment : Fragment() {
                 binding.movieOverview.text = it.overview
                 binding.movieVote.text = it.vote_average.toString()
                 binding.movieBudget.text = it.budget.toString()
-                binding.movieAdult.text = it.adult.toString()
+                binding.movieAdult.text = if (it.adult!!) "Yes" else "No"
                 binding.movieOriginalTitle.text = it.original_title
             }
         }

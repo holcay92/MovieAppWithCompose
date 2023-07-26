@@ -17,7 +17,7 @@ interface MovieApiService {
     ): Call<MovieSearchResponse>
 
     @GET("movie/popular")
-    fun getPopularMovies(): Call<PopularResponse>
+    fun getPopularMovies(@Query("page") page: Int): Call<PopularResponse>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(

@@ -1,6 +1,5 @@
 package com.example.movieapp.view.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +20,6 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
                     .into(movieImage!!)
-                Log.d("TAG_X", "bind in the adapter popularMovie.title : ${popularMovie.title}")
             }
         }
     }
@@ -43,9 +41,8 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
     }
 
     fun updateList(list: List<ResultPopular>?) {
-        movieList.clear()
+        // movieList.clear()
         movieList.addAll(list ?: emptyList())
-        Log.d("TAG_X", "Adapter Pokemon updateList in the adapter pokemonlist: $movieList")
         notifyDataSetChanged()
     }
 

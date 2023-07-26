@@ -2,7 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="tmdb_dark_blue"> #0d253f</color>
-    <color name="tmdb_light_blue">#01b4e4</color>
+    <color name="tmdb_dark_blue">#4A6D93</color>
+    <color name="tmdb_light_blue">#A6C4CC</color>
     <color name="tmdb_light_green">#90cea1</color>
 </resources>
+
+<!-- <color name="tmdb_light_blue">#01b4e4</color> -->
