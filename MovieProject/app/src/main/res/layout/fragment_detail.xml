@@ -25,13 +25,12 @@
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <ImageView
-                    android:id="@+id/movieImage"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/rounded_bg" />
+                    android:layout_height="400dp"
+                    android:paddingBottom="20dp"
+                    tools:background="@color/tmdb_dark_blue"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

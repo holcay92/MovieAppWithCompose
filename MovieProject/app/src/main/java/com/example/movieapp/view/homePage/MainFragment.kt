@@ -1,4 +1,4 @@
-package com.example.movieapp.view
+package com.example.movieapp.view.homePage
 
 import android.app.Dialog
 import android.os.Bundle
@@ -12,10 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapp.Constants
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.model.topRated.ResultTopRated
+import com.example.movieapp.view.adapters.PopularMovieAdapter
+import com.example.movieapp.view.adapters.TopRatedMovieAdapter
 import com.example.movieapp.viewModel.PopularMovieViewModel
 import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,9 +50,13 @@ class MainFragment : Fragment() {
         adapterPopular = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: ResultPopular) {
-                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment()
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                        Constants.POPULAR,
+                        movie.id,
+
+                    )
                     findNavController().navigate(action)
-                    Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $movie")
+                    Log.d("TAG_X", "Main Fragment onItemClick popular item in the fragment: $movie")
                 }
             },
         )
@@ -60,7 +67,10 @@ class MainFragment : Fragment() {
         adapterTR = TopRatedMovieAdapter(
             object : TopRatedMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: ResultTopRated) {
-                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment()
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                        Constants.TOP_RATED,
+                        movie.id,
+                    )
                     findNavController().navigate(action)
                     Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $movie")
                 }

@@ -15,12 +15,8 @@ class MovieDetailViewModel @Inject constructor(private val movieApiService: Movi
     ViewModel() {
     var movieDetail = MutableLiveData<MovieDetail?>()
 
-    init {
-        fetchMovieDetail()
-    }
-
-    private fun fetchMovieDetail() {
-        val call = movieApiService.getMovieDetails(1)
+    fun fetchMovieDetail(id: Int) {
+        val call = movieApiService.getMovieDetails(id)
 
         call.enqueue(
             object : Callback<MovieDetail?> {
