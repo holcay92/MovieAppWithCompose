@@ -54,7 +54,8 @@ class DetailFragment : Fragment() {
             val isFav = favoriteMovies.any { it.id == id }
             updateFavButtonState(isFav)
             bindingDetail.favButton.setOnClickListener {
-                val favMovie = FavoriteMovie(0, id)
+                val movie = viewModelForDetail.movieDetail.value
+                val favMovie = FavoriteMovie(0, id, movie?.title, movie?.poster_path)
                 viewModelForFavorite.actionFavButton(favMovie)
             }
         }

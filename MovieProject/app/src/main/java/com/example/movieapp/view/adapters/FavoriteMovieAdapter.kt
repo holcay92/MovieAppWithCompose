@@ -4,6 +4,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.room.FavoriteMovie
@@ -18,7 +20,11 @@ class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) :
             val bindingItem = MovieItemPopularBinding.bind(itemView)
             Log.d("TAG_X", "fav adapter bind in the adapter popularMovie: $popularMovie")
             bindingItem.apply {
-                bindingItem.movieTitle.text = popularMovie.id.toString()
+                bindingItem.movieTitle.text = popularMovie.title
+                bindingItem.btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
+                Glide.with(itemView.context)
+                    .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
+                    .into(bindingItem.movieImage)
                 Log.d("TAG_X", "fav adapter bind in the adapter popularMovie.id : ${popularMovie.id}")
 
             }

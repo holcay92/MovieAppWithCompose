@@ -11,4 +11,8 @@ data class FavoriteMovie(
     var list_id: Int,
     @ColumnInfo(name = "movie_id")
     var id: Int?,
+    @ColumnInfo(name = "movie_title")
+    var title: String?,
+    @ColumnInfo(name = "movie_poster_path")
+    var poster_path: String?,
 )

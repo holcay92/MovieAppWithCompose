@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,8 +21,10 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.model.topRated.ResultTopRated
+import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.view.adapters.PopularMovieAdapter
 import com.example.movieapp.view.adapters.TopRatedMovieAdapter
+import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
 import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +38,7 @@ class MainFragment : Fragment() {
     private lateinit var progressDialog: Dialog
     private lateinit var adapterPopular: PopularMovieAdapter
     private lateinit var adapterTR: TopRatedMovieAdapter
+    private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private var viewType = false
 
     override fun onCreateView(
@@ -44,14 +48,13 @@ class MainFragment : Fragment() {
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         showProgressDialog()
-        // Set the fragment to receive menu item click events
-        setHasOptionsMenu(true)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val toolbar = activity as AppCompatActivity
+        toolbar.supportActionBar?.title = "Movie App"
 
         binding.gridBtn.setOnClickListener {
             viewType = !viewType
@@ -118,6 +121,7 @@ class MainFragment : Fragment() {
             }
         }
         hideProgressDialog()
+
     }
 
     private fun showProgressDialog() {
@@ -146,4 +150,5 @@ class MainFragment : Fragment() {
         }
         binding.rvPopularMovies.adapter?.notifyDataSetChanged()
     }
+
 }
