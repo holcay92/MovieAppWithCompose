@@ -8,7 +8,7 @@ import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.room.FavoriteMovie
 
-class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>() {
+class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>() {
 
     private var favMovieList = ArrayList<FavoriteMovie>()
 
@@ -37,6 +37,9 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteV
 
     override fun onBindViewHolder(holder: FavoriteMovieAdapter.FavoriteViewHolder, position: Int) {
         holder.bind(favMovieList[position])
+        holder.itemView.setOnClickListener {
+            itemClickListener.onItemClick(favMovieList[position])
+        }
         Log.d("TAG_X", "fav adapter onBindViewHolder: ${favMovieList[position]}")
 
     }
@@ -50,5 +53,9 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteV
         favMovieList.addAll(list ?: emptyList())
         Log.d("TAG_X", "fav adapter updateList in the adapter list after: $favMovieList")
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(movie: FavoriteMovie)
     }
 }

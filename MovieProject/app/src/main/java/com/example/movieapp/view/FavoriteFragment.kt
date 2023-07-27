@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapp.Constants
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentFavoriteBinding
 import com.example.movieapp.view.adapters.FavoriteMovieAdapter
@@ -31,7 +33,14 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = FavoriteMovieAdapter()
+        adapter = FavoriteMovieAdapter(
+            object : FavoriteMovieAdapter.OnItemClickListener {
+                override fun onItemClick(movie: com.example.movieapp.room.FavoriteMovie) {
+                    val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(Constants.POPULAR,movie.id!!)
+                    findNavController().navigate(action)
+                }
+            }
+        )
         binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.favoriteRecyclerView.adapter = adapter
         viewModel.favMovieList.observe(viewLifecycleOwner) {
