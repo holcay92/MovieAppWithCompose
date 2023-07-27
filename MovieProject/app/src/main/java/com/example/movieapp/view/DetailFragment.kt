@@ -24,9 +24,6 @@ class DetailFragment : Fragment() {
     private val viewModelForDetail by viewModels<MovieDetailViewModel>()
     private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private lateinit var adapter: MovieImageAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

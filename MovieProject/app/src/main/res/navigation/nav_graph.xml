@@ -26,8 +26,8 @@
             android:id="@+id/action_mainFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_hilt_FavoriteFragment"
-            app:destination="@id/hilt_FavoriteFragment" />
+            android:id="@+id/action_mainFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -51,7 +51,8 @@
             app:destination="@id/detailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/hilt_FavoriteFragment"
-        android:name="com.example.movieapp.view.Hilt_FavoriteFragment"
-        android:label="Hilt_FavoriteFragment" />
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.movieapp.view.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
 </navigation>

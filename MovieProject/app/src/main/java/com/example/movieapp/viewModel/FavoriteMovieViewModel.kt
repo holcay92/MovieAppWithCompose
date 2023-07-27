@@ -27,4 +27,6 @@ class FavoriteMovieViewModel @Inject constructor(context: Application) : ViewMod
             dao.insertFavorite(movie)
         }
     }
+
+
 }
