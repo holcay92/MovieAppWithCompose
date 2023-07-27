@@ -5,4 +5,7 @@ Used Libraries:
 -View Binding
 -Glide
 -Retrofit
--
+-Hilt
+-Navigation
+-logging interceptor
+-gson
