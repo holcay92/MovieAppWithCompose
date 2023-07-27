@@ -7,10 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapp.Constants
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentSearchBinding
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 import com.example.movieapp.view.adapters.SearchListAdapter
+import com.example.movieapp.view.homePage.MainFragmentDirections
 import com.example.movieapp.viewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,8 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private val viewModel by viewModels<SearchViewModel>()
-    private lateinit var searchAdapter: SearchListAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,7 +45,11 @@ class SearchFragment : Fragment() {
         // Setup RecyclerView and adapter for displaying search results
         val searchListAdapter = SearchListAdapter(object : SearchListAdapter.OnItemClickListener {
             override fun onItemClick(movie: SearchResult) {
-                // Handle item click if needed
+                Log.d("TAG_X", "SearchFragment onItemClick: $movie")
+                val action :NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment( Constants.POPULAR,movie.id)
+                Log.d("TAG_X", "SearchFragment onItemClick action: $action")
+
+                findNavController().navigate(action)
             }
         })
         binding.searchRV.layoutManager = LinearLayoutManager(requireContext())
@@ -51,10 +58,9 @@ class SearchFragment : Fragment() {
         // Observe search results from ViewModel and update the adapter
         viewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
             searchListAdapter.updateList(searchResults)
-
-
         }
     }
+
     companion object {
         private const val ARG_SEARCH_QUERY = "search_query"
 
@@ -68,6 +74,3 @@ class SearchFragment : Fragment() {
         }
     }
 }
-
-
-

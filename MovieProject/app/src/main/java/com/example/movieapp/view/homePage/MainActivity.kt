@@ -1,5 +1,7 @@
 package com.example.movieapp.view.homePage
 
+
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -8,7 +10,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.WindowInsets
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -17,9 +18,9 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.service.MovieApiService
 import com.example.movieapp.view.SearchFragment
-import com.example.movieapp.viewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -50,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                 binding.toolbar.visibility = View.VISIBLE
             }, SPLASH_DELAY.toLong())
         }
-
         // home button of the bottom navigation
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
@@ -88,17 +88,12 @@ class MainActivity : AppCompatActivity() {
                 val searchFragment = SearchFragment.newInstance(query)
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainerView, searchFragment)
-                    .addToBackStack(null)
                     .commit()
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                //
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, SearchFragment())
-                    .addToBackStack(null)
-                    .commit()
+                Log.d("TAG_X MainActivity newText", newText)
                 return true
             }
         })

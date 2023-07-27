@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,6 +35,7 @@ class MainFragment : Fragment() {
     private lateinit var progressDialog: Dialog
     private lateinit var adapterPopular: PopularMovieAdapter
     private lateinit var adapterTR: TopRatedMovieAdapter
+    private var viewType = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,13 +44,22 @@ class MainFragment : Fragment() {
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         showProgressDialog()
+        // Set the fragment to receive menu item click events
+        setHasOptionsMenu(true)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.gridBtn.setOnClickListener {
+            viewType = !viewType
+            switchRecyclerViewLayout()
+        }
         binding.rvPopularMovies.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -72,7 +84,7 @@ class MainFragment : Fragment() {
                         Constants.POPULAR,
                         movie.id,
 
-                    )
+                        )
                     findNavController().navigate(action)
                 }
             },
@@ -97,12 +109,12 @@ class MainFragment : Fragment() {
         runBlocking {
             viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
                 adapterTR.updateList(it)
-               // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+                // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
             }
 
             viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
                 adapterPopular.updateList(it)
-               // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+                // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
             }
         }
         hideProgressDialog()
@@ -121,5 +133,17 @@ class MainFragment : Fragment() {
         handler.postDelayed({
             progressDialog.dismiss()
         }, progressBarDelay)
+    }
+
+    private fun switchRecyclerViewLayout() {
+        if (viewType) {
+            binding.rvPopularMovies.layoutManager =
+                GridLayoutManager(requireContext(), 2)
+            binding.gridBtn.setImageResource(R.drawable.list_view)
+        } else {
+            binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+            binding.gridBtn.setImageResource(R.drawable.grid_view)
+        }
+        binding.rvPopularMovies.adapter?.notifyDataSetChanged()
     }
 }

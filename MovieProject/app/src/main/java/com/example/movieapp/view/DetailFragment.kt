@@ -1,6 +1,7 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,7 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
+        Log.d("TAG_X", "DetailFragment onViewCreated: $id")
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
         viewModelForImage.fetchMovieImageList(id)

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.movieapp.databinding.SearchItemBinding
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 
@@ -21,6 +22,9 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
             bindingItem.apply {
                 movieTitle.text = movie.title
                 Log.d("TAG_X", "bind in the adapter movie.title : ${movie.title}")
+                Glide.with(itemView.context)
+                    .load("https://image.tmdb.org/t/p/w500${movie.poster_path}").centerCrop()
+                    .into(moviePoster)
             }
         }
     }

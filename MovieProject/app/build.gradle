@@ -41,6 +41,7 @@ android {
 
 dependencies {
 
+
     def nav_version = "2.6.0"
     def room_version = "2.5.2"
 
@@ -51,7 +52,7 @@ dependencies {
     // glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     //fragment
-    implementation 'androidx.fragment:fragment:1.6.0'
+    implementation 'androidx.fragment:fragment:1.6.1'
     //okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.2'
 

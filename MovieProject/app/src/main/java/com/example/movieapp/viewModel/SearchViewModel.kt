@@ -25,15 +25,9 @@ class SearchViewModel @Inject constructor(private val movieApiService: MovieApiS
                 call: Call<MovieSearchResponse?>,
                 response: Response<MovieSearchResponse?>,
             ) {
-                Log.d("TAG_X SearchViewModel", "Adapter onResponse response.body(): ${response.body()}")
                 Log.d("TAG_X SearchViewModel", "Adapter onResponse response.body()?.results: ${response.body()?.results}")
-
                 if (response.isSuccessful) {
-                    Log.d("TAG_X SearchViewModel", "onResponse response.body()1 : ${response.body()}")
-                    Log.d("TAG_X SearchViewModel", "onResponse response.body()?.results: ${response.body()?.results}")
                     searchList.value = response.body()?.results
-                    Log.d("TAG_X SearchViewModel", "onResponse searchList.value: ${searchList.value}")
-
                 }
             }
 
