@@ -3,7 +3,6 @@ package com.example.movieapp.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.movieapp.model.movieImages.MovieImages
 import com.example.movieapp.model.topRated.ResultTopRated
 import com.example.movieapp.model.topRated.TopRated
 import com.example.movieapp.service.MovieApiService
@@ -31,7 +30,6 @@ class TopRatedMovieViewModel @Inject constructor(private val movieApiService: Mo
                     call: Call<TopRated?>,
                     response: Response<TopRated?>,
                 ) {
-                    Log.d("TAG_X", "MovieViewModel onResponse: ${response.body()}")
                     if (response.isSuccessful) {
                         tRMovieResponse.value = response.body()?.results
                     }

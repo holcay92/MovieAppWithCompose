@@ -3,9 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/tmdb_dark_blue"
+    android:background="@color/main_theme"
     android:layout_height="match_parent"
     tools:context=".view.homePage.MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?attr/colorAccent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Movie App"
+        app:titleTextColor="@color/light_theme"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
 
 
     <androidx.fragment.app.FragmentContainerView
@@ -26,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/tmdb_light_blue"
+        android:background="@color/secondary_theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/navigation_bar" />
 

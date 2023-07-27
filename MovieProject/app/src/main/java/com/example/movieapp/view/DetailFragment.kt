@@ -1,7 +1,6 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentDetailBinding
+    private lateinit var bindingDetail: FragmentDetailBinding
     private val viewModelForImage by viewModels<DetailFragmentMovieImageViewModel>()
     private val viewModelForDetail by viewModels<MovieDetailViewModel>()
     private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
@@ -32,9 +31,9 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View {
+        bindingDetail = FragmentDetailBinding.inflate(inflater, container, false)
+        return bindingDetail.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class DetailFragment : Fragment() {
 
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
         adapter = MovieImageAdapter()
-        binding.viewPager.adapter = adapter
+        bindingDetail.viewPager.adapter = adapter
         viewModelForImage.fetchMovieImageList(id)
         viewModelForImage.imageResponse.observe(viewLifecycleOwner) {
             adapter.updateList(it)
@@ -55,34 +54,31 @@ class DetailFragment : Fragment() {
         viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
             val isFav = favoriteMovies.any { it.id == id }
             updateFavButtonState(isFav)
-            binding.favButton.setOnClickListener {
+            bindingDetail.favButton.setOnClickListener {
                 val favMovie = FavoriteMovie(0, id)
                 viewModelForFavorite.actionFavButton(favMovie)
-                // updateFavButtonState(!isFav)
             }
         }
     }
 
     private fun updateUI() {
         val response = viewModelForDetail.movieDetail.value
-        binding.apply {
+        bindingDetail.apply {
             response?.let {
                 movieTitle.text = it.title
-                binding.movieReleaseDate.text = it.release_date
-                binding.movieOverview.text = it.overview
-                binding.movieVote.text = it.vote_average.toString()
-                binding.movieBudget.text = it.budget.toString()
-                binding.movieAdult.text = if (it.adult!!) "Yes" else "No"
-                binding.movieOriginalTitle.text = it.original_title
+                bindingDetail.movieReleaseDate.text = it.release_date
+                bindingDetail.movieOverview.text = it.overview
+                bindingDetail.movieVote.text = it.vote_average.toString()
+                bindingDetail.movieBudget.text = it.budget.toString()
+                bindingDetail.movieAdult.text = if (it.adult!!) "Yes" else "No"
+                bindingDetail.movieOriginalTitle.text = it.original_title
             }
         }
     }
 
     private fun updateFavButtonState(isFav: Boolean) {
-        Log.d("DetailFragment", "updateFavButtonState: $isFav")
         val drawableResId =
             if (isFav) R.drawable.add_fav_filled_icon else R.drawable.add_fav_empty_icon
-        Log.d("DetailFragment", "updateFavButtonState drawableResId: $drawableResId")
-        binding.favButton.setBackgroundResource(drawableResId)
+        bindingDetail.favButton.setBackgroundResource(drawableResId)
     }
 }

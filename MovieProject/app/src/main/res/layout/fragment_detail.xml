@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tmdb_dark_blue"
+    android:background="@color/main_theme"
     tools:context=".view.DetailFragment"
     android:padding="@dimen/layoutPadding">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/tmdb_light_blue"
+            android:backgroundTint="@color/secondary_theme"
             app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
             app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="600dp"
                     android:paddingBottom="20dp"
-                    tools:background="@color/tmdb_dark_blue" />
+                    tools:background="@color/light_theme" />
 
                 <ImageView
                     android:id="@+id/favButton"
@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                    android:backgroundTint="@color/tmdb_light_blue"
+                    android:backgroundTint="@color/secondary_theme"
                     app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                     app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -53,7 +53,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
                             android:id="@+id/movieTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold"
                             tools:text="movieTitle" />
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                    android:backgroundTint="@color/tmdb_light_blue"
+                    android:backgroundTint="@color/secondary_theme"
                     app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                     app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -92,7 +92,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/original_title"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
                             android:id="@+id/movieOriginalTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold"
                             tools:text="movieOriginalTitle" />
@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                    android:backgroundTint="@color/tmdb_light_blue"
+                    android:backgroundTint="@color/secondary_theme"
                     app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                     app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -130,7 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/adult"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
                             android:id="@+id/movieAdult"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold"
                             tools:text="movieAdult" />
@@ -155,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                    android:backgroundTint="@color/tmdb_light_blue"
+                    android:backgroundTint="@color/secondary_theme"
                     app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                     app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -169,7 +169,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/release_date"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
 
@@ -182,7 +182,7 @@
                             android:id="@+id/movieReleaseDate"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold"
                             tools:text="movieReleaseDate" />
@@ -194,7 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                    android:backgroundTint="@color/tmdb_light_blue"
+                    android:backgroundTint="@color/secondary_theme"
                     app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                     app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -208,7 +208,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/budget"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
 
@@ -222,7 +222,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/budget"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -232,7 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                    android:backgroundTint="@color/tmdb_light_blue"
+                    android:backgroundTint="@color/secondary_theme"
                     app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                     app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -246,7 +246,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/vote"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
 
@@ -259,7 +259,7 @@
                             android:id="@+id/movieVote"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:textColor="@color/tmdb_dark_blue"
+                            android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold"
                             tools:text="movieVote" />
@@ -277,7 +277,7 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
                         android:text="@string/overview"
-                        android:textColor="@color/tmdb_dark_blue"
+                        android:textColor="@color/light_theme"
                         android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                         android:textStyle="bold" />
 
@@ -287,7 +287,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="100dp"
-                        android:textColor="@color/tmdb_dark_blue"
+                        android:textColor="@color/light_theme"
                         android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                         android:paddingStart="30dp"
                         android:paddingEnd="10dp"

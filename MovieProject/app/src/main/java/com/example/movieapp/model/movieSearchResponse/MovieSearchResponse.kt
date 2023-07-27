@@ -1,8 +1,7 @@
 package com.example.movieapp.model.movieSearchResponse
 
+import com.google.gson.annotations.SerializedName
+
 data class MovieSearchResponse(
-    val page: Int,
-    val results: List<Result>,
-    val total_pages: Int,
-    val total_results: Int,
+    @SerializedName("results") val results: ArrayList<SearchResult>,
 )

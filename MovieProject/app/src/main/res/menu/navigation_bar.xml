@@ -4,10 +4,11 @@
         android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/home_button"
-        android:title="Home"/>
+        android:title="@string/home"
+        />
     <item
         android:id="@+id/favorites"
         android:enabled="true"
         android:icon="@drawable/favorite_icon"
-        android:title="Favorites" />
+        android:title="@string/favorites" />
 </menu>

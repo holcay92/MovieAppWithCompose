@@ -2,25 +2,23 @@ package com.example.movieapp.view.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.room.FavoriteMovie
 
-class FavoriteListAdapter: RecyclerView.Adapter<FavoriteListAdapter.FavoriteViewHolder>()  {
+class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteViewHolder>() {
 
     inner class FavoriteViewHolder(bindingItem: MovieItemPopularBinding) :
-    RecyclerView.ViewHolder(bindingItem.root) {
+        RecyclerView.ViewHolder(bindingItem.root) {
         fun bind(popularMovie: FavoriteMovie) {
             val bindingItem = MovieItemPopularBinding.bind(itemView)
             bindingItem.apply {
-
             }
-        }}
-
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): FavoriteListAdapter.FavoriteViewHolder {
         TODO("Not yet implemented")
     }

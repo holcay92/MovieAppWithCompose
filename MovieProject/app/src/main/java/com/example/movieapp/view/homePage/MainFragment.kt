@@ -62,7 +62,6 @@ class MainFragment : Fragment() {
                     // showProgressDialog()
                     viewModelPopular.getNextPage(page)
                     // hideProgressDialog()
-                    Log.d("TAG_X", "Main Fragment onScrolled in the fragment: $totalItemCount")
                 }
             }
         })
@@ -75,7 +74,6 @@ class MainFragment : Fragment() {
 
                     )
                     findNavController().navigate(action)
-                    Log.d("TAG_X", "Main Fragment onItemClick popular item in the fragment: $movie")
                 }
             },
         )
@@ -91,7 +89,6 @@ class MainFragment : Fragment() {
                         movie.id,
                     )
                     findNavController().navigate(action)
-                    Log.d("TAG_X", "Main Fragment onItemClick in the fragment: $movie")
                 }
             },
         )
@@ -100,12 +97,12 @@ class MainFragment : Fragment() {
         runBlocking {
             viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
                 adapterTR.updateList(it)
-                Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+               // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
             }
 
             viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
                 adapterPopular.updateList(it)
-                Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+               // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
             }
         }
         hideProgressDialog()

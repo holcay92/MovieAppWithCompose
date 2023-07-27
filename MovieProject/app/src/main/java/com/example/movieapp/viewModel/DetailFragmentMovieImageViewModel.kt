@@ -25,10 +25,8 @@ class DetailFragmentMovieImageViewModel @Inject constructor(private val movieApi
                     call: Call<MovieImages?>,
                     response: Response<MovieImages?>,
                 ) {
-                    Log.d("TAG_X", "DetailFragmentMovieImageViewModel onResponse: ${response.body()}")
                     if (response.isSuccessful) {
                         imageResponse.value = response.body()?.posters
-                        Log.d("TAG_X", "DetailFragmentMovieImageViewModel onResponse: ${response.body()?.posters}")
                     }
                 }
 

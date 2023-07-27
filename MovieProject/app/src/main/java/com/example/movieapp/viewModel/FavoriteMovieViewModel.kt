@@ -22,13 +22,8 @@ class FavoriteMovieViewModel @Inject constructor(context: Application) : ViewMod
 
         if (favoriteMovies?.any { it.id == movie.id } == true) {
             val deleteMovie = favoriteMovies.find { it.id == movie.id }
-            Log.d("DetailFragment effect", "actionFavButton: delete")
-            Log.d("DetailFragment effect", "actionFavButton: movie.id = ${movie.id}")
-            Log.d("DetailFragment effect", "actionFavButton: movie = $movie")
             dao.deleteFavorite(deleteMovie!!)
-            // Assuming dao.deleteFavorite() takes the movie ID as a parameter
         } else {
-            Log.d("DetailFragment effect", "actionFavButton: insert")
             dao.insertFavorite(movie)
         }
     }

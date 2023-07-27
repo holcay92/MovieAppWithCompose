@@ -12,4 +12,7 @@
     <string name="adult">Adult :</string>
     <string name="original_title">Original Title:</string>
     <string name="overview">Overview:</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
 </resources>

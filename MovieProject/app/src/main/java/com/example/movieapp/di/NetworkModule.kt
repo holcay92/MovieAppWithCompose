@@ -1,7 +1,6 @@
 package com.example.movieapp.di
 
 import com.example.movieapp.Constants
-import com.example.movieapp.Constants.API_KEY
 import com.example.movieapp.Constants.BEARER
 import com.example.movieapp.service.MovieApiService
 import dagger.Module
@@ -13,10 +12,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @InstallIn(SingletonComponent::class)
 @Module
-class NetworkModule {
+class NetworkModule @Inject constructor() {
     @Provides
     fun logging(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
