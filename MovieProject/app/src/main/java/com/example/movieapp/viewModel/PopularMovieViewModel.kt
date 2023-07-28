@@ -1,5 +1,6 @@
 package com.example.movieapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.model.popularMovie.PopularResponse
@@ -32,6 +33,7 @@ class PopularMovieViewModel @Inject constructor(private val movieApiService: Mov
                 ) {
                     if (response.isSuccessful) {
                         popularMovieResponse.value = response.body()?.results
+                        Log.d("TAG_X", "PopularMovieViewModel onResponse: ${response.body()}")
                     }
                 }
 

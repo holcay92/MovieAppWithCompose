@@ -28,7 +28,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"
+                android:layout_weight="1"
                 android:gravity="center|start"
                 android:orientation="horizontal">
 
@@ -37,7 +37,6 @@
                     android:layout_width="80dp"
                     android:layout_height="100dp"
                     android:background="@drawable/rounded_bg" />
-
 
 
             </LinearLayout>
@@ -55,12 +54,28 @@
                 android:textStyle="bold"
                 tools:text="MovieTitle" />
 
-            <ImageButton
-                android:id="@+id/btnAddFav"
-                android:layout_width="34dp"
-                android:layout_height="30dp"
-                android:backgroundTint="@color/secondary_theme"
-                android:src="@drawable/add_fav_empty_icon" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btnAddFav"
+                    android:layout_width="34dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/secondary_theme"
+                    android:src="@drawable/add_fav_empty_icon" />
+
+                <ImageView
+                    android:id="@+id/movieVote"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="bottom" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

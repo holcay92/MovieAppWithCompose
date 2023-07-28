@@ -1,6 +1,5 @@
 package com.example.movieapp.view.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
@@ -21,7 +20,7 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
             val bindingItem = SearchItemBinding.bind(itemView)
             bindingItem.apply {
                 movieTitle.text = movie.title
-                Log.d("TAG_X", "bind in the adapter movie.title : ${movie.title}")
+
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${movie.poster_path}").centerCrop()
                     .into(moviePoster)
@@ -53,7 +52,7 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
 
     fun updateList(list: List<SearchResult>?) {
         searchList.value = list!!
-        Log.d("TAG_X", "Adapter SearchListAdapter updateList in the adapter searchList: $searchList")
+
         notifyDataSetChanged()
     }
 }

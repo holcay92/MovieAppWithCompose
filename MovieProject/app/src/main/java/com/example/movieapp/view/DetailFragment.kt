@@ -71,7 +71,7 @@ class DetailFragment : Fragment() {
                 bindingDetail.movieVote.text = it.vote_average.toString()
                 bindingDetail.movieBudget.text = it.budget.toString()
                 bindingDetail.movieAdult.text = if (it.adult!!) "Yes" else "No"
-                bindingDetail.movieOriginalTitle.text = it.original_title
+                bindingDetail.movieVoteCount.text = it.vote_count.toString()
             }
         }
     }

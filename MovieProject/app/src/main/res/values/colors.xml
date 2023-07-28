@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+
     <color name="white">#FFFFFFFF</color>
-    <color name="secondary_theme">#462446</color>
-    <color name="main_theme">#b05f6d</color>
+    <color name="main_theme">#3A3434</color>
+    <color name="secondary_theme">#FF000000</color>
     <color name="light_theme">#ffc153</color>
+    <color name="green">#00FF00</color>
+    <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
 </resources>
 
 <!-- <color name="tmdb_light_blue">#01b4e4</color> -->
+
+

@@ -38,7 +38,6 @@ class MainFragment : Fragment() {
     private lateinit var progressDialog: Dialog
     private lateinit var adapterPopular: PopularMovieAdapter
     private lateinit var adapterTR: TopRatedMovieAdapter
-    private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private var viewType = false
 
     override fun onCreateView(

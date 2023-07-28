@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +20,8 @@ import com.example.movieapp.view.adapters.SearchListAdapter
 import com.example.movieapp.view.homePage.MainFragmentDirections
 import com.example.movieapp.viewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -39,16 +43,25 @@ class SearchFragment : Fragment() {
 
         // Fetch search results based on the search query
         if (!searchQuery.isNullOrEmpty()) {
-            viewModel.searchMovies(searchQuery)
+            val isEmpty = viewModel.searchMovies(searchQuery)
+            Log.d("TAG_X", "SearchFragment onViewCreated isEmpty: $isEmpty")
+            if (isEmpty) {
+                lifecycleScope.launch {
+                    withContext(coroutineContext) {
+                        Toast.makeText(requireContext(), "No results found", Toast.LENGTH_SHORT)
+                            .show()
+                }
+                }
+            }
         }
 
         // Setup RecyclerView and adapter for displaying search results
-        val searchListAdapter = SearchListAdapter(object : SearchListAdapter.OnItemClickListener {
+        val searchListAdapter = SearchListAdapter(
+            object : SearchListAdapter.OnItemClickListener {
             override fun onItemClick(movie: SearchResult) {
-                Log.d("TAG_X", "SearchFragment onItemClick: $movie")
-                val action :NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment( Constants.POPULAR,movie.id)
-                Log.d("TAG_X", "SearchFragment onItemClick action: $action")
-
+        Log.d("TAG_X", "SearchFragment onItemClick: $movie")
+                Log.d("TAG_X", "SearchFragment onItemClick movie.id: ${movie.id}")
+                val action =SearchFragmentDirections.actionSearchFragmentToDetailFragment(Constants.POPULAR,movie.id)
                 findNavController().navigate(action)
             }
         })
