@@ -37,9 +37,9 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //get id from bundle
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
-        Log.d("TAG_X", "DetailFragment onViewCreated: $id")
+        //set up viewpager
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
 
@@ -52,6 +52,7 @@ class DetailFragment : Fragment() {
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI()
         }
+        //show reviews
         bindingDetail.showReviews.setOnClickListener {
             val action = DetailFragmentDirections.actionDetailFragmentToDetailReviewFragment(id)
             findNavController().navigate(action)
