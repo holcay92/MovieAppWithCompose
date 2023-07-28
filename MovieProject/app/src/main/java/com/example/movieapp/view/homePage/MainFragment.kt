@@ -76,7 +76,7 @@ class MainFragment : Fragment() {
                     page++
                     //showProgressDialog()
                     Log.d("TAG_X", "Main Fragment page: $page")
-                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     viewModelPopular.getNextPage(page)
                     //hideProgressDialog()
                 }

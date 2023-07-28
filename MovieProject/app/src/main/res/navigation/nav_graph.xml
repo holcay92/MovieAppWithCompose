@@ -40,6 +40,9 @@
         <argument
             android:name="type"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detailFragment_to_detailReviewFragment"
+            app:destination="@id/detailReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -58,5 +61,15 @@
         <action
             android:id="@+id/action_favoriteFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailReviewFragment"
+        android:name="com.example.movieapp.view.DetailReviewFragment"
+        android:label="fragment_detail_review"
+        tools:layout="@layout/fragment_detail_review" >
+        <argument
+            android:name="movie_id"
+            app:argType="integer"
+            android:defaultValue="346698" />
     </fragment>
 </navigation>

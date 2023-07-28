@@ -11,5 +11,5 @@
     <dimen name="detailFragmentCardViewMargin">10dp</dimen>
     <dimen name="detailFragmentCardViewCornerRadius">10dp</dimen>
     <dimen name="detailFragmentCardViewElevation">20dp</dimen>
-    <dimen name="detailFragmentCardViewDetailTextSize">20sp</dimen>
+    <dimen name="detailFragmentCardViewDetailTextSize">14sp</dimen>
 </resources>
