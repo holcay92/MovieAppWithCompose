@@ -5,16 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.databinding.FragmentDetailReviewBinding
+import com.example.movieapp.view.adapters.DetailReviewAdapter
+import com.example.movieapp.view.adapters.FavoriteMovieAdapter
+import com.example.movieapp.viewModel.DetailReviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailReviewFragment : Fragment() {
     private lateinit var binding: FragmentDetailReviewBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var adapter: DetailReviewAdapter
+    private val viewModel by viewModels<DetailReviewViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +29,19 @@ class DetailReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //
+        val id = DetailReviewFragmentArgs.fromBundle(requireArguments()).movieId
+
+
+        adapter = DetailReviewAdapter()
+        binding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvDetailReview.adapter = adapter
+        //linear layout manager is default for recyclerview
+        viewModel.getReview(id)
+        viewModel.reviewList.observe(viewLifecycleOwner) {
+            adapter.updateList(it)
+
+        }
 
 
     }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailReviewViewModel @Inject constructor(private val apiService: MovieApiService): ViewModel(){
 
-    val reviewList = MutableLiveData<List<ReviewResult?>?>()
+    val reviewList = MutableLiveData<List<ReviewResult>>()
 
 
     fun getReview(id: Int){
@@ -28,7 +28,8 @@ class DetailReviewViewModel @Inject constructor(private val apiService: MovieApi
             }
 
             override fun onFailure(call: retrofit2.Call<Review?>, t: Throwable) {
-                reviewList.postValue(null)
+                //reviewList.postValue(null)
+                Log.d("DetailReviewViewModel", "onFailure: ${t.message}")
             }
 
         })

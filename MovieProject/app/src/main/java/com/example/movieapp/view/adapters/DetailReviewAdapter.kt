@@ -8,7 +8,7 @@ import com.example.movieapp.model.review.ReviewResult
 
 class DetailReviewAdapter : RecyclerView.Adapter<DetailReviewAdapter.DetailReviewViewHolder>() {
 
-    val reviewList = ArrayList<ReviewResult>()
+    private val reviewList = ArrayList<ReviewResult>()
 
     inner class DetailReviewViewHolder(bindingItem: ReviewItemBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
@@ -40,4 +40,10 @@ class DetailReviewAdapter : RecyclerView.Adapter<DetailReviewAdapter.DetailRevie
     }
 
     override fun getItemCount() = reviewList.size
+
+    fun updateList(newList: List<ReviewResult>) {
+        reviewList.clear()
+        reviewList.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

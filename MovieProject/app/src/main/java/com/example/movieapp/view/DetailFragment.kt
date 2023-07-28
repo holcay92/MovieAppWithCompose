@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailBinding
 import com.example.movieapp.room.FavoriteMovie
@@ -41,6 +42,8 @@ class DetailFragment : Fragment() {
         Log.d("TAG_X", "DetailFragment onViewCreated: $id")
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
+
+        //Todo: check if it is best practice to use 2 observations
         viewModelForImage.fetchMovieImageList(id)
         viewModelForImage.imageResponse.observe(viewLifecycleOwner) {
             adapter.updateList(it)
@@ -48,6 +51,10 @@ class DetailFragment : Fragment() {
         viewModelForDetail.fetchMovieDetail(id)
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI()
+        }
+        bindingDetail.showReviews.setOnClickListener {
+            val action = DetailFragmentDirections.actionDetailFragmentToDetailReviewFragment(id)
+            findNavController().navigate(action)
         }
 
         viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
