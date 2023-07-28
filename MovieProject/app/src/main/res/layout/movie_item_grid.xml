@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
                         android:text="90"
-                        android:layout_gravity="center"
+                        android:layout_gravity="end"
                         android:textColor="@color/light_theme"
                         android:textSize="12sp"
                         android:textStyle="bold"

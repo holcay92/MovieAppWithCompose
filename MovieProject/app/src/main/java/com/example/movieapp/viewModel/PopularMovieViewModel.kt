@@ -45,6 +45,6 @@ class PopularMovieViewModel @Inject constructor(private val movieApiService: Mov
     }
 
     fun getNextPage(page: Int) {
-        runBlocking { fetchMovieList(page) }
+         fetchMovieList(page)
     }
 }

@@ -1,11 +1,9 @@
 package com.example.movieapp.view.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.movieapp.databinding.MovieItemBinding
 import com.example.movieapp.databinding.MovieItemGridBinding
 import com.example.movieapp.model.topRated.ResultTopRated
 
@@ -18,12 +16,11 @@ class TopRatedMovieAdapter(private val listener: OnItemClickListener) :
         fun bind(tRMovie: ResultTopRated) {
             val bindingItem = MovieItemGridBinding.bind(itemView)
             bindingItem.apply {
-                movieTitle?.text = tRMovie.title
-                tvMovieRating?.text = tRMovie.vote_average.toString()
+                movieTitle.text = tRMovie.title
+                tvMovieRating.text = tRMovie.vote_average.toString()
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${tRMovie.poster_path}").centerCrop()
-                    .into(movieImage!!)
-                //Log.d("TAG_X", "bind in the adapter popularMovie.title : ${tRMovie.title}")
+                    .into(movieImage)
             }
         }
     }

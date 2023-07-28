@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,6 +40,7 @@ class MainFragment : Fragment() {
     private lateinit var adapterPopular: PopularMovieAdapter
     private lateinit var adapterTR: TopRatedMovieAdapter
     private var viewType = false
+    private var page = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,15 +71,18 @@ class MainFragment : Fragment() {
                 val visibleItemCount = layoutManager.childCount
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    var page = 1
+
                     page++
-                    // showProgressDialog()
+                    //showProgressDialog()
+                    Log.d("TAG_X", "Main Fragment page: $page")
+                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     viewModelPopular.getNextPage(page)
-                    // hideProgressDialog()
+                    //hideProgressDialog()
                 }
+
             }
+
         })
         adapterPopular = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
