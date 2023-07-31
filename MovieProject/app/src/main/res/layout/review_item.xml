@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:backgroundTint="@color/light_theme"
     android:padding="5dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/main_theme"
+        android:backgroundTint="@color/secondary_theme"
         app:cardCornerRadius="10dp"
         app:cardElevation="50dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +25,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+               >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -32,15 +35,24 @@
                     android:text="@string/author_vote"
                     android:textSize="16sp"
                     android:textColor="@color/light_theme"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+
+                   />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
 
                 <TextView
                     android:id="@+id/reviewVote"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/light_theme"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="7.5"
+                    />
 
             </LinearLayout>
 
@@ -48,7 +60,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,21 +70,28 @@
                     android:textColor="@color/light_theme"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
 
                 <TextView
                     android:id="@+id/reviewAuthor"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/light_theme"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="@string/author"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,7 +107,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/light_theme"
                     android:textSize="16sp"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"
+                    android:paddingTop="5dp"/>
 
             </LinearLayout>
         </LinearLayout>
