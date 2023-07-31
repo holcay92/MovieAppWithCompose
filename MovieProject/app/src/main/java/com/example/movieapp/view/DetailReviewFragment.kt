@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.databinding.FragmentDetailReviewBinding
 import com.example.movieapp.view.adapters.DetailReviewAdapter
-import com.example.movieapp.view.adapters.FavoriteMovieAdapter
 import com.example.movieapp.viewModel.DetailReviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,8 +29,12 @@ class DetailReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //
-        val id = DetailReviewFragmentArgs.fromBundle(requireArguments()).movieId
+        val id = DetailReviewFragmentArgs.fromBundle(
+            requireArguments()
+        ).movieId
+        val toolbar = activity as AppCompatActivity
+        toolbar.supportActionBar?.title = "Reviews"
+
 
 
         adapter = DetailReviewAdapter()
@@ -42,8 +46,5 @@ class DetailReviewFragment : Fragment() {
             adapter.updateList(it)
 
         }
-
-
     }
-
 }

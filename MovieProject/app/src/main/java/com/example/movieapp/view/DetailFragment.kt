@@ -1,10 +1,10 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -80,6 +80,8 @@ class DetailFragment : Fragment() {
                 bindingDetail.movieBudget.text = it.budget.toString()
                 bindingDetail.movieAdult.text = if (it.adult!!) "Yes" else "No"
                 bindingDetail.movieVoteCount.text = it.vote_count.toString()
+                val toolbar = activity as AppCompatActivity
+                toolbar.supportActionBar?.title = it.title
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.movieapp.view.homePage
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -56,6 +58,16 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = "Movie App"
+
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                alertDialog()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback,
+        )
 
         binding.gridBtn.setOnClickListener {
             viewType = !viewType
@@ -153,6 +165,21 @@ class MainFragment : Fragment() {
             binding.gridBtn.setImageResource(R.drawable.grid_view)
         }
         binding.rvPopularMovies.adapter?.notifyDataSetChanged()
+    }
+
+    private fun alertDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Alert")
+        builder.setMessage("Do you want to exit?")
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton("Yes") { _, _ ->
+            requireActivity().finish() // Exit the app
+        }
+        builder.setNegativeButton("No") { _, _ ->
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
 }
