@@ -140,6 +140,18 @@ class MainFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
+            adapterPopular.updateList(it)
+            // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+        }
+        viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
+            adapterTR.updateList(it)
+            // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
+        }
+    }
+
     private fun showProgressDialog() {
         progressDialog = Dialog(requireContext())
         progressDialog.setContentView(R.layout.progress_dialog)

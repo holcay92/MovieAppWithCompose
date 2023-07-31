@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_theme"
-    android:paddingTop="30dp"
+    android:paddingTop="35dp"
     tools:context=".view.DetailFragment">
 
     <androidx.cardview.widget.CardView
@@ -35,12 +35,12 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
                 <LinearLayout
-                    android:id="@+id/showReviews"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <ImageButton
-
+                        android:id="@+id/showReviews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/read_reviews"

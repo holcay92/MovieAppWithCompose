@@ -10,6 +10,7 @@ import com.example.movieapp.room.MovieDatabase
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +23,6 @@ class PopularMovieViewModel @Inject constructor(
 ) :
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
-
 
     init {
         fetchMovieList(1)
@@ -40,9 +40,9 @@ class PopularMovieViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         val results = response.body()?.results
                         results?.forEach { movie ->
-                            viewModelScope.launch {
-                                movie.isFavorite = isMovieInFavorites(movie.id)
-                            }
+                                viewModelScope.launch {
+                                    movie.isFavorite = isMovieInFavorites(movie.id)
+                                }
                         }
                         popularMovieResponse.value = results
                         Log.d("TAG_X", "PopularMovieViewModel onResponse: ${response.body()}")
@@ -60,6 +60,6 @@ class PopularMovieViewModel @Inject constructor(
         fetchMovieList(page)
     }
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {
-        return movieDatabase.dao().getMovieById(movieId) != null
+       return runBlocking{ movieDatabase.dao().getMovieById(movieId) != null }
     }
 }
