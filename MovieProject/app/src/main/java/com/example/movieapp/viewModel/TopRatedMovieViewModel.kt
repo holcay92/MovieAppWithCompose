@@ -3,17 +3,23 @@ package com.example.movieapp.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.movieapp.model.topRated.ResultTopRated
 import com.example.movieapp.model.topRated.TopRated
+import com.example.movieapp.room.MovieDatabase
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class TopRatedMovieViewModel @Inject constructor(private val movieApiService: MovieApiService) :
+class TopRatedMovieViewModel @Inject constructor(
+    private val movieApiService: MovieApiService,
+    private val movieDatabase: MovieDatabase
+) :
     ViewModel() {
     var tRMovieResponse = MutableLiveData<List<ResultTopRated>?>()
 
@@ -31,7 +37,14 @@ class TopRatedMovieViewModel @Inject constructor(private val movieApiService: Mo
                     response: Response<TopRated?>,
                 ) {
                     if (response.isSuccessful) {
-                        tRMovieResponse.value = response.body()?.results
+                        val results = response.body()?.results
+                        results?.forEach { movie ->
+                            viewModelScope.launch {
+                                movie.isFavorite = isMovieInFavorites(movie.id)
+                            }
+                        }
+                       tRMovieResponse.value = results
+                        Log.d("TAG_X", "Top Rated MovieViewModel onResponse: ${response.body()}")
                     }
                 }
 
@@ -40,5 +53,8 @@ class TopRatedMovieViewModel @Inject constructor(private val movieApiService: Mo
                 }
             },
         )
+    }
+    private suspend fun isMovieInFavorites(movieId: Int): Boolean {
+        return movieDatabase.dao().getMovieById(movieId) != null
     }
 }
