@@ -110,7 +110,7 @@ class MainFragment : Fragment() {
         )
         binding.rvPopularMovies.adapter = adapterPopular
 
-        binding.rvTopRatedMovies.layoutManager =
+        binding.rvTopRatedMovies?.layoutManager =
             GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
         adapterTR = TopRatedMovieAdapter(
             object : TopRatedMovieAdapter.OnItemClickListener {
