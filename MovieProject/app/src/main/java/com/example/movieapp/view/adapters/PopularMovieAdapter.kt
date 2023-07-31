@@ -1,6 +1,5 @@
 package com.example.movieapp.view.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,13 +9,11 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.databinding.MovieItemPopularGridViewBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
-import com.example.movieapp.room.Dao
 
 class PopularMovieAdapter(private val listener: OnItemClickListener) :
     RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
     private var movieList = ArrayList<ResultPopular>()
     private var viewType = ViewType.LIST
-
 
     enum class ViewType {
         LIST, GRID
@@ -24,11 +21,8 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
 
     fun setViewType(viewType: ViewType) {
         this.viewType = viewType
-        Log.d("TAG_X", "setViewType in the adapter viewType: $viewType")
         notifyDataSetChanged()
     }
-
-
 
     inner class MovieViewHolder(bindingItem: ViewBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
@@ -39,10 +33,8 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                 bindingItem.apply {
                     movieTitle.text = popularMovie.title
                     if(popularMovie.isFavorite) {
-                        Log.d("TAG_X", "PopularMovieAdapter onBindViewHolder: ${popularMovie.isFavorite}")
                         btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                     } else {
-                        Log.d("TAG_X", "PopularMovieAdapter onBindViewHolder false: ${popularMovie.isFavorite}")
                         btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
                     }
 
@@ -121,5 +113,4 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
             "red"
         }
     }
-
 }

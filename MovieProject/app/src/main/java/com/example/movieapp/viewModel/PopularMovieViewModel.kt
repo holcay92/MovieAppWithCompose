@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PopularMovieViewModel @Inject constructor(
     private val movieApiService: MovieApiService,
-    private val movieDatabase: MovieDatabase //
+    private val movieDatabase: MovieDatabase
 ) :
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
