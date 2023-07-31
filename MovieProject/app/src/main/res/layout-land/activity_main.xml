@@ -24,7 +24,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:src="@drawable/tmdb_icon" />
+            android:src="@drawable/tmdb_landscape" />
     </androidx.appcompat.widget.Toolbar>
 
 

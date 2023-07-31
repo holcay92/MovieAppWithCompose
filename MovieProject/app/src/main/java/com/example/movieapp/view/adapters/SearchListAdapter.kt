@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.movieapp.R
 import com.example.movieapp.databinding.SearchItemBinding
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 
@@ -20,6 +21,11 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
             val bindingItem = SearchItemBinding.bind(itemView)
             bindingItem.apply {
                 movieTitle.text = movie.title
+                if(movie.isFavorite) {
+                    isFavMovie.setImageResource(R.drawable.add_fav_filled_icon)
+                } else {
+                    isFavMovie.setImageResource(R.drawable.add_fav_empty_icon)
+                }
 
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${movie.poster_path}").centerCrop()
@@ -51,8 +57,7 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
     }
 
     fun updateList(list: List<SearchResult>?) {
-        searchList.value = list!!
-
+        searchList.value = list ?: emptyList()
         notifyDataSetChanged()
     }
 }

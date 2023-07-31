@@ -4,7 +4,6 @@
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.SearchFragment"
     android:paddingTop="30dp">
     <ImageView
@@ -20,9 +19,8 @@
         android:id="@+id/searchRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:background="@color/light_theme"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:background="@color/secondary_theme"
+        tools:listitem="@layout/search_item"
+      />
 
 </FrameLayout>

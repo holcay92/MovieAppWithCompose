@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
     <!-- item_movie.xml -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:padding="5dp"
         android:orientation="horizontal"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/moviePoster"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            android:src="@drawable/add_fav_filled_icon" />
-
-        <TextView
-            android:id="@+id/movieTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="movieTitle"
-            android:layout_marginStart="10dp"/>
 
         <ImageView
             android:id="@+id/isFavMovie"
             android:layout_width="35dp"
             android:layout_height="50dp"
-            android:src="@drawable/bino" />
+            android:src="@drawable/bino"
+          />
+
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textStyle="bold"
+            tools:text="movieTitle"
+            android:layout_weight="1"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+        <ImageView
+            android:id="@+id/moviePoster"
+            android:layout_width="35dp"
+            android:layout_height="50dp"
+            android:src="@drawable/add_fav_filled_icon"
+            />
+
 
         <!-- Add more TextViews or other UI elements to display additional movie data -->
     </LinearLayout>

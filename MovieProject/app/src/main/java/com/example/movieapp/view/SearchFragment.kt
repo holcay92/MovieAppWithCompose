@@ -39,18 +39,19 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val searchQuery = arguments?.getString(ARG_SEARCH_QUERY)
-        Log.d("TAG_X", "SearchFragment onViewCreated: $searchQuery")
+        Log.d("TAG_X", "SearchFragment onViewCreated search query: $searchQuery")
 
         // Fetch search results based on the search query
         if (!searchQuery.isNullOrEmpty()) {
             val isEmpty = viewModel.searchMovies(searchQuery)
+
             Log.d("TAG_X", "SearchFragment onViewCreated isEmpty: $isEmpty")
             if (isEmpty) {
                 lifecycleScope.launch {
                     withContext(coroutineContext) {
                         Toast.makeText(requireContext(), "No results found", Toast.LENGTH_SHORT)
                             .show()
-                }
+                    }
                 }
             }
         }
@@ -58,13 +59,11 @@ class SearchFragment : Fragment() {
         // Setup RecyclerView and adapter for displaying search results
         val searchListAdapter = SearchListAdapter(
             object : SearchListAdapter.OnItemClickListener {
-            override fun onItemClick(movie: SearchResult) {
-        Log.d("TAG_X", "SearchFragment onItemClick: $movie")
-                Log.d("TAG_X", "SearchFragment onItemClick movie.id: ${movie.id}")
-                val action =SearchFragmentDirections.actionSearchFragmentToDetailFragment(Constants.POPULAR,movie.id)
-                findNavController().navigate(action)
-            }
-        })
+                override fun onItemClick(movie: SearchResult) {
+                    val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(Constants.TOP_RATED,movie.id)
+                    findNavController().navigate(action)
+                }
+            })
         binding.searchRV.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRV.adapter = searchListAdapter
 

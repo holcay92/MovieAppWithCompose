@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.model.movieSearchResponse.MovieSearchResponse
 import com.example.movieapp.model.movieSearchResponse.SearchResult
+import com.example.movieapp.room.MovieDatabase
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,9 +18,12 @@ import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val movieApiService: MovieApiService) :
+class SearchViewModel @Inject constructor(
+    private val movieApiService: MovieApiService,
+    private val movieDatabase: MovieDatabase
+) :
     ViewModel() {
-    val searchList = MutableLiveData<List<SearchResult>>()
+    val searchList = MutableLiveData<List<SearchResult>?>()
 
     fun searchMovies(query: String): Boolean {
         var isEmpty = true
@@ -34,8 +39,16 @@ class SearchViewModel @Inject constructor(private val movieApiService: MovieApiS
                     "Adapter onResponse response.body()?.results: ${response.body()?.results}"
                 )
                 if (response.isSuccessful) {
-                    searchList.value = response.body()?.results
-                    if (response.body()?.results.isNullOrEmpty()) {
+                    val results = response.body()?.results
+                    if (results != null) {
+                        results.forEach { movie ->
+                            runBlocking {
+                                withContext(coroutineContext) {
+                                    movie.isFavorite = isMovieInFavorites(movie.id)
+                                }
+                            }
+                        }
+                        searchList.value = results
                         isEmpty = false
                     }
                 }
@@ -46,5 +59,9 @@ class SearchViewModel @Inject constructor(private val movieApiService: MovieApiS
             }
         })
         return isEmpty
+    }
+
+    private suspend fun isMovieInFavorites(movieId: Int): Boolean {
+        return runBlocking{ movieDatabase.dao().getMovieById(movieId) != null }
     }
 }
