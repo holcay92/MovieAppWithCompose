@@ -5,5 +5,6 @@
 -filter ui
 -video player fragment
 -animation between fragments
--oriantation change portrait vs landscape
+-orientation change portrait vs landscape
 -save image into local storage (optional, if time permits)
+-orientation change toolbar and nav bar not displayed. 

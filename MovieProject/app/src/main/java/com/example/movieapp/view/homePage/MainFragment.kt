@@ -159,10 +159,12 @@ class MainFragment : Fragment() {
         if (viewType) {
             binding.rvPopularMovies.layoutManager =
                 GridLayoutManager(requireContext(), 2)
+            adapterPopular.setViewType(PopularMovieAdapter.ViewType.GRID)
             binding.gridBtn.setImageResource(R.drawable.list_view)
         } else {
             binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
             binding.gridBtn.setImageResource(R.drawable.grid_view)
+            adapterPopular.setViewType(PopularMovieAdapter.ViewType.LIST)
         }
         binding.rvPopularMovies.adapter?.notifyDataSetChanged()
     }
