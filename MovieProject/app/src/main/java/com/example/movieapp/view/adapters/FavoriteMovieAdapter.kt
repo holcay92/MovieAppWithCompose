@@ -9,11 +9,11 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.room.FavoriteMovie
+import com.example.movieapp.room.MovieDatabase
 
 class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>() {
 
     private var favMovieList = ArrayList<FavoriteMovie>()
-
      class FavoriteViewHolder(bindingItem: MovieItemPopularBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
         fun bind(popularMovie: FavoriteMovie) {

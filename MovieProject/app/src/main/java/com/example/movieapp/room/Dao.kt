@@ -17,4 +17,7 @@ interface Dao {
 
     @Query("SELECT * FROM movie_data_table ORDER BY movie_id ASC")
     fun getAllItems(): LiveData<List<FavoriteMovie>>
+
+    @Query("SELECT * FROM movie_data_table WHERE movie_id = :movieId")
+    suspend fun getMovieById(movieId: Int): FavoriteMovie?
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movieapp.room.Dao
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.room.MovieDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,8 +13,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteMovieViewModel @Inject constructor(context: Application) : ViewModel() {
-    private val dao = MovieDatabase.getInstance(context).dao()
+class FavoriteMovieViewModel @Inject constructor(private val dao: Dao) : ViewModel() {
+
 
     var favMovieList: LiveData<List<FavoriteMovie>> = dao.getAllItems()
 

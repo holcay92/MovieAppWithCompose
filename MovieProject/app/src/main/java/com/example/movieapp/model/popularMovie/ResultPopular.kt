@@ -14,4 +14,5 @@ data class ResultPopular(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
+    var isFavorite: Boolean = false//custom added to check if favorite or not
 )

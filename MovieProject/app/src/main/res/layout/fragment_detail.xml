@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_theme"
-    android:padding="@dimen/layoutPadding"
+    android:paddingTop="30dp"
     tools:context=".view.DetailFragment">
 
     <androidx.cardview.widget.CardView
@@ -31,20 +31,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center"
+                android:orientation="horizontal"
                 android:padding="10dp">
-
-                <TextView
+                <LinearLayout
                     android:id="@+id/showReviews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/show_reviews"
-                    android:textColor="@color/light_theme"
-                    android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+                    <ImageButton
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/read_reviews"
+                        android:background="@color/secondary_theme"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_reviews"
+                        android:textColor="@color/light_theme"/>
+                </LinearLayout>
+
+
+
                 <Space
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
@@ -318,6 +330,13 @@
                     tools:text="@string/app_name" />
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/trailers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="videos"
+                android:textColor="@color/light_theme"
+                />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>

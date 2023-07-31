@@ -10,11 +10,13 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.databinding.MovieItemPopularGridViewBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
+import com.example.movieapp.room.Dao
 
 class PopularMovieAdapter(private val listener: OnItemClickListener) :
     RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
     private var movieList = ArrayList<ResultPopular>()
     private var viewType = ViewType.LIST
+
 
     enum class ViewType {
         LIST, GRID
@@ -36,6 +38,13 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                 val bindingItem = MovieItemPopularBinding.bind(itemView)
                 bindingItem.apply {
                     movieTitle.text = popularMovie.title
+                    if(popularMovie.isFavorite) {
+                        Log.d("TAG_X", "PopularMovieAdapter onBindViewHolder: ${popularMovie.isFavorite}")
+                        btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
+                    } else {
+                        Log.d("TAG_X", "PopularMovieAdapter onBindViewHolder false: ${popularMovie.isFavorite}")
+                        btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
+                    }
 
                     movieVote.setBackgroundResource(
                         when (updateVoteStyle(popularMovie.vote_average)) {
