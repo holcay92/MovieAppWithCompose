@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity(){
         setSupportActionBar(toolbar)
         binding.bottomNavigation.visibility = View.GONE
         binding.toolbar.visibility = View.GONE
+        //change search bar text color
+
 
         if (savedInstanceState == null) {
             Handler(Looper.getMainLooper()).postDelayed({
@@ -79,6 +81,8 @@ class MainActivity : AppCompatActivity(){
         menuInflater.inflate(R.menu.menu_main, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
+        val searchEditText = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
+        searchEditText.setTextColor(resources.getColor(R.color.light_theme))
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -91,8 +95,10 @@ class MainActivity : AppCompatActivity(){
                 return true
             }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                Log.d("TAG_X MainActivity newText", newText)
+            override fun onQueryTextChange(query: String): Boolean {
+
+                Log.d("TAG_X MainActivity query", query)
+
                 return true
             }
         })

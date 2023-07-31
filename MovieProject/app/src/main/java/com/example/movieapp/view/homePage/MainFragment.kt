@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = "Movie App"
+        toolbar.supportActionBar?.title = ""
 
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
