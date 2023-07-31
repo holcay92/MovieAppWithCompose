@@ -38,6 +38,9 @@ interface MovieApiService {
         @Path("movie_id") movieId: Int,
     ): Call<Review>
 
-    // @GET("movie/upcoming")
-    // fun getUpComingMovies(@Query("page") page: Int): Call<MovieResponse>
+    // get movie videos todo: add to detail fragment
+    @GET("movie/{movie_id}/videos")
+    fun getMovieVideos(
+        @Path("movie_id") movieId: Int,
+    ): Call<Review>
 }

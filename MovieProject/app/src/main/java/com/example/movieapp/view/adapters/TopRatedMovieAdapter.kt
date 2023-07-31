@@ -17,7 +17,7 @@ class TopRatedMovieAdapter(private val listener: OnItemClickListener) :
         fun bind(tRMovie: ResultTopRated) {
             val bindingItem = MovieItemGridBinding.bind(itemView)
             bindingItem.apply {
-                movieTitle.text = tRMovie.title
+               // movieTitle.text = tRMovie.title
                 if(tRMovie.isFavorite) {
                     btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                 } else {
