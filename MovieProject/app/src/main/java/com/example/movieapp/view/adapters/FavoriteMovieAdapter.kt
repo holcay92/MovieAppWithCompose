@@ -14,7 +14,7 @@ import com.example.movieapp.room.MovieDatabase
 class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>() {
 
     private var favMovieList = ArrayList<FavoriteMovie>()
-     class FavoriteViewHolder(bindingItem: MovieItemPopularBinding) :
+    inner class FavoriteViewHolder(bindingItem: MovieItemPopularBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
         fun bind(popularMovie: FavoriteMovie) {
             val bindingItem = MovieItemPopularBinding.bind(itemView)
