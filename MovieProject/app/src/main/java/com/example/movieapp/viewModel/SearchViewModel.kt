@@ -1,6 +1,7 @@
 package com.example.movieapp.viewModel
 
 import android.util.Log
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.movieapp.model.movieSearchResponse.MovieSearchResponse
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 import com.example.movieapp.room.MovieDatabase
 import com.example.movieapp.service.MovieApiService
+import com.example.movieapp.view.adapters.SearchListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -25,8 +27,7 @@ class SearchViewModel @Inject constructor(
     ViewModel() {
     val searchList = MutableLiveData<List<SearchResult>?>()
 
-    fun searchMovies(query: String): Boolean {
-        var isEmpty = true
+    fun searchMovies(query: String){
         val call = movieApiService.searchMovies(query)
         Log.d("TAG_X SearchViewModel", "searchMovies: $query")
         call.enqueue(object : Callback<MovieSearchResponse?> {
@@ -44,12 +45,11 @@ class SearchViewModel @Inject constructor(
                         results.forEach { movie ->
                             runBlocking {
                                 withContext(coroutineContext) {
-                                    movie.isFavorite = isMovieInFavorites(movie.id)
+                                    movie.isFavorite = isMovieInFavorites(movie.id!!)
                                 }
                             }
                         }
                         searchList.value = results
-                        isEmpty = false
                     }
                 }
             }
@@ -58,7 +58,6 @@ class SearchViewModel @Inject constructor(
                 Log.d("TAG_X SearchViewModel", "onFailure: ${t.message}")
             }
         })
-        return isEmpty
     }
 
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {

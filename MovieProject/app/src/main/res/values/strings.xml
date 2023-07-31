@@ -20,4 +20,5 @@
     <string name="review">Review:</string>
     <string name="author">Author:</string>
     <string name="author_vote">Vote:</string>
+    <string name="no_results_found">No Result</string>
 </resources>

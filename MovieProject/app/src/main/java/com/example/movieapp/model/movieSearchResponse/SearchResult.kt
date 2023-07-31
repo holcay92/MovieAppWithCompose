@@ -1,10 +1,12 @@
 package com.example.movieapp.model.movieSearchResponse
 
+import com.google.gson.annotations.SerializedName
+
 data class SearchResult(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
-    val id: Int,
+    @SerializedName("id") val id: Int?,
     val original_language: String,
     val original_title: String,
     val overview: String,
