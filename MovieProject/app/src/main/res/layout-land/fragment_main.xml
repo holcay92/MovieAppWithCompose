@@ -67,19 +67,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="start"
+                    android:gravity="center"
                     android:text="@string/popular_movies"
                     android:textColor="@color/light_theme"
                     android:textSize="@dimen/mainFragmentMoreFieldTextSize"
                     android:textStyle="bold" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
                 <ImageButton
                     android:id="@+id/gridBtn"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/main_theme"

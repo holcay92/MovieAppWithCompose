@@ -2,6 +2,7 @@ package com.example.movieapp.view.homePage
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -58,6 +59,12 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = "Movie App"
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        SPAN_COUNT = if (isLandscape) {
+            5
+        } else {
+            2
+        }
 
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -87,7 +94,7 @@ class MainFragment : Fragment() {
                     page++
                     //showProgressDialog()
                     Log.d("TAG_X", "Main Fragment page: $page")
-                   // Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     viewModelPopular.getNextPage(page)
                     //hideProgressDialog()
                 }
@@ -167,7 +174,7 @@ class MainFragment : Fragment() {
     private fun switchRecyclerViewLayout() {
         if (viewType) {
             binding.rvPopularMovies.layoutManager =
-                GridLayoutManager(requireContext(), 2)
+                GridLayoutManager(requireContext(), SPAN_COUNT)
             adapterPopular.setViewType(PopularMovieAdapter.ViewType.GRID)
             binding.gridBtn.setImageResource(R.drawable.list_view)
         } else {
@@ -191,6 +198,10 @@ class MainFragment : Fragment() {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    companion object {
+        private var SPAN_COUNT = 2
     }
 
 }

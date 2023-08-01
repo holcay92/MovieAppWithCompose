@@ -53,7 +53,11 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                 val bindingItem = MovieItemPopularGridViewBinding.bind(itemView)
                 bindingItem.apply {
                     movieTitle.text = popularMovie.title
-
+                    if(popularMovie.isFavorite) {
+                        btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
+                    } else {
+                        btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
+                    }
                     movieVote.setBackgroundResource(
                         when (updateVoteStyle(popularMovie.vote_average)) {
                             "green" -> R.drawable.good
