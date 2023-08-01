@@ -27,7 +27,7 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -53,7 +53,6 @@ class FavoriteFragment : Fragment() {
         binding.favoriteRecyclerView.adapter = adapter
         viewModel.favMovieList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
-            Log.d("TAG_X", "FavoriteFragment onViewCreated viewmodel.observe: $it")
         }
 
 

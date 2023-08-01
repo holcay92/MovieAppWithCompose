@@ -18,15 +18,12 @@ class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) :
         RecyclerView.ViewHolder(bindingItem.root) {
         fun bind(popularMovie: FavoriteMovie) {
             val bindingItem = MovieItemPopularBinding.bind(itemView)
-            Log.d("TAG_X", "fav adapter bind in the adapter popularMovie: $popularMovie")
             bindingItem.apply {
                 bindingItem.movieTitle.text = popularMovie.title
                 bindingItem.btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
                     .into(bindingItem.movieImage)
-                Log.d("TAG_X", "fav adapter bind in the adapter popularMovie.id : ${popularMovie.id}")
-
             }
         }
     }
@@ -46,18 +43,13 @@ class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) :
         holder.itemView.setOnClickListener {
             itemClickListener.onItemClick(favMovieList[position])
         }
-        Log.d("TAG_X", "fav adapter onBindViewHolder: ${favMovieList[position]}")
-
     }
 
     override fun getItemCount()= favMovieList.size
 
     fun updateList(list: List<FavoriteMovie>?) {
-        Log.d("TAG_X", "fav adapter updateList in the adapter list: $favMovieList")
         favMovieList.clear()
-
         favMovieList.addAll(list ?: emptyList())
-        Log.d("TAG_X", "fav adapter updateList in the adapter list after: $favMovieList")
         notifyDataSetChanged()
     }
 

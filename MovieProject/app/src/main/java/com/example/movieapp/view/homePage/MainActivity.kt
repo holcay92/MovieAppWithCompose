@@ -119,7 +119,6 @@ class MainActivity : AppCompatActivity() {
                 // requests for every single character typed by the user.
                 searchJob = lifecycleScope.launch {
                     delay(300)
-                   // performSearch(newText)
                 }
                 return true
             }
@@ -130,8 +129,6 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToSearchFragment(query: String) {
         val args = Bundle()
         args.putString(SearchFragment.ARG_SEARCH_QUERY, query)
-
-        // Use the NavController to navigate to the SearchFragment
         findNavController(R.id.fragmentContainerView).navigate(R.id.searchFragment, args)
     }
 }

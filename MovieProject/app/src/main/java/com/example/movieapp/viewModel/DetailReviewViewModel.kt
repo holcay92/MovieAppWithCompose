@@ -23,7 +23,6 @@ class DetailReviewViewModel @Inject constructor(private val apiService: MovieApi
             override fun onResponse(call: Call<Review?>, response: retrofit2.Response<Review?>) {
                 if (response.isSuccessful){
                     reviewList.value = response.body()?.results
-                    Log.d("DetailReviewViewModel", "onResponse: ${response.body()}")
                 }
             }
 

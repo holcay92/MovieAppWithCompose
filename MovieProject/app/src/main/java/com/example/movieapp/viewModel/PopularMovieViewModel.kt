@@ -45,7 +45,6 @@ class PopularMovieViewModel @Inject constructor(
                                 }
                         }
                         popularMovieResponse.value = results
-                        Log.d("TAG_X", "PopularMovieViewModel onResponse: ${response.body()}")
                     }
                 }
 

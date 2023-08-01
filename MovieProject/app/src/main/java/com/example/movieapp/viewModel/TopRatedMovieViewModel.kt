@@ -45,7 +45,6 @@ class TopRatedMovieViewModel @Inject constructor(
                             }
                         }
                        tRMovieResponse.value = results
-                        Log.d("TAG_X", "Top Rated MovieViewModel onResponse: ${response.body()}")
                     }
                 }
 

@@ -56,7 +56,6 @@ class TopRatedMovieAdapter(private val listener: OnItemClickListener) :
     fun updateList(list: List<ResultTopRated>?) {
         tRMovieList.clear()
         tRMovieList.addAll(list ?: emptyList())
-       // Log.d("TAG_X", "Adapter Top Rated updateList in the adapter list: $tRMovieList")
         notifyDataSetChanged()
     }
 

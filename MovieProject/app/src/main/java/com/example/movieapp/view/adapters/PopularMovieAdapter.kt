@@ -99,7 +99,6 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
     }
 
     fun updateList(list: List<ResultPopular>?) {
-        // movieList.clear()
         movieList.addAll(list ?: emptyList())
         notifyDataSetChanged()
     }

@@ -32,7 +32,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -40,12 +40,11 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val searchQuery = arguments?.getString(ARG_SEARCH_QUERY)
-        Log.d("TAG_X", "SearchFragment onViewCreated search query: $searchQuery")
         searchListAdapter = SearchListAdapter(
             object : SearchListAdapter.OnItemClickListener {
                 override fun onItemClick(movie: SearchResult) {
                     val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(Constants.TOP_RATED,movie.id!!)
-                    Log.d("TAG_X", "onItemClick in Search Fragment: ${movie.id} ${action}")
+
                     findNavController().navigate(action)
                 }
             })
@@ -54,6 +53,14 @@ class SearchFragment : Fragment() {
             viewModel.searchMovies(searchQuery)
             viewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
                 searchListAdapter.updateList(searchResults)
+                if (searchResults.isNullOrEmpty()) {
+                    binding.searchBg.visibility = View.VISIBLE
+                    Log.d("TAG_X", "SearchFragment onViewCreated searchResults: $searchResults")
+                    Toast.makeText(requireContext(), "No search results", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    binding.searchBg.visibility = View.GONE
+                }
             }
         }
         if (searchQuery == null) {

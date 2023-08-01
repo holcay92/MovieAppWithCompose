@@ -58,7 +58,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = "Movie App"
+        toolbar.supportActionBar?.title = ""
         val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         SPAN_COUNT = if (isLandscape) {
             5
@@ -132,12 +132,10 @@ class MainFragment : Fragment() {
         runBlocking {
             viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
                 adapterTR.updateList(it)
-                // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
             }
 
             viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
                 adapterPopular.updateList(it)
-                // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
             }
         }
         hideProgressDialog()
@@ -148,11 +146,9 @@ class MainFragment : Fragment() {
         super.onResume()
         viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
             adapterPopular.updateList(it)
-            // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
         }
         viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
             adapterTR.updateList(it)
-            // Log.d("TAG_X", "Main Fragment updateList in the fragment: $it")
         }
     }
 

@@ -29,16 +29,11 @@ class SearchViewModel @Inject constructor(
 
     fun searchMovies(query: String){
         val call = movieApiService.searchMovies(query)
-        Log.d("TAG_X SearchViewModel", "searchMovies: $query")
         call.enqueue(object : Callback<MovieSearchResponse?> {
             override fun onResponse(
                 call: Call<MovieSearchResponse?>,
                 response: Response<MovieSearchResponse?>,
             ) {
-                Log.d(
-                    "TAG_X SearchViewModel",
-                    "Adapter onResponse response.body()?.results: ${response.body()?.results}"
-                )
                 if (response.isSuccessful) {
                     val results = response.body()?.results
                     if (results != null) {

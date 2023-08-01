@@ -52,7 +52,6 @@ class DetailFragment : Fragment() {
         )
         //get id from bundle
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
-        Log.d("TAG_X", "DetailFragment onViewCreated id: $id")
         //set up viewpager
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
