@@ -1,6 +1,6 @@
 package com.example.movieapp.view.homePage
 
-
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -20,9 +20,8 @@ import com.example.movieapp.view.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     @Inject
@@ -34,33 +33,36 @@ class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val toolbar: Toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        binding.bottomNavigation.visibility = View.GONE
-        binding.toolbar.visibility = View.GONE
-        //change search bar text color
 
+        setupToolbar()
+        setupBottomNavigation()
+        hideSystemUI()
 
         if (savedInstanceState == null) {
             Handler(Looper.getMainLooper()).postDelayed({
-                val action = SplashFragmentDirections.actionSplashFragmentToMainFragment()
-                findNavController(R.id.fragmentContainerView).navigate(action)
+                navigateToMainFragment()
                 binding.bottomNavigation.visibility = View.VISIBLE
                 binding.toolbar.visibility = View.VISIBLE
             }, SPLASH_DELAY.toLong())
         }
-        // home button of the bottom navigation
-        binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
+    }
+
+    private fun setupToolbar() {
+        val toolbar: Toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+    }
+
+    private fun setupBottomNavigation() {
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.home -> {
                     findNavController(R.id.fragmentContainerView).navigate(R.id.mainFragment)
                     true
                 }
                 R.id.favorites -> {
-                  findNavController(R.id.fragmentContainerView).navigate(R.id.favoriteFragment)
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.favoriteFragment)
                     true
                 }
                 else -> false
@@ -68,12 +70,21 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
+    private fun navigateToMainFragment() {
+        val action = SplashFragmentDirections.actionSplashFragmentToMainFragment()
+        findNavController(R.id.fragmentContainerView).navigate(action)
+    }
+
+    private fun hideSystemUI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.navigationBars())
+        }
+    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                window.insetsController?.hide(WindowInsets.Type.navigationBars())
-            }
+            hideSystemUI()
         }
     }
 
@@ -96,9 +107,7 @@ class MainActivity : AppCompatActivity(){
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-
                 Log.d("TAG_X MainActivity query", query)
-
                 return true
             }
         })
