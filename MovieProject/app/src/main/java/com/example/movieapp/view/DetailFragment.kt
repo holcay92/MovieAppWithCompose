@@ -42,8 +42,8 @@ class DetailFragment : Fragment() {
         // handle back button
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // todo: main fragment is not updated when pressed back button
-                findNavController().navigateUp()
+               val action = DetailFragmentDirections.actionDetailFragmentToMainFragment()
+                findNavController().navigate(action)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(

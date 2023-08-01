@@ -1,6 +1,5 @@
 package com.example.movieapp.view
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,10 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.Constants
-import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentFavoriteBinding
+import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.view.adapters.FavoriteMovieAdapter
-import com.example.movieapp.view.homePage.MainActivity
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,7 +40,7 @@ class FavoriteFragment : Fragment() {
 
         adapter = FavoriteMovieAdapter(
             object : FavoriteMovieAdapter.OnItemClickListener {
-                override fun onItemClick(movie: com.example.movieapp.room.FavoriteMovie) {
+                override fun onItemClick(movie: FavoriteMovie) {
                     val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(
                         Constants.POPULAR,
                         movie.id!!

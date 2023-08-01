@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = ""
+        toolbar.supportActionBar?.title = "Movie App"
 
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -84,7 +84,6 @@ class MainFragment : Fragment() {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-
                     page++
                     //showProgressDialog()
                     Log.d("TAG_X", "Main Fragment page: $page")
@@ -92,9 +91,7 @@ class MainFragment : Fragment() {
                     viewModelPopular.getNextPage(page)
                     //hideProgressDialog()
                 }
-
             }
-
         })
         adapterPopular = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {

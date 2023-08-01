@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SearchFragment"
-    android:paddingTop="35dp">
-    <ImageView
+    android:orientation="vertical"
+    android:paddingTop="35dp"
+    tools:context=".view.SearchFragment">
+
+    <TextView
+        android:id="@+id/no_result"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bino"
-        android:scaleType="fitCenter"
-        android:alpha="0.5"
-        android:contentDescription="search_bg"
-        />
+        android:layout_height="wrap_content"
+        android:background="@color/main_theme"
+        android:gravity="center"
+        android:text="No Result"
+        android:paddingTop="40dp"
+        android:textColor="@color/light_theme"
+        android:textSize="30sp"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@color/secondary_theme"
         tools:listitem="@layout/search_item"
-      />
 
-</FrameLayout>
+        />
+
+    <ImageView
+        android:id="@+id/search_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:alpha="0.5"
+        android:contentDescription="search_bg"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bino"
+        android:visibility="gone" />
+
+
+
+</LinearLayout>
