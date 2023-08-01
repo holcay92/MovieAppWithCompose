@@ -21,7 +21,7 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
             val bindingItem = SearchItemBinding.bind(itemView)
             bindingItem.apply {
                 movieTitle.text = movie.title
-                if(movie.isFavorite) {
+                if (movie.isFavorite) {
                     isFavMovie.setImageResource(R.drawable.add_fav_filled_icon)
                 } else {
                     isFavMovie.setImageResource(R.drawable.add_fav_empty_icon)

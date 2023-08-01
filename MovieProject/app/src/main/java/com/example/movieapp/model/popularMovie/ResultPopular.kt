@@ -1,5 +1,7 @@
 package com.example.movieapp.model.popularMovie
 
+import com.google.gson.annotations.SerializedName
+
 data class ResultPopular(
     val adult: Boolean,
     val genre_ids: List<Int>,
@@ -14,5 +16,5 @@ data class ResultPopular(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
-    var isFavorite: Boolean = false//custom added to check if favorite or not
+    @SerializedName("isFavorite") var isFavorite: Boolean = false, // custom added to check if favorite or not
 )

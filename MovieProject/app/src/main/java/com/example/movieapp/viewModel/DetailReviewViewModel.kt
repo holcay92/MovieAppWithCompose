@@ -12,25 +12,24 @@ import retrofit2.Callback
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailReviewViewModel @Inject constructor(private val apiService: MovieApiService): ViewModel(){
+class DetailReviewViewModel @Inject constructor(private val apiService: MovieApiService) :
+    ViewModel() {
 
     val reviewList = MutableLiveData<List<ReviewResult>>()
 
-
-    fun getReview(id: Int){
+    fun getReview(id: Int) {
         val call = apiService.getMovieReviews(id)
         call.enqueue(object : Callback<Review?> {
             override fun onResponse(call: Call<Review?>, response: retrofit2.Response<Review?>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     reviewList.value = response.body()?.results
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<Review?>, t: Throwable) {
-                //reviewList.postValue(null)
+                // reviewList.postValue(null)
                 Log.d("DetailReviewViewModel", "onFailure: ${t.message}")
             }
-
         })
     }
 }

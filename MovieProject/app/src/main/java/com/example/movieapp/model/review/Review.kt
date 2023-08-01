@@ -5,5 +5,5 @@ data class Review(
     val page: Int,
     val results: List<ReviewResult>,
     val total_pages: Int,
-    val total_results: Int
+    val total_results: Int,
 )

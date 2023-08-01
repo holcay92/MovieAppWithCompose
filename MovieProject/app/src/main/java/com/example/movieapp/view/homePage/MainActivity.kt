@@ -1,6 +1,5 @@
 package com.example.movieapp.view.homePage
 
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var movieApiService: MovieApiService
     private var searchJob: Job? = null
+
     companion object {
         private const val SPLASH_DELAY = 1000
     }
@@ -65,10 +65,12 @@ class MainActivity : AppCompatActivity() {
                     findNavController(R.id.fragmentContainerView).navigate(R.id.mainFragment)
                     true
                 }
+
                 R.id.favorites -> {
                     findNavController(R.id.fragmentContainerView).navigate(R.id.favoriteFragment)
                     true
                 }
+
                 else -> false
             }
         }
@@ -96,7 +98,8 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
-        val searchEditText = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
+        val searchEditText =
+            searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
         searchEditText.setTextColor(resources.getColor(R.color.light_theme))
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -126,6 +129,7 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
+
     private fun navigateToSearchFragment(query: String) {
         val args = Bundle()
         args.putString(SearchFragment.ARG_SEARCH_QUERY, query)

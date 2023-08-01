@@ -1,7 +1,6 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //set toolbars text as favorites
+        // set toolbars text as favorites
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = "Favorites"
 
@@ -43,19 +42,16 @@ class FavoriteFragment : Fragment() {
                 override fun onItemClick(movie: FavoriteMovie) {
                     val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(
                         Constants.POPULAR,
-                        movie.id!!
+                        movie.id!!,
                     )
                     findNavController().navigate(action)
                 }
-            }
+            },
         )
         binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.favoriteRecyclerView.adapter = adapter
         viewModel.favMovieList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
         }
-
-
     }
-
 }

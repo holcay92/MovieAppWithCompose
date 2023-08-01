@@ -1,7 +1,6 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +41,7 @@ class DetailFragment : Fragment() {
         // handle back button
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-               val action = DetailFragmentDirections.actionDetailFragmentToMainFragment()
+                val action = DetailFragmentDirections.actionDetailFragmentToMainFragment()
                 findNavController().navigate(action)
             }
         }
@@ -50,13 +49,13 @@ class DetailFragment : Fragment() {
             viewLifecycleOwner,
             onBackPressedCallback,
         )
-        //get id from bundle
+        // get id from bundle
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
-        //set up viewpager
+        // set up viewpager
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
 
-        //Todo: check if it is best practice to use 2 observations
+        // Todo: check if it is best practice to use 2 observations
         viewModelForImage.fetchMovieImageList(id)
         viewModelForImage.imageResponse.observe(viewLifecycleOwner) {
             adapter.updateList(it)
@@ -65,7 +64,7 @@ class DetailFragment : Fragment() {
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI()
         }
-        //show reviews
+        // show reviews
         bindingDetail.showReviews.setOnClickListener {
             val action = DetailFragmentDirections.actionDetailFragmentToDetailReviewFragment(id)
             findNavController().navigate(action)

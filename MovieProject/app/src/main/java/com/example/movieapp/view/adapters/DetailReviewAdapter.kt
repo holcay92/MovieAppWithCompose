@@ -25,7 +25,7 @@ class DetailReviewAdapter : RecyclerView.Adapter<DetailReviewAdapter.DetailRevie
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): DetailReviewAdapter.DetailReviewViewHolder {
         val itemView = ReviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DetailReviewViewHolder(itemView)
@@ -33,10 +33,9 @@ class DetailReviewAdapter : RecyclerView.Adapter<DetailReviewAdapter.DetailRevie
 
     override fun onBindViewHolder(
         holder: DetailReviewAdapter.DetailReviewViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.bind(reviewList[position])
-
     }
 
     override fun getItemCount() = reviewList.size

@@ -1,15 +1,12 @@
 package com.example.movieapp.viewModel
 
 import android.util.Log
-import android.widget.Adapter
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.model.movieSearchResponse.MovieSearchResponse
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 import com.example.movieapp.room.MovieDatabase
 import com.example.movieapp.service.MovieApiService
-import com.example.movieapp.view.adapters.SearchListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -22,12 +19,12 @@ import kotlin.coroutines.coroutineContext
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val movieApiService: MovieApiService,
-    private val movieDatabase: MovieDatabase
+    private val movieDatabase: MovieDatabase,
 ) :
     ViewModel() {
     val searchList = MutableLiveData<List<SearchResult>?>()
 
-    fun searchMovies(query: String){
+    fun searchMovies(query: String) {
         val call = movieApiService.searchMovies(query)
         call.enqueue(object : Callback<MovieSearchResponse?> {
             override fun onResponse(
@@ -56,6 +53,6 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {
-        return runBlocking{ movieDatabase.dao().getMovieById(movieId) != null }
+        return runBlocking { movieDatabase.dao().getMovieById(movieId) != null }
     }
 }

@@ -8,20 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.Constants
-import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentSearchBinding
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 import com.example.movieapp.view.adapters.SearchListAdapter
-import com.example.movieapp.view.homePage.MainFragmentDirections
 import com.example.movieapp.viewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -43,11 +37,15 @@ class SearchFragment : Fragment() {
         searchListAdapter = SearchListAdapter(
             object : SearchListAdapter.OnItemClickListener {
                 override fun onItemClick(movie: SearchResult) {
-                    val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(Constants.TOP_RATED,movie.id!!)
+                    val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(
+                        Constants.TOP_RATED,
+                        movie.id!!,
+                    )
 
                     findNavController().navigate(action)
                 }
-            })
+            },
+        )
         // Fetch search results based on the search query
         searchQuery?.let {
             viewModel.searchMovies(searchQuery)

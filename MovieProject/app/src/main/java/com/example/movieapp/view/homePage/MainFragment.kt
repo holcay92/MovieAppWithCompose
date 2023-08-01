@@ -4,14 +4,10 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -25,10 +21,8 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.model.topRated.ResultTopRated
-import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.view.adapters.PopularMovieAdapter
 import com.example.movieapp.view.adapters.TopRatedMovieAdapter
-import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
 import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -92,11 +86,11 @@ class MainFragment : Fragment() {
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     page++
-                    //showProgressDialog()
+                    // showProgressDialog()
                     Log.d("TAG_X", "Main Fragment page: $page")
                     // Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     viewModelPopular.getNextPage(page)
-                    //hideProgressDialog()
+                    // hideProgressDialog()
                 }
             }
         })
@@ -107,7 +101,7 @@ class MainFragment : Fragment() {
                         Constants.POPULAR,
                         movie.id,
 
-                        )
+                    )
                     findNavController().navigate(action)
                 }
             },
@@ -139,7 +133,6 @@ class MainFragment : Fragment() {
             }
         }
         hideProgressDialog()
-
     }
 
     override fun onResume() {
@@ -160,11 +153,11 @@ class MainFragment : Fragment() {
     }
 
     private fun hideProgressDialog() {
-        //val handler = Handler()
-       // val progressBarDelay = 500L
-        //handler.postDelayed({
-            progressDialog.dismiss()
-        //}, progressBarDelay)
+        // val handler = Handler()
+        // val progressBarDelay = 500L
+        // handler.postDelayed({
+        progressDialog.dismiss()
+        // }, progressBarDelay)
     }
 
     private fun switchRecyclerViewLayout() {
@@ -199,5 +192,4 @@ class MainFragment : Fragment() {
     companion object {
         private var SPAN_COUNT = 2
     }
-
 }

@@ -1,11 +1,11 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.databinding.FragmentDetailReviewBinding
@@ -20,8 +20,9 @@ class DetailReviewFragment : Fragment() {
     private val viewModel by viewModels<DetailReviewViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
         return binding.root
@@ -30,21 +31,18 @@ class DetailReviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = DetailReviewFragmentArgs.fromBundle(
-            requireArguments()
+            requireArguments(),
         ).movieId
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = "Reviews"
 
-
-
         adapter = DetailReviewAdapter()
         binding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())
         binding.rvDetailReview.adapter = adapter
-        //linear layout manager is default for recyclerview
+        // linear layout manager is default for recyclerview
         viewModel.getReview(id)
         viewModel.reviewList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
-
         }
     }
 }

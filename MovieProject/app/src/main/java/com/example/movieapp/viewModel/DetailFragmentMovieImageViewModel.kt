@@ -1,6 +1,5 @@
 package com.example.movieapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.model.movieImages.MovieImages
@@ -11,6 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
+
 @HiltViewModel
 class DetailFragmentMovieImageViewModel @Inject constructor(private val movieApiService: MovieApiService) :
     ViewModel() {

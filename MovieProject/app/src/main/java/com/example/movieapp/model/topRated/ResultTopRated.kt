@@ -1,10 +1,12 @@
 package com.example.movieapp.model.topRated
 
+import com.google.gson.annotations.SerializedName
+
 data class ResultTopRated(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
-    val id: Int,
+    @SerializedName("id") val id: Int,
     val original_language: String,
     val original_title: String,
     val overview: String,
@@ -15,5 +17,5 @@ data class ResultTopRated(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
-    var isFavorite: Boolean = false//custom added to check if favorite or not
+    @SerializedName("isFavorite") var isFavorite: Boolean = false, // custom added to check if favorite or not
 )

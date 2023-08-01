@@ -1,6 +1,5 @@
 package com.example.movieapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PopularMovieViewModel @Inject constructor(
     private val movieApiService: MovieApiService,
-    private val movieDatabase: MovieDatabase
+    private val movieDatabase: MovieDatabase,
 ) :
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
@@ -40,9 +39,9 @@ class PopularMovieViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         val results = response.body()?.results
                         results?.forEach { movie ->
-                                viewModelScope.launch {
-                                    movie.isFavorite = isMovieInFavorites(movie.id)
-                                }
+                            viewModelScope.launch {
+                                movie.isFavorite = isMovieInFavorites(movie.id)
+                            }
                         }
                         popularMovieResponse.value = results
                     }
@@ -58,7 +57,8 @@ class PopularMovieViewModel @Inject constructor(
     fun getNextPage(page: Int) {
         fetchMovieList(page)
     }
+
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {
-       return runBlocking{ movieDatabase.dao().getMovieById(movieId) != null }
+        return runBlocking { movieDatabase.dao().getMovieById(movieId) != null }
     }
 }

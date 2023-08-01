@@ -27,12 +27,11 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
     inner class MovieViewHolder(bindingItem: ViewBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
         fun bind(popularMovie: ResultPopular) {
-
-            if(viewType == ViewType.LIST) {
+            if (viewType == ViewType.LIST) {
                 val bindingItem = MovieItemPopularBinding.bind(itemView)
                 bindingItem.apply {
                     movieTitle.text = popularMovie.title
-                    if(popularMovie.isFavorite) {
+                    if (popularMovie.isFavorite) {
                         btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                     } else {
                         btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
@@ -43,17 +42,18 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                             "green" -> R.drawable.good
                             "yellow" -> R.drawable.intermediate
                             else -> R.drawable.normal
-                        }
+                        },
                     )
                     Glide.with(itemView.context)
-                        .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
+                        .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}")
+                        .centerCrop()
                         .into(movieImage!!)
                 }
             } else {
                 val bindingItem = MovieItemPopularGridViewBinding.bind(itemView)
                 bindingItem.apply {
                     movieTitle.text = popularMovie.title
-                    if(popularMovie.isFavorite) {
+                    if (popularMovie.isFavorite) {
                         btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                     } else {
                         btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
@@ -63,10 +63,11 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                             "green" -> R.drawable.good
                             "yellow" -> R.drawable.intermediate
                             else -> R.drawable.normal
-                        }
+                        },
                     )
                     Glide.with(itemView.context)
-                        .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
+                        .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}")
+                        .centerCrop()
                         .into(movieImage!!)
                 }
             }
@@ -74,17 +75,21 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-
-        return if(viewType == ViewType.LIST.ordinal) {
+        return if (viewType == ViewType.LIST.ordinal) {
             val itemView =
                 MovieItemPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             MovieViewHolder(itemView)
         } else {
             val itemView =
-                MovieItemPopularGridViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                MovieItemPopularGridViewBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false,
+                )
             MovieViewHolder(itemView)
         }
     }
+
     override fun getItemViewType(position: Int): Int {
         return viewType.ordinal
     }

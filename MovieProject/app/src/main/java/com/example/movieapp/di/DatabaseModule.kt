@@ -21,7 +21,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context.applicationContext,
             MovieDatabase::class.java,
-            "movie_data_table"
+            "movie_data_table",
         ).build()
     }
 
