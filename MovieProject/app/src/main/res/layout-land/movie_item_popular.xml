@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:padding="10dp">
+    android:padding="3dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -26,9 +26,9 @@
             android:padding="5dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:gravity="center|start"
                 android:orientation="horizontal">
 
@@ -57,22 +57,22 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/btnAddFav"
-                    android:layout_width="30dp"
-                    android:layout_height="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/secondary_theme"
-                    android:src="@drawable/add_fav_empty_icon" />
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/movieVote"
                     android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:gravity="bottom" />
+                    android:layout_height="24dp" />
+
+                <ImageButton
+                    android:id="@+id/btnAddFav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/secondary_theme"
+                    android:src="@drawable/add_fav_empty_icon" />
+
 
             </LinearLayout>
 

@@ -12,12 +12,16 @@ import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.service.MovieApiService
 import com.example.movieapp.view.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var movieApiService: MovieApiService
-
+    private var searchJob: Job? = null
     companion object {
         private const val SPLASH_DELAY = 1000
     }
@@ -99,19 +103,36 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 Log.d("TAG_X MainActivity query", query)
                 searchView.clearFocus()
-                val searchFragment = SearchFragment.newInstance(query)
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, searchFragment)
-                    .commit()
+                if (query.isNotBlank()) {
+                    // Handle query submission
+                    navigateToSearchFragment(query)
+                }
                 return true
             }
 
             override fun onQueryTextChange(query: String): Boolean {
                 Log.d("TAG_X MainActivity query", query)
+                // Cancel the previous search job if it's still running to avoid unnecessary requests
+                searchJob?.cancel()
+
+                // Delay the search request by a small amount of time (e.g., 300 milliseconds) to avoid making
+                // requests for every single character typed by the user.
+                searchJob = lifecycleScope.launch {
+                    delay(300)
+                   // performSearch(newText)
+                }
                 return true
             }
         })
 
         return true
+    }
+    private fun navigateToSearchFragment(query: String) {
+        // Create a bundle to pass the query to the SearchFragment
+        val args = Bundle()
+        args.putString("searchQuery", query)
+
+        // Use the NavController to navigate to the SearchFragment
+        findNavController(R.id.fragmentContainerView).navigate(R.id.searchFragment, args)
     }
 }
