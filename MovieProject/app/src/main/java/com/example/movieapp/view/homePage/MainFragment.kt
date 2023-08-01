@@ -164,11 +164,11 @@ class MainFragment : Fragment() {
     }
 
     private fun hideProgressDialog() {
-        val handler = Handler()
-        val progressBarDelay = 500L
-        handler.postDelayed({
+        //val handler = Handler()
+       // val progressBarDelay = 500L
+        //handler.postDelayed({
             progressDialog.dismiss()
-        }, progressBarDelay)
+        //}, progressBarDelay)
     }
 
     private fun switchRecyclerViewLayout() {
