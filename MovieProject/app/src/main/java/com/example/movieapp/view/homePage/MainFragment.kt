@@ -43,23 +43,16 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        showProgressDialog()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = ""
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        SPAN_COUNT = if (isLandscape) {
-            5
-        } else {
-            2
-        }
-
+        // setup user interface
+        setupViews()
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 alertDialog()
@@ -108,7 +101,7 @@ class MainFragment : Fragment() {
         )
         binding.rvPopularMovies.adapter = adapterPopular
 
-        binding.rvTopRatedMovies?.layoutManager =
+        binding.rvTopRatedMovies.layoutManager =
             GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
         adapterTR = TopRatedMovieAdapter(
             object : TopRatedMovieAdapter.OnItemClickListener {
@@ -123,6 +116,10 @@ class MainFragment : Fragment() {
         )
         binding.rvTopRatedMovies.adapter = adapterTR
 
+        fetchData()
+    }
+
+    private fun fetchData() {
         runBlocking {
             viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
                 adapterTR.updateList(it)
@@ -132,7 +129,76 @@ class MainFragment : Fragment() {
                 adapterPopular.updateList(it)
             }
         }
-        hideProgressDialog()
+    }
+
+    private fun setupViews() {
+        val toolbar = activity as AppCompatActivity
+        toolbar.supportActionBar?.title = ""
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        SPAN_COUNT = if (isLandscape) 5 else 2
+        setupBackButtonCallback()
+        setupGridButtonClickListener()
+        setupRecyclerViews()
+    }
+
+    private fun setupBackButtonCallback() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                alertDialog()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback,
+        )
+    }
+
+    private fun setupGridButtonClickListener() {
+        binding.gridBtn.setOnClickListener {
+            viewType = !viewType
+            switchRecyclerViewLayout()
+        }
+    }
+
+    private fun setupRecyclerViews() {
+        binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        adapterPopular = PopularMovieAdapter(object : PopularMovieAdapter.OnItemClickListener {
+            override fun onItemClick(movie: ResultPopular) {
+                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                    Constants.POPULAR,
+                    movie.id,
+                )
+                findNavController().navigate(action)
+            }
+        })
+        binding.rvPopularMovies.adapter = adapterPopular
+
+        binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    page++
+                    viewModelPopular.getNextPage(page)
+                }
+            }
+        })
+
+        binding.rvTopRatedMovies.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
+        adapterTR = TopRatedMovieAdapter(object : TopRatedMovieAdapter.OnItemClickListener {
+            override fun onItemClick(movie: ResultTopRated) {
+                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                    Constants.TOP_RATED,
+                    movie.id,
+                )
+                findNavController().navigate(action)
+            }
+        })
+        binding.rvTopRatedMovies.adapter = adapterTR
     }
 
     override fun onResume() {
@@ -153,24 +219,30 @@ class MainFragment : Fragment() {
     }
 
     private fun hideProgressDialog() {
-        // val handler = Handler()
-        // val progressBarDelay = 500L
-        // handler.postDelayed({
         progressDialog.dismiss()
-        // }, progressBarDelay)
     }
 
     private fun switchRecyclerViewLayout() {
-        if (viewType) {
-            binding.rvPopularMovies.layoutManager =
+        binding.rvPopularMovies.layoutManager =
+            if (viewType) {
                 GridLayoutManager(requireContext(), SPAN_COUNT)
-            adapterPopular.setViewType(PopularMovieAdapter.ViewType.GRID)
-            binding.gridBtn.setImageResource(R.drawable.list_view)
-        } else {
-            binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
-            binding.gridBtn.setImageResource(R.drawable.grid_view)
-            adapterPopular.setViewType(PopularMovieAdapter.ViewType.LIST)
-        }
+            } else {
+                LinearLayoutManager(requireContext())
+            }
+        adapterPopular.setViewType(
+            if (viewType) {
+                PopularMovieAdapter.ViewType.GRID
+            } else {
+                PopularMovieAdapter.ViewType.LIST
+            },
+        )
+        binding.gridBtn.setImageResource(
+            if (viewType) {
+                R.drawable.list_view
+            } else {
+                R.drawable.grid_view
+            },
+        )
         binding.rvPopularMovies.adapter?.notifyDataSetChanged()
     }
 
