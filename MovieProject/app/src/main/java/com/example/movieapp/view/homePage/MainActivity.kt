@@ -45,10 +45,12 @@ class MainActivity : AppCompatActivity() {
         hideSystemUI()
 
         if (savedInstanceState == null) {
+            hideNavigationBarAndToolbar()
             Handler(Looper.getMainLooper()).postDelayed({
                 navigateToMainFragment()
                 binding.bottomNavigation.visibility = View.VISIBLE
                 binding.toolbar.visibility = View.VISIBLE
+                showNavigationBarAndToolbar()
             }, SPLASH_DELAY.toLong())
         }
     }
@@ -134,5 +136,15 @@ class MainActivity : AppCompatActivity() {
         val args = Bundle()
         args.putString(SearchFragment.ARG_SEARCH_QUERY, query)
         findNavController(R.id.fragmentContainerView).navigate(R.id.searchFragment, args)
+    }
+
+    private fun hideNavigationBarAndToolbar() {
+        binding.bottomNavigation.visibility = View.GONE
+        binding.toolbar.visibility = View.GONE
+    }
+
+    private fun showNavigationBarAndToolbar() {
+        binding.bottomNavigation.visibility = View.VISIBLE
+        binding.toolbar.visibility = View.VISIBLE
     }
 }
