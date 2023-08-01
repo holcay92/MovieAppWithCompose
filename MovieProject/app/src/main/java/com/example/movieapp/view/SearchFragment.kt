@@ -50,11 +50,15 @@ class SearchFragment : Fragment() {
                 }
             })
         // Fetch search results based on the search query
-        if (!searchQuery.isNullOrEmpty()) {
+        searchQuery?.let {
             viewModel.searchMovies(searchQuery)
             viewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
                 searchListAdapter.updateList(searchResults)
             }
+        }
+        if (searchQuery == null) {
+            Toast.makeText(requireContext(), "No search query", Toast.LENGTH_SHORT).show()
+            binding.searchBg.visibility = View.VISIBLE
         }
         binding.searchRV.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRV.adapter = searchListAdapter
@@ -66,15 +70,6 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
-        private const val ARG_SEARCH_QUERY = "search_query"
-
-        fun newInstance(searchQuery: String): SearchFragment {
-            val args = Bundle().apply {
-                putString(ARG_SEARCH_QUERY, searchQuery)
-            }
-            val fragment = SearchFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        var ARG_SEARCH_QUERY = "search_query"
     }
 }

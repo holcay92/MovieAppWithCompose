@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                Log.d("TAG_X MainActivity query", query)
+                Log.d("TAG_X ", "onQueryTextSubmit $query")
                 searchView.clearFocus()
                 if (query.isNotBlank()) {
                     // Handle query submission
@@ -111,11 +111,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                Log.d("TAG_X MainActivity query", query)
+                Log.d("TAG_X ", "onQueryTextChange $query")
                 // Cancel the previous search job if it's still running to avoid unnecessary requests
                 searchJob?.cancel()
 
-                // Delay the search request by a small amount of time (e.g., 300 milliseconds) to avoid making
+                // Delay the search request by a small amount of time to avoid making
                 // requests for every single character typed by the user.
                 searchJob = lifecycleScope.launch {
                     delay(300)
@@ -128,9 +128,8 @@ class MainActivity : AppCompatActivity() {
         return true
     }
     private fun navigateToSearchFragment(query: String) {
-        // Create a bundle to pass the query to the SearchFragment
         val args = Bundle()
-        args.putString("searchQuery", query)
+        args.putString(SearchFragment.ARG_SEARCH_QUERY, query)
 
         // Use the NavController to navigate to the SearchFragment
         findNavController(R.id.fragmentContainerView).navigate(R.id.searchFragment, args)
