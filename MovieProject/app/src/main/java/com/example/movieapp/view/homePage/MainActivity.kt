@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private var searchJob: Job? = null
 
     companion object {
-        private const val SPLASH_DELAY = 1000
+        private const val SPLASH_DELAY = 2000
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

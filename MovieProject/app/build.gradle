@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace 'com.example.movieapp'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.movieapp"
@@ -81,6 +81,9 @@ dependencies {
     // youtube
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0'
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28'
+
+    // constraint layout
+    implementation "androidx.constraintlayout:constraintlayout:2.2.0-alpha11"
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
