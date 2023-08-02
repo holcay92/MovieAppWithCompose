@@ -1,5 +1,6 @@
 package com.example.movieapp.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
         LIST, GRID
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setViewType(viewType: ViewType) {
         this.viewType = viewType
         notifyDataSetChanged()
@@ -47,7 +49,7 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                     Glide.with(itemView.context)
                         .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}")
                         .centerCrop()
-                        .into(movieImage!!)
+                        .into(movieImage)
                 }
             } else {
                 val bindingItem = MovieItemPopularGridViewBinding.bind(itemView)
@@ -68,7 +70,7 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                     Glide.with(itemView.context)
                         .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}")
                         .centerCrop()
-                        .into(movieImage!!)
+                        .into(movieImage)
                 }
             }
         }
@@ -103,6 +105,7 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<ResultPopular>?) {
         movieList.addAll(list ?: emptyList())
         notifyDataSetChanged()

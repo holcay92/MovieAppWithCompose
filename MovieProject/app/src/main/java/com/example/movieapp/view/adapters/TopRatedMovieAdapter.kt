@@ -1,5 +1,6 @@
 package com.example.movieapp.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -53,6 +54,7 @@ class TopRatedMovieAdapter(private val listener: OnItemClickListener) :
 
     override fun getItemCount() = tRMovieList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<ResultTopRated>?) {
         tRMovieList.clear()
         tRMovieList.addAll(list ?: emptyList())

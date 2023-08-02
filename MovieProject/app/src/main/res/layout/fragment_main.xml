@@ -2,7 +2,6 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,7 +18,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2" android:paddingStart="10dp">
+            android:weightSum="2"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -60,6 +61,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:weightSum="2">
 
             <TextView
@@ -82,7 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/main_theme"
-                android:src="@drawable/grid_view" />
+                android:src="@drawable/grid_view"
+                android:contentDescription="@string/content_description" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -28,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/main_theme"
-            android:src="@drawable/grid_view_landscape" />
+            android:src="@drawable/grid_view_landscape"
+            android:contentDescription="@string/content_description" />
     </LinearLayout>
 <!-- top rated landscape hidden. todo: switch button to be added-->
     <LinearLayout

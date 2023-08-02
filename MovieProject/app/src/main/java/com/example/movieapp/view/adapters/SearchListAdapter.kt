@@ -1,5 +1,6 @@
 package com.example.movieapp.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +13,7 @@ import com.example.movieapp.model.movieSearchResponse.SearchResult
 class SearchListAdapter(private val listener: OnItemClickListener) :
     RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>() {
 
-    var searchList = MutableLiveData<List<SearchResult>>()
+    private var searchList = MutableLiveData<List<SearchResult>>()
 
     class SearchViewHolder(bindingItem: SearchItemBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
@@ -56,6 +57,7 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
         fun onItemClick(movie: SearchResult)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<SearchResult>?) {
         searchList.value = list ?: emptyList()
         notifyDataSetChanged()

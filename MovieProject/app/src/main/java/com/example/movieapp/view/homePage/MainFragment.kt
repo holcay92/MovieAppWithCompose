@@ -1,5 +1,6 @@
 package com.example.movieapp.view.homePage
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.res.Configuration
@@ -222,6 +223,7 @@ class MainFragment : Fragment() {
         progressDialog.dismiss()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun switchRecyclerViewLayout() {
         binding.rvPopularMovies.layoutManager =
             if (viewType) {

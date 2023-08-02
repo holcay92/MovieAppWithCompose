@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/read_reviews"
                         android:background="@color/secondary_theme"
-                        />
+                        android:contentDescription="@string/content_description" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -65,7 +65,8 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:layout_gravity="end"
-                    android:src="@drawable/add_fav_empty_icon" />
+                    android:src="@drawable/add_fav_empty_icon"
+                    android:contentDescription="@string/content_description" />
             </LinearLayout>
 
 
@@ -334,7 +335,7 @@
                 android:id="@+id/trailers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="videos"
+                android:text="@string/trailers"
                 android:textColor="@color/light_theme"
                 />
         </LinearLayout>

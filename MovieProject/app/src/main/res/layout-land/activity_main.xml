@@ -24,7 +24,8 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:src="@drawable/tmdb_landscape" />
+            android:src="@drawable/tmdb_landscape"
+            android:contentDescription="@string/content_description" />
     </androidx.appcompat.widget.Toolbar>
 
 

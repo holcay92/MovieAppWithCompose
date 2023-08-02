@@ -1,5 +1,6 @@
 package com.example.movieapp.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,8 +20,7 @@ class MovieImageAdapter : RecyclerView.Adapter<MovieImageAdapter.MovieImageViewH
             itemImage.apply {
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${image.file_path}").fitCenter()
-                    .into(imageView!!)
-                // Log.d("TAG_X", "bind in the adapter image.file_path : ${image.file_path}")
+                    .into(imageView)
             }
         }
     }
@@ -40,10 +40,10 @@ class MovieImageAdapter : RecyclerView.Adapter<MovieImageAdapter.MovieImageViewH
 
     override fun getItemCount() = movieImageList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<Poster>?) {
         movieImageList.clear()
         movieImageList.addAll(list ?: emptyList())
-        // Log.d("TAG_X", "Adapter Movie updateList in the adapter list: $movieImageList")
         notifyDataSetChanged()
     }
 }

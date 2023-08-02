@@ -36,7 +36,8 @@
                     android:id="@+id/movieImage"
                     android:layout_width="60dp"
                     android:layout_height="75dp"
-                    android:background="@drawable/rounded_bg" />
+                    android:background="@drawable/rounded_bg"
+                    android:contentDescription="@string/content_description" />
 
 
             </LinearLayout>
@@ -49,6 +50,7 @@
                 android:layout_weight="2"
                 android:gravity="start|center_vertical"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/light_theme"
                 android:textSize="@dimen/mainFragmentCardViewTitleTextSize"
                 android:textStyle="bold"
@@ -63,17 +65,19 @@
                 <ImageButton
                     android:id="@+id/btnAddFav"
                     android:layout_width="34dp"
-                    android:layout_height="30dp"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/secondary_theme"
-                    android:src="@drawable/add_fav_empty_icon" />
+                    android:src="@drawable/add_fav_empty_icon"
+                    android:contentDescription="@string/content_description" />
 
                 <ImageView
                     android:id="@+id/movieVote"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:gravity="bottom"
-                    tools:src="@color/light_theme"/>
+                    tools:src="@color/light_theme"
+                    android:contentDescription="@string/content_description" />
 
             </LinearLayout>
 

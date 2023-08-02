@@ -21,4 +21,8 @@
     <string name="author">Author:</string>
     <string name="author_vote">Vote:</string>
     <string name="no_results_found">No Result</string>
+    <string name="content_description">content value</string>
+    <string name="trailers">"Trailers "</string>
+    <string name="vote_placeholder">9.0</string>
+    <string name="no_result">No Result</string>
 </resources>

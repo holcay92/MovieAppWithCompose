@@ -1,5 +1,6 @@
 package com.example.movieapp.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +46,7 @@ class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) :
 
     override fun getItemCount() = favMovieList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<FavoriteMovie>?) {
         favMovieList.clear()
         favMovieList.addAll(list ?: emptyList())

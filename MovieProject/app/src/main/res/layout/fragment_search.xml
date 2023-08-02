@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/main_theme"
         android:gravity="center"
-        android:text="No Result"
+        android:text="@string/no_result"
         android:paddingTop="40dp"
         android:textColor="@color/light_theme"
         android:textSize="30sp"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:alpha="0.5"
-        android:contentDescription="search_bg"
+        android:contentDescription="@string/content_description"
         android:scaleType="fitCenter"
         android:src="@drawable/bino"
         android:visibility="gone" />

@@ -14,7 +14,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(

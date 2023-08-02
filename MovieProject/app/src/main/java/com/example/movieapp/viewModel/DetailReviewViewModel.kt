@@ -26,7 +26,7 @@ class DetailReviewViewModel @Inject constructor(private val apiService: MovieApi
                 }
             }
 
-            override fun onFailure(call: retrofit2.Call<Review?>, t: Throwable) {
+            override fun onFailure(call: Call<Review?>, t: Throwable) {
                 // reviewList.postValue(null)
                 Log.d("DetailReviewViewModel", "onFailure: ${t.message}")
             }
