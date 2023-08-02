@@ -1,6 +1,7 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,16 @@ import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailBinding
 import com.example.movieapp.room.FavoriteMovie
+import com.example.movieapp.utils.ScalePageTransformer
 import com.example.movieapp.view.adapters.MovieImageAdapter
+import com.example.movieapp.view.adapters.VideoAdapter
 import com.example.movieapp.viewModel.DetailFragmentMovieImageViewModel
+import com.example.movieapp.viewModel.DetailViewModel
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
-import com.example.movieapp.viewModel.MovieDetailViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,9 +30,11 @@ class DetailFragment : Fragment() {
 
     private lateinit var bindingDetail: FragmentDetailBinding
     private val viewModelForImage by viewModels<DetailFragmentMovieImageViewModel>()
-    private val viewModelForDetail by viewModels<MovieDetailViewModel>()
+    private val viewModelForDetail by viewModels<DetailViewModel>()
     private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private lateinit var adapter: MovieImageAdapter
+    private lateinit var videoAdapter: VideoAdapter
+    private var movieVideo = "Y9RfhbH0GEQ"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,9 +60,35 @@ class DetailFragment : Fragment() {
         )
         // get id from bundle
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
+        val youTubePlayerView: YouTubePlayerView = bindingDetail.youtubePlayer!!
+
+        lifecycle.addObserver(youTubePlayerView)
+
+        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                // loading the selected video into the YouTube Player
+                youTubePlayer.loadVideo(movieVideo, 0F)
+            }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState,
+            ) {
+                // this method is called if video has ended,
+                super.onStateChange(youTubePlayer, state)
+            }
+        })
+
         // set up viewpager
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
+
+        val displayMetrics = DisplayMetrics()
+        requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val screenHeight = displayMetrics.heightPixels
+        val halfScreenHeight = screenHeight / 2
+        bindingDetail.viewPager.layoutParams.height = halfScreenHeight
+        bindingDetail.viewPager.setPageTransformer(ScalePageTransformer())
 
         // Todo: check if it is best practice to use 2 observations
         viewModelForImage.fetchMovieImageList(id)
@@ -65,14 +100,13 @@ class DetailFragment : Fragment() {
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI()
         }
+        viewModelForDetail.movieVideos.observe(viewLifecycleOwner) {
+            movieVideo = it?.get(0)?.key.toString()
+        }
         // show reviews
         bindingDetail.showReviews.setOnClickListener {
             val action = DetailFragmentDirections.actionDetailFragmentToDetailReviewFragment(id)
             findNavController().navigate(action)
-        }
-        bindingDetail.trailers.setOnClickListener {
-            // val action = DetailFragmentDirections.actionDetailFragmentToDetailTrailerFragment(id)
-            // findNavController().navigate(action)
         }
 
         viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->

@@ -24,7 +24,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
+                android:layout_height="match_parent"
                 android:paddingBottom="20dp"
                 tools:background="@color/light_theme" />
 
@@ -339,34 +339,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/light_theme" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/youtubePlayer"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+
+                        />
+
                     <ImageButton
                         android:id="@+id/trailers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/trailers"
-                        android:src="@drawable/trailer"
-                        android:contentDescription="@string/content_description"
                         android:background="@color/secondary_theme"
+                        android:contentDescription="@string/content_description"
+                        android:src="@drawable/trailer"
+                        android:text="@string/trailers"
                         android:textColor="@color/light_theme" />
-                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                        android:id="@+id/youtube_player_view"
-                        android:layout_width="match_parent"
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trailer_recycler_view"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:autoPlay="true"
-                        app:videoId="S0Q4gqBUs7c" />
+                        tools:listitem="@layout/video_item" />
+
                     <TextView
                         android:id="@+id/trailer2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:paddingBottom="50dp"
                         android:text="@string/content_description"
-                        android:textColor="@color/light_theme"/>
+                        android:textColor="@color/light_theme" />
                 </LinearLayout>
-
 
 
             </LinearLayout>

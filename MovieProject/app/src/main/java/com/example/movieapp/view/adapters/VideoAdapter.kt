@@ -1,10 +1,13 @@
 package com.example.movieapp.view.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.databinding.VideoItemBinding
 import com.example.movieapp.model.videos.VideoResult
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
 class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
@@ -15,8 +18,15 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
         fun bind(video: VideoResult) {
             val bindingItem = VideoItemBinding.bind(itemView)
             bindingItem.apply {
-                // youtubePlayerView
+                bindingItem.youtubePlayerView.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        val videoId = video.key
+                        youTubePlayer.loadVideo(videoId, 0f)
+                    }
+                })
             }
+            Log.d("TAG_X", "bind video: $video")
         }
     }
 
@@ -34,4 +44,10 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
     }
 
     override fun getItemCount() = videoList.size
+
+    fun updateList(list: List<VideoResult?>?) {
+        videoList.clear()
+        videoList.addAll((list ?: emptyList()) as Collection<VideoResult>)
+        Log.d("TAG_X", "updateList video: $videoList")
+    }
 }

@@ -14,10 +14,10 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val movieApiService: MovieApiService) :
+class DetailViewModel @Inject constructor(private val movieApiService: MovieApiService) :
     ViewModel() {
     var movieDetail = MutableLiveData<MovieDetail?>()
-    var movieVideos = MutableLiveData<List<VideoResult?>?>()
+    var movieVideos = MutableLiveData<List<VideoResult>?>()
 
     fun fetchMovieDetail(id: Int) {
         val call = movieApiService.getMovieDetails(id)
