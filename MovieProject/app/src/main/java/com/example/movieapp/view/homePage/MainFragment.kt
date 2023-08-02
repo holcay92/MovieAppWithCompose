@@ -37,8 +37,6 @@ class MainFragment : Fragment() {
     private lateinit var progressDialog: Dialog
     private lateinit var adapterPopular: PopularMovieAdapter
     private lateinit var adapterTR: TopRatedMovieAdapter
-    private var viewType = false
-    private var page = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +44,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-
+        showProgressDialog()
         return binding.root
     }
 
@@ -81,7 +79,7 @@ class MainFragment : Fragment() {
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     page++
                     // showProgressDialog()
-                    Log.d("TAG_X", "Main Fragment page: $page")
+                    Log.d("TAG_X", "Main Fragment page number: $page")
                     // Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     viewModelPopular.getNextPage(page)
                     // hideProgressDialog()
@@ -130,6 +128,7 @@ class MainFragment : Fragment() {
                 adapterPopular.updateList(it)
             }
         }
+        hideProgressDialog()
     }
 
     private fun setupViews() {
@@ -204,12 +203,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
-            adapterPopular.updateList(it)
-        }
-        viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
-            adapterTR.updateList(it)
-        }
+        fetchData()
     }
 
     private fun showProgressDialog() {
@@ -265,5 +259,7 @@ class MainFragment : Fragment() {
 
     companion object {
         private var SPAN_COUNT = 2
+        private var viewType = false
+        private var page = 1
     }
 }

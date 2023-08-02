@@ -34,25 +34,27 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="10dp">
+
                 <LinearLayout
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <ImageButton
                         android:id="@+id/showReviews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/read_reviews"
                         android:background="@color/secondary_theme"
-                        android:contentDescription="@string/content_description" />
+                        android:contentDescription="@string/content_description"
+                        android:src="@drawable/read_reviews" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/show_reviews"
-                        android:textColor="@color/light_theme"/>
+                        android:textColor="@color/light_theme" />
                 </LinearLayout>
-
 
 
                 <Space
@@ -65,8 +67,8 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:layout_gravity="end"
-                    android:src="@drawable/add_fav_empty_icon"
-                    android:contentDescription="@string/content_description" />
+                    android:contentDescription="@string/content_description"
+                    android:src="@drawable/add_fav_empty_icon" />
             </LinearLayout>
 
 
@@ -300,12 +302,16 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/light_theme" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="20dp">
+                android:paddingBottom="40dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -315,7 +321,6 @@
                     android:textColor="@color/light_theme"
                     android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                     android:textStyle="bold" />
-
 
                 <TextView
                     android:id="@+id/movieOverview"
@@ -330,14 +335,43 @@
                     android:textStyle="bold"
                     tools:text="@string/app_name" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/light_theme" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:id="@+id/trailers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trailers"
+                        android:src="@drawable/trailer"
+                        android:contentDescription="@string/content_description"
+                        android:background="@color/secondary_theme"
+                        android:textColor="@color/light_theme" />
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/youtube_player_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:autoPlay="true"
+                        app:videoId="S0Q4gqBUs7c" />
+                    <TextView
+                        android:id="@+id/trailer2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/content_description"
+                        android:textColor="@color/light_theme"/>
+                </LinearLayout>
+
+
+
             </LinearLayout>
-            <TextView
-                android:id="@+id/trailers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/trailers"
-                android:textColor="@color/light_theme"
-                />
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>

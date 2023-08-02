@@ -61,6 +61,7 @@ class DetailFragment : Fragment() {
             adapter.updateList(it)
         }
         viewModelForDetail.fetchMovieDetail(id)
+        viewModelForDetail.fetchMovieVideos(id)
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI()
         }
@@ -68,6 +69,10 @@ class DetailFragment : Fragment() {
         bindingDetail.showReviews.setOnClickListener {
             val action = DetailFragmentDirections.actionDetailFragmentToDetailReviewFragment(id)
             findNavController().navigate(action)
+        }
+        bindingDetail.trailers.setOnClickListener {
+            // val action = DetailFragmentDirections.actionDetailFragmentToDetailTrailerFragment(id)
+            // findNavController().navigate(action)
         }
 
         viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->

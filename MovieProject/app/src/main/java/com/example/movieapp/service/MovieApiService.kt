@@ -6,6 +6,7 @@ import com.example.movieapp.model.movieSearchResponse.MovieSearchResponse
 import com.example.movieapp.model.popularMovie.PopularResponse
 import com.example.movieapp.model.review.Review
 import com.example.movieapp.model.topRated.TopRated
+import com.example.movieapp.model.videos.Videos
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -42,5 +43,5 @@ interface MovieApiService {
     @GET("movie/{movie_id}/videos")
     fun getMovieVideos(
         @Path("movie_id") movieId: Int,
-    ): Call<Review>
+    ): Call<Videos>
 }
