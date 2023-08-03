@@ -1,6 +1,5 @@
 package com.example.movieapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.model.movieDetail.MovieDetail
@@ -51,7 +50,6 @@ class DetailViewModel @Inject constructor(private val movieApiService: MovieApiS
                 ) {
                     if (response.isSuccessful) {
                         movieVideos.value = response.body()?.results
-                        Log.d("TAG_X", "view model onResponse: ${response.body()?.results}")
                     }
                 }
 

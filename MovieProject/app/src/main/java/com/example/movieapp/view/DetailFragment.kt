@@ -2,7 +2,9 @@ package com.example.movieapp.view
 
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
@@ -53,6 +55,9 @@ class DetailFragment : Fragment() {
         observeMovieDetailAndVideos(movieId)
         setupShowReviewsButton(movieId)
         observeFavoriteMovieList(movieId)
+        // Enable the back button
+        val activity = requireActivity() as AppCompatActivity
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupBackButtonNavigation() {
@@ -68,6 +73,20 @@ class DetailFragment : Fragment() {
         )
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d("TAG_X", "onOptionsItemSelected: ")
+        when (item.itemId) {
+            android.R.id.home -> {
+                Log.d("TAG_X", "onOptionsItemSelected: home")
+
+                findNavController().navigateUp()
+                return true
+            }
+            // Add other menu item handling here if needed
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun extractMovieIdFromArguments(): Int {
         return DetailFragmentArgs.fromBundle(requireArguments()).id
     }
@@ -80,8 +99,8 @@ class DetailFragment : Fragment() {
 
     private fun setupVideoRecyclerView() {
         videoAdapter = VideoAdapter(viewLifecycleOwner.lifecycle)
-        bindingDetail.trailerRecyclerView?.adapter = videoAdapter
-        bindingDetail.trailerRecyclerView?.layoutManager =
+        bindingDetail.trailerRecyclerView.adapter = videoAdapter
+        bindingDetail.trailerRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 

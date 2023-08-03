@@ -9,6 +9,7 @@ import com.example.movieapp.databinding.VideoItemBinding
 import com.example.movieapp.model.videos.VideoResult
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class VideoAdapter(
@@ -27,7 +28,7 @@ class VideoAdapter(
 
             youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.loadVideo(video.key, 0F)
+                    youTubePlayer.loadOrCueVideo(lifecycle, video.key, 0F)
                 }
             })
 
