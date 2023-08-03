@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondary_theme"
+        android:backgroundTint="@android:color/transparent"
         app:cardCornerRadius="10dp"
         app:cardElevation="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
                     android:id="@+id/movieImage"
                     android:layout_width="40dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/rounded_bg"
+
                     android:contentDescription="@string/content_description" />
 
 
@@ -73,7 +73,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/secondary_theme"
+                    android:backgroundTint="@android:color/transparent"
                     android:src="@drawable/add_fav_empty_icon"
                     android:contentDescription="@string/content_description" />
 

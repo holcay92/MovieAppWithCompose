@@ -46,7 +46,7 @@
             android:orientation="horizontal"
             android:scrollbars="horizontal"
             tools:itemCount="1"
-            tools:listitem="@layout/movie_item_grid" />
+            tools:listitem="@layout/movie_item_top_rated_grid" />
 
     </LinearLayout>
 
@@ -92,7 +92,7 @@
             android:id="@+id/rvPopularMovies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:background="@android:color/transparent"
             android:orientation="horizontal"
             android:scrollbars="horizontal"
             tools:itemCount="4"

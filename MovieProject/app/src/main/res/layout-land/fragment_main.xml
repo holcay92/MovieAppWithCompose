@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/app_bg_landscape"
     android:padding="3dp">
 <!-- top bar popular and grid layout buttons-->
     <LinearLayout
@@ -65,7 +66,6 @@
             android:id="@+id/rvTopRatedMovies"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/main_theme"
             android:orientation="vertical"
             android:scrollbars="vertical"
             tools:itemCount="1"
@@ -75,9 +75,8 @@
             android:id="@+id/rvPopularMovies"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/main_theme"
             android:orientation="horizontal"
             android:scrollbars="horizontal"
-            tools:itemCount="5"
+            tools:itemCount="4"
             tools:listitem="@layout/movie_item_popular" />
 </LinearLayout>

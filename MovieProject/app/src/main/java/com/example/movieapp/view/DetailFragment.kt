@@ -15,7 +15,7 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailBinding
 import com.example.movieapp.model.movieDetail.MovieDetail
 import com.example.movieapp.room.FavoriteMovie
-import com.example.movieapp.utils.ScalePageTransformer
+import com.example.movieapp.utils.ZoomOutPageTransformer
 import com.example.movieapp.view.adapters.MovieImageAdapter
 import com.example.movieapp.view.adapters.VideoAdapter
 import com.example.movieapp.viewModel.DetailFragmentMovieImageViewModel
@@ -75,7 +75,7 @@ class DetailFragment : Fragment() {
     private fun setupViewPager() {
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
-        bindingDetail.viewPager.setPageTransformer(ScalePageTransformer())
+        bindingDetail.viewPager.setPageTransformer(ZoomOutPageTransformer())
     }
 
     private fun setupVideoRecyclerView() {

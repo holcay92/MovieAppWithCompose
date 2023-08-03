@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_theme"
+    android:background="@drawable/app_bg_landscape"
     android:paddingTop="35dp"
     tools:context=".view.DetailFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondary_theme"
+        android:backgroundTint="@android:color/transparent"
         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -28,20 +28,21 @@
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPager"
-                    android:layout_width="250dp"
-                    android:layout_height="350dp"
+                    android:layout_width="300dp"
+                    android:layout_height="450dp"
                     tools:background="@color/light_theme" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                        android:backgroundTint="@color/secondary_theme"
+                        android:backgroundTint="@android:color/transparent"
                         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -49,6 +50,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
+                            android:padding="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -79,7 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                        android:backgroundTint="@color/secondary_theme"
+                        android:backgroundTint="@android:color/transparent"
                         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -87,6 +89,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
+                            android:padding="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -118,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                        android:backgroundTint="@color/secondary_theme"
+                        android:backgroundTint="@android:color/transparent"
                         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -126,6 +129,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
+                            android:padding="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -157,7 +161,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                        android:backgroundTint="@color/secondary_theme"
+                        android:backgroundTint="@android:color/transparent"
                         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -165,6 +169,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
+                            android:padding="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -195,13 +200,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                        android:backgroundTint="@color/secondary_theme"
+                        android:backgroundTint="@android:color/transparent"
                         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:padding="5dp"
                             android:gravity="center_horizontal"
                             android:orientation="horizontal">
 
@@ -233,7 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                        android:backgroundTint="@color/secondary_theme"
+                        android:backgroundTint="@android:color/transparent"
                         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
                         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
@@ -241,6 +247,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
+                            android:padding="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -283,7 +290,7 @@
                                 android:id="@+id/showReviews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@color/secondary_theme"
+                                android:background="@android:color/transparent"
                                 android:src="@drawable/read_reviews"
                                 android:contentDescription="@string/content_description" />
 

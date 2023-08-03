@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+
     android:padding="3dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondary_theme"
+        android:backgroundTint="@color/movie_item_color_popular"
         app:cardCornerRadius="10dp"
         app:cardElevation="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +29,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:gravity="center|start"
                 android:orientation="horizontal">
 
@@ -36,7 +36,6 @@
                     android:id="@+id/movieImage"
                     android:layout_width="60dp"
                     android:layout_height="75dp"
-                    android:background="@drawable/rounded_bg"
                     android:contentDescription="@string/content_description" />
 
 
@@ -67,7 +66,7 @@
                     android:layout_width="34dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/secondary_theme"
+                    android:backgroundTint="@android:color/transparent"
                     android:src="@drawable/add_fav_empty_icon"
                     android:contentDescription="@string/content_description" />
 
