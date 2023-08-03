@@ -349,12 +349,12 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/trailers"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trailer_recycler_view"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/trailers"
-                android:textColor="@color/light_theme" />
+                android:layout_height="250dp"
+                tools:listitem="@layout/video_item"
+                tools:itemCount="1"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>
