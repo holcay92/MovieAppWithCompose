@@ -21,10 +21,26 @@ class VideoAdapter(
     inner class VideoViewHolder(itemView: VideoItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         private val youTubePlayerView: YouTubePlayerView = itemView.youtubePlayerView
-
+        private var isFullscreen = false
         fun bind(video: VideoResult) {
             val bindingItem = VideoItemBinding.bind(itemView)
             lifecycle.addObserver(youTubePlayerView)
+            /* val iFramePlayerOptions = IFramePlayerOptions.Builder()
+                 .controls(1)
+                 .fullscreen(1)
+                 .build()
+             youTubePlayerView.addFullscreenListener(object : FullscreenListener {
+                 override fun onEnterFullscreen(fullscreenView: View, exitFullscreen: () -> Unit) {
+                     isFullscreen = true
+
+                     // the video will continue playing in fullscreenView
+                     youTubePlayerView.visibility = View.GONE
+                     fullscreenViewContainer.visibility = View.VISIBLE
+                     fullscreenViewContainer.addView(fullscreenView)
+
+                     // optionally request landscape orientation
+                     // requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                 }*/
 
             youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
