@@ -351,8 +351,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/trailer_recycler_view"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:paddingBottom="30dp"
                 tools:listitem="@layout/video_item"
                 tools:itemCount="1"/>
         </LinearLayout>
