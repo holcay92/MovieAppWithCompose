@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_theme"
+    android:background="@drawable/app_bg"
     tools:context=".view.homePage.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
-        android:colorBackground="?attr/colorSecondary"
+        android:colorBackground="@color/status_bar_color"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"

@@ -3,12 +3,15 @@
 
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
-    <color name="main_theme">#3A3434</color>
+    <color name="main_theme">#040732</color>
+    <color name="main_theme_night">#A33030</color>
     <color name="secondary_theme">#FF000000</color>
+    <color name="secondary_theme_night">#B1A6A6</color>
     <color name="light_theme">#ffc153</color>
     <color name="green">#00FF00</color>
     <color name="red">#FF0000</color>
     <color name="yellow">#FFFF00</color>
+    <color name="status_bar_color">#040732</color>
 </resources>
 
 <!-- <color name="tmdb_light_blue">#01b4e4</color> -->

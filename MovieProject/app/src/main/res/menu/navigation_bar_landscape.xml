@@ -4,7 +4,6 @@
         android:id="@+id/home"
         android:enabled="true"
         android:title="@string/home"
-        android:iconTint="@color/light_theme"
         />
     <item
         android:id="@+id/favorites"
