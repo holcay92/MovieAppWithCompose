@@ -2,6 +2,7 @@ package com.example.movieapp.view
 
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailBinding
 import com.example.movieapp.room.FavoriteMovie
@@ -19,9 +21,6 @@ import com.example.movieapp.view.adapters.VideoAdapter
 import com.example.movieapp.viewModel.DetailFragmentMovieImageViewModel
 import com.example.movieapp.viewModel.DetailViewModel
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +33,7 @@ class DetailFragment : Fragment() {
     private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private lateinit var adapter: MovieImageAdapter
     private lateinit var videoAdapter: VideoAdapter
-    private var movieVideo = "Y9RfhbH0GEQ"
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,28 +59,19 @@ class DetailFragment : Fragment() {
         )
         // get id from bundle
         val id = DetailFragmentArgs.fromBundle(requireArguments()).id
-        val youTubePlayerView: YouTubePlayerView = bindingDetail.youtubePlayer!!
-
-        lifecycle.addObserver(youTubePlayerView)
-
-        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                // loading the selected video into the YouTube Player
-                youTubePlayer.loadVideo(movieVideo, 0F)
-            }
-
-            override fun onStateChange(
-                youTubePlayer: YouTubePlayer,
-                state: PlayerConstants.PlayerState,
-            ) {
-                // this method is called if video has ended,
-                super.onStateChange(youTubePlayer, state)
-            }
-        })
-
         // set up viewpager
         adapter = MovieImageAdapter()
         bindingDetail.viewPager.adapter = adapter
+
+        // set up video recyclerview
+        videoAdapter = VideoAdapter(viewLifecycleOwner.lifecycle)
+        bindingDetail.trailerRecyclerView?.adapter = videoAdapter
+        bindingDetail.trailerRecyclerView?.layoutManager =
+            LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false,
+            )
 
         val displayMetrics = DisplayMetrics()
         requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -101,7 +91,7 @@ class DetailFragment : Fragment() {
             updateUI()
         }
         viewModelForDetail.movieVideos.observe(viewLifecycleOwner) {
-            movieVideo = it?.get(0)?.key.toString()
+            videoAdapter.updateList(it)
         }
         // show reviews
         bindingDetail.showReviews.setOnClickListener {

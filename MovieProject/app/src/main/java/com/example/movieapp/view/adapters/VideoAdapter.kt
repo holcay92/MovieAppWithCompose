@@ -1,22 +1,36 @@
 package com.example.movieapp.view.adapters
 
-import android.util.Log
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.databinding.VideoItemBinding
 import com.example.movieapp.model.videos.VideoResult
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
-class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
+class VideoAdapter(
+    private val lifecycle: Lifecycle,
+) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     private var videoList = ArrayList<VideoResult>()
 
     inner class VideoViewHolder(itemView: VideoItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
+        private val youTubePlayerView: YouTubePlayerView = itemView.youtubePlayerView
+
         fun bind(video: VideoResult) {
             val bindingItem = VideoItemBinding.bind(itemView)
+            lifecycle.addObserver(youTubePlayerView)
+
+            youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    youTubePlayer.loadVideo(video.key, 0F)
+                }
+            })
+
             bindingItem.apply {
                 bindingItem.youtubePlayerView.addYouTubePlayerListener(object :
                     AbstractYouTubePlayerListener() {
@@ -26,7 +40,6 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
                     }
                 })
             }
-            Log.d("TAG_X", "bind video: $video")
         }
     }
 
@@ -45,9 +58,10 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     override fun getItemCount() = videoList.size
 
-    fun updateList(list: List<VideoResult?>?) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(list: List<VideoResult>?) {
         videoList.clear()
-        videoList.addAll((list ?: emptyList()) as Collection<VideoResult>)
-        Log.d("TAG_X", "updateList video: $videoList")
+        videoList.addAll(list ?: emptyList())
+        notifyDataSetChanged()
     }
 }

@@ -8,6 +8,7 @@
     android:paddingTop="35dp"
     tools:context=".view.DetailFragment">
 
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,11 +16,19 @@
         app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
         app:cardElevation="@dimen/detailFragmentCardViewElevation">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trailer_recycler_view"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/red"
+                tools:listitem="@layout/video_item"
+                tools:itemCount="1"/>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
@@ -339,44 +348,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/light_theme" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                        android:id="@+id/youtubePlayer"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-
-                        />
-
-                    <ImageButton
-                        android:id="@+id/trailers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/secondary_theme"
-                        android:contentDescription="@string/content_description"
-                        android:src="@drawable/trailer"
-                        android:text="@string/trailers"
-                        android:textColor="@color/light_theme" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/trailer_recycler_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:listitem="@layout/video_item" />
-
-                    <TextView
-                        android:id="@+id/trailer2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:paddingBottom="50dp"
-                        android:text="@string/content_description"
-                        android:textColor="@color/light_theme" />
-                </LinearLayout>
 
 
             </LinearLayout>

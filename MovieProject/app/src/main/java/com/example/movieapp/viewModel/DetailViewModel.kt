@@ -51,7 +51,7 @@ class DetailViewModel @Inject constructor(private val movieApiService: MovieApiS
                 ) {
                     if (response.isSuccessful) {
                         movieVideos.value = response.body()?.results
-                        Log.d("MovieDetailViewModel", "Videos onResponse: ${response.body()?.results}")
+                        Log.d("TAG_X", "view model onResponse: ${response.body()?.results}")
                     }
                 }
 
@@ -59,6 +59,7 @@ class DetailViewModel @Inject constructor(private val movieApiService: MovieApiS
                     movieVideos.postValue(null)
                 }
             },
+
         )
     }
 }
