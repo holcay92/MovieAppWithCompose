@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_bg"
+    android:background="@color/main_theme_landscape"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
     tools:context=".view.homePage.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="20dp"
-        android:colorBackground="?attr/colorSecondary"
+        android:colorBackground="@color/main_theme"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +36,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginVertical="10dp"
+
         android:paddingBottom="20dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +51,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/secondary_theme"
+        android:backgroundTint="@color/main_theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/navigation_bar_landscape" />
 

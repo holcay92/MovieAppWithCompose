@@ -100,7 +100,7 @@ class MainFragment : Fragment() {
         )
         binding.rvPopularMovies.adapter = adapterPopular
 
-        binding.rvTopRatedMovies.layoutManager =
+        binding.rvTopRatedMovies?.layoutManager =
             GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
         adapterTR = TopRatedMovieAdapter(
             object : TopRatedMovieAdapter.OnItemClickListener {
@@ -113,7 +113,7 @@ class MainFragment : Fragment() {
                 }
             },
         )
-        binding.rvTopRatedMovies.adapter = adapterTR
+        binding.rvTopRatedMovies?.adapter = adapterTR
 
         fetchData()
     }
@@ -187,7 +187,7 @@ class MainFragment : Fragment() {
             }
         })
 
-        binding.rvTopRatedMovies.layoutManager =
+        binding.rvTopRatedMovies?.layoutManager =
             GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
         adapterTR = TopRatedMovieAdapter(object : TopRatedMovieAdapter.OnItemClickListener {
             override fun onItemClick(movie: ResultTopRated) {
@@ -198,7 +198,7 @@ class MainFragment : Fragment() {
                 findNavController().navigate(action)
             }
         })
-        binding.rvTopRatedMovies.adapter = adapterTR
+        binding.rvTopRatedMovies?.adapter = adapterTR
     }
 
     override fun onResume() {

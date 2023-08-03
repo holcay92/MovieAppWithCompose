@@ -1,5 +1,6 @@
 package com.example.movieapp.view.homePage
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -39,6 +41,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Set the activity to full-screen mode
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
 
         setupToolbar()
         setupBottomNavigation()
