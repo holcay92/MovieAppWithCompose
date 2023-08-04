@@ -26,4 +26,5 @@
     <string name="vote_placeholder">9.0</string>
     <string name="no_result">No Result</string>
     <string name="empty_fav_list_text">It is quiet right now...</string>
+    <string name="toggle_full_screen">Enter Full Screen</string>
 </resources>

@@ -28,7 +28,6 @@ class VideoFullScreenActivity : AppCompatActivity() {
                 // if the player is in fullscreen, exit fullscreen
                 youTubePlayer.toggleFullscreen()
             } else {
-                videoId = ""
                 finish()
             }
         }
