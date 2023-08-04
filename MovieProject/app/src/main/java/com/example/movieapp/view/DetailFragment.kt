@@ -63,14 +63,16 @@ class DetailFragment : Fragment() {
         val activity = requireActivity() as AppCompatActivity
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        bindingDetail.fullscreenButton.setOnClickListener {
-            handleFullScreenButton()
-        }
-        bindingDetail.nextButton!!.setOnClickListener {
-            switchToNextVideo()
-        }
-        bindingDetail.previousButton!!.setOnClickListener {
-            switchToPreviousVideo()
+        bindingDetail.apply {
+            fullscreenButton.setOnClickListener {
+                handleFullScreenButton()
+            }
+            nextButton.setOnClickListener {
+                switchToNextVideo()
+            }
+            previousButton.setOnClickListener {
+                switchToPreviousVideo()
+            }
         }
     }
 
@@ -92,11 +94,9 @@ class DetailFragment : Fragment() {
         when (item.itemId) {
             android.R.id.home -> {
                 Log.d("TAG_X", "onOptionsItemSelected: home")
-
                 findNavController().navigateUp()
                 return true
             }
-            // Add other menu item handling here if needed
         }
         return super.onOptionsItemSelected(item)
     }
@@ -186,7 +186,6 @@ class DetailFragment : Fragment() {
     }
 
     private fun handleFullScreenButton() {
-        currentVideoId = currentVideoId
         val action = DetailFragmentDirections.actionDetailFragmentToVideoFullScreenActivity(
             currentVideoId,
         )
@@ -195,9 +194,8 @@ class DetailFragment : Fragment() {
 
     private fun initFirstVideo(video: VideoResult) {
         currentVideoId = video.key
-        Log.d("TAG_X", "initFirstVideo: $currentVideoId")
-        val youTubePlayerView: YouTubePlayerView? = bindingDetail.youtubePlayerView1
-        lifecycle.addObserver(youTubePlayerView!!)
+        val youTubePlayerView: YouTubePlayerView = bindingDetail.youtubePlayerView1
+        lifecycle.addObserver(youTubePlayerView)
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.loadVideo(currentVideoId, 0f)
@@ -208,12 +206,8 @@ class DetailFragment : Fragment() {
     private fun switchToNextVideo() {
         val videos = viewModelForDetail.movieVideos.value
         if (!videos.isNullOrEmpty()) {
-            // Increment the currentVideoIndex
             videoNumber = (videoNumber + 1) % videos.size
-            Log.d("TAG_X", "switchToNextVideo: $videoNumber")
-            // Get the next video
             val nextVideo = videos[videoNumber]
-            // Update the UI with the details of the next video
             updateVideoUI(nextVideo)
         }
     }
@@ -221,28 +215,21 @@ class DetailFragment : Fragment() {
     private fun switchToPreviousVideo() {
         val videos = viewModelForDetail.movieVideos.value
         if (!videos.isNullOrEmpty()) {
-            // Decrement the currentVideoIndex
             if (videoNumber == 0) {
-                videoNumber = videos.size
+                videoNumber = videos.size // cycle to the last video
             }
             videoNumber = (videoNumber - 1) % videos.size
-            Log.d("TAG_X", "switchToPreviousVideo: $videoNumber")
-            // Get the previous video
-
             val previousVideo = videos[videoNumber]
-            // Update the UI with the details of the previous video
             updateVideoUI(previousVideo)
         }
     }
 
     private fun updateVideoUI(video: VideoResult) {
         currentVideoId = video.key
-        Log.d("TAG_X", "updateVideoUI: $currentVideoId")
         // Get the existing YouTubePlayer instance
-        val youTubePlayerView: YouTubePlayerView? = bindingDetail.youtubePlayerView1
-        youTubePlayerView?.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+        val youTubePlayerView: YouTubePlayerView = bindingDetail.youtubePlayerView1
+        youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
             override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                // Load the new video in the existing player
                 youTubePlayer.loadVideo(currentVideoId, 0f)
             }
         })

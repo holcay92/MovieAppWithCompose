@@ -39,8 +39,6 @@ class VideoFullScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         videoId = intent.getStringExtra("video_id").toString()
-
-        Log.d("TAG_X", "VideoFullScreenActivity videoId: $videoId")
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
         val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
@@ -74,8 +72,6 @@ class VideoFullScreenActivity : AppCompatActivity() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@VideoFullScreenActivity.youTubePlayer = youTubePlayer
                     youTubePlayer.cueVideo(videoId, 0f)
-                    Log.d("TAG_X", "VideoFullScreenActivity onReady videoId: $videoId")
-
                     val enterFullscreenButton = findViewById<Button>(R.id.enter_fullscreen_button)
                     enterFullscreenButton.setOnClickListener {
                         youTubePlayer.toggleFullscreen()
