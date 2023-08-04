@@ -54,8 +54,6 @@ class MainActivity : AppCompatActivity() {
             hideNavigationBarAndToolbar()
             Handler(Looper.getMainLooper()).postDelayed({
                 navigateToMainFragment()
-                binding.bottomNavigation.visibility = View.VISIBLE
-                binding.toolbar.visibility = View.VISIBLE
                 showNavigationBarAndToolbar()
             }, SPLASH_DELAY.toLong())
         }

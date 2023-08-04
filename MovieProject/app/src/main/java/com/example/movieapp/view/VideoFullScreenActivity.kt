@@ -1,14 +1,13 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.movieapp.R
-import com.example.movieapp.databinding.ActivityFullScreenBinding
+import com.example.movieapp.databinding.ActivityVideoFullScreenBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
@@ -18,7 +17,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 class VideoFullScreenActivity : AppCompatActivity() {
 
     private lateinit var youTubePlayer: YouTubePlayer
-    private lateinit var binding: ActivityFullScreenBinding
+    private lateinit var binding: ActivityVideoFullScreenBinding
     private var videoId: String = ""
 
     private var isFullscreen = false
@@ -35,7 +34,7 @@ class VideoFullScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFullScreenBinding.inflate(layoutInflater)
+        binding = ActivityVideoFullScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         videoId = intent.getStringExtra("video_id").toString()
