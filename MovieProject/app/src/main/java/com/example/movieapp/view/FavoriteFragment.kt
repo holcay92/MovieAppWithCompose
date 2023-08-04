@@ -35,6 +35,8 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // Set toolbar text as "Favorites"
         (activity as AppCompatActivity).supportActionBar?.title = "Favorites"
+        // Enable the back button
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         adapter = FavoriteMovieAdapter(
             object : FavoriteMovieAdapter.OnItemClickListener {

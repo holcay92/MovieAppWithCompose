@@ -89,10 +89,8 @@ class DetailFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.d("TAG_X", "onOptionsItemSelected: ")
         when (item.itemId) {
             android.R.id.home -> {
-                Log.d("TAG_X", "onOptionsItemSelected: home")
                 findNavController().navigateUp()
                 return true
             }
