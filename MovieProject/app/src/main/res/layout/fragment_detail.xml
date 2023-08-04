@@ -380,13 +380,11 @@
                         android:backgroundTint="@android:color/transparent"
                         android:src="@drawable/next_arrow" />
                 </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/trailer_recycler_view"
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player_view1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:itemCount="1"
-                    android:layout_weight="1"
-                    tools:listitem="@layout/video_item" />
+                    tools:videoId="KLqfVqDkXaI" />
 
                 <View
                     android:layout_width="match_parent"

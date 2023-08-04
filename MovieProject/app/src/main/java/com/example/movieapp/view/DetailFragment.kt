@@ -12,19 +12,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailBinding
 import com.example.movieapp.model.movieDetail.MovieDetail
+import com.example.movieapp.model.videos.VideoResult
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.utils.ZoomOutPageTransformer
 import com.example.movieapp.view.adapters.MovieImageAdapter
-import com.example.movieapp.view.adapters.VideoAdapter
 import com.example.movieapp.viewModel.DetailFragmentMovieImageViewModel
 import com.example.movieapp.viewModel.DetailViewModel
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -34,9 +37,8 @@ class DetailFragment : Fragment() {
     private val viewModelForDetail by viewModels<DetailViewModel>()
     private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private lateinit var adapter: MovieImageAdapter
-    private lateinit var videoAdapter: VideoAdapter
-    private val snapHelper = LinearSnapHelper()
     private lateinit var currentVideoId: String
+    private var videoNumber = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +54,6 @@ class DetailFragment : Fragment() {
         setupBackButtonNavigation()
         val movieId = extractMovieIdFromArguments()
         setupViewPager()
-        setupVideoRecyclerView()
         adjustViewPagerHeight()
         observeMovieImageList(movieId)
         observeMovieDetailAndVideos(movieId)
@@ -64,6 +65,12 @@ class DetailFragment : Fragment() {
 
         bindingDetail.fullscreenButton.setOnClickListener {
             handleFullScreenButton()
+        }
+        bindingDetail.nextButton!!.setOnClickListener {
+            switchToNextVideo()
+        }
+        bindingDetail.previousButton!!.setOnClickListener {
+            switchToPreviousVideo()
         }
     }
 
@@ -104,14 +111,6 @@ class DetailFragment : Fragment() {
         bindingDetail.viewPager.setPageTransformer(ZoomOutPageTransformer())
     }
 
-    private fun setupVideoRecyclerView() {
-        videoAdapter = VideoAdapter(viewLifecycleOwner.lifecycle)
-        bindingDetail.trailerRecyclerView.adapter = videoAdapter
-        bindingDetail.trailerRecyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        snapHelper.attachToRecyclerView(bindingDetail.trailerRecyclerView)
-    }
-
     private fun adjustViewPagerHeight() {
         val displayMetrics = DisplayMetrics()
         requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -133,8 +132,14 @@ class DetailFragment : Fragment() {
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI(it)
         }
-        viewModelForDetail.movieVideos.observe(viewLifecycleOwner) {
-            videoAdapter.updateList(it)
+        runBlocking {
+            viewModelForDetail.movieVideos.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    if (it.isNotEmpty()) {
+                        initFirstVideo(it[0])
+                    }
+                }
+            }
         }
     }
 
@@ -181,14 +186,65 @@ class DetailFragment : Fragment() {
     }
 
     private fun handleFullScreenButton() {
-        currentVideoId = videoAdapter.getCurrentVideoId()
-        Log.d(
-            "TAG_X",
-            "Detailfrag handleFullScreenButton currentVideoId: $currentVideoId",
-        )
+        currentVideoId = currentVideoId
         val action = DetailFragmentDirections.actionDetailFragmentToVideoFullScreenActivity(
             currentVideoId,
         )
         findNavController().navigate(action)
+    }
+
+    private fun initFirstVideo(video: VideoResult) {
+        currentVideoId = video.key
+        Log.d("TAG_X", "initFirstVideo: $currentVideoId")
+        val youTubePlayerView: YouTubePlayerView? = bindingDetail.youtubePlayerView1
+        lifecycle.addObserver(youTubePlayerView!!)
+        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.loadVideo(currentVideoId, 0f)
+            }
+        })
+    }
+
+    private fun switchToNextVideo() {
+        val videos = viewModelForDetail.movieVideos.value
+        if (!videos.isNullOrEmpty()) {
+            // Increment the currentVideoIndex
+            videoNumber = (videoNumber + 1) % videos.size
+            Log.d("TAG_X", "switchToNextVideo: $videoNumber")
+            // Get the next video
+            val nextVideo = videos[videoNumber]
+            // Update the UI with the details of the next video
+            updateVideoUI(nextVideo)
+        }
+    }
+
+    private fun switchToPreviousVideo() {
+        val videos = viewModelForDetail.movieVideos.value
+        if (!videos.isNullOrEmpty()) {
+            // Decrement the currentVideoIndex
+            if (videoNumber == 0) {
+                videoNumber = videos.size
+            }
+            videoNumber = (videoNumber - 1) % videos.size
+            Log.d("TAG_X", "switchToPreviousVideo: $videoNumber")
+            // Get the previous video
+
+            val previousVideo = videos[videoNumber]
+            // Update the UI with the details of the previous video
+            updateVideoUI(previousVideo)
+        }
+    }
+
+    private fun updateVideoUI(video: VideoResult) {
+        currentVideoId = video.key
+        Log.d("TAG_X", "updateVideoUI: $currentVideoId")
+        // Get the existing YouTubePlayer instance
+        val youTubePlayerView: YouTubePlayerView? = bindingDetail.youtubePlayerView1
+        youTubePlayerView?.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+            override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                // Load the new video in the existing player
+                youTubePlayer.loadVideo(currentVideoId, 0f)
+            }
+        })
     }
 }
