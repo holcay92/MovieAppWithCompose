@@ -33,9 +33,8 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // set toolbars text as favorites
-        val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = "Favorites"
+        // Set toolbar text as "Favorites"
+        (activity as AppCompatActivity).supportActionBar?.title = "Favorites"
 
         adapter = FavoriteMovieAdapter(
             object : FavoriteMovieAdapter.OnItemClickListener {
@@ -48,19 +47,16 @@ class FavoriteFragment : Fragment() {
                 }
             },
         )
-        binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.favoriteRecyclerView.adapter = adapter
+        with(binding.favoriteRecyclerView) {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@FavoriteFragment.adapter
+        }
         viewModel.favMovieList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
-            if(it.isEmpty()) {
-                binding.emptyFavListImage.visibility = View.VISIBLE
-                binding.emptyFavListText.visibility = View.VISIBLE
-                binding.favoriteRecyclerView.visibility = View.GONE
-            } else {
-                binding.emptyFavListImage.visibility = View.GONE
-                binding.emptyFavListText.visibility = View.GONE
-                binding.favoriteRecyclerView.visibility = View.VISIBLE
-            }
+            val isListEmpty = it.isEmpty()
+            binding.emptyFavListImage.visibility = if (isListEmpty) View.VISIBLE else View.GONE
+            binding.emptyFavListText.visibility = if (isListEmpty) View.VISIBLE else View.GONE
+            binding.favoriteRecyclerView.visibility = if (isListEmpty) View.GONE else View.VISIBLE
         }
     }
 }
