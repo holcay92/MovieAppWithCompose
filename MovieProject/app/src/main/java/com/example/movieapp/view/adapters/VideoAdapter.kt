@@ -1,6 +1,7 @@
 package com.example.movieapp.view.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
@@ -9,7 +10,6 @@ import com.example.movieapp.databinding.VideoItemBinding
 import com.example.movieapp.model.videos.VideoResult
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class VideoAdapter(
@@ -17,24 +17,21 @@ class VideoAdapter(
 ) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     private var videoList = ArrayList<VideoResult>()
+    private var currentVideoId = ""
 
     inner class VideoViewHolder(itemView: VideoItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         private val youTubePlayerView: YouTubePlayerView = itemView.youtubePlayerView
-        private var isFullscreen = false
+
         fun bind(video: VideoResult) {
             val bindingItem = VideoItemBinding.bind(itemView)
             lifecycle.addObserver(youTubePlayerView)
-            val iFramePlayerOptions = IFramePlayerOptions.Builder()
-                .controls(1)
-                .fullscreen(1)
-                .build()
-
             bindingItem.apply {
                 bindingItem.youtubePlayerView.addYouTubePlayerListener(object :
                     AbstractYouTubePlayerListener() {
                     override fun onReady(youTubePlayer: YouTubePlayer) {
                         val videoId = video.key
+                        currentVideoId = videoId
                         youTubePlayer.loadVideo(videoId, 0f)
                     }
                 })
@@ -62,5 +59,16 @@ class VideoAdapter(
         videoList.clear()
         videoList.addAll(list ?: emptyList())
         notifyDataSetChanged()
+    }
+
+    fun updateCurrentVideoId(videoId: String) {
+        currentVideoId = videoId
+        Log.d("TAG_X", "VideoAdapter updateCurrentVideoId: $currentVideoId")
+        notifyDataSetChanged()
+    }
+
+    fun getCurrentVideoId(): String {
+        Log.d("TAG_X", "VideoAdapter getCurrentVideoId: $currentVideoId")
+        return currentVideoId
     }
 }

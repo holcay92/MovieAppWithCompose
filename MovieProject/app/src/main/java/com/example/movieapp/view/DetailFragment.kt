@@ -36,6 +36,7 @@ class DetailFragment : Fragment() {
     private lateinit var adapter: MovieImageAdapter
     private lateinit var videoAdapter: VideoAdapter
     private val snapHelper = LinearSnapHelper()
+    private lateinit var currentVideoId: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +61,10 @@ class DetailFragment : Fragment() {
         // Enable the back button
         val activity = requireActivity() as AppCompatActivity
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        bindingDetail.fullscreenButton.setOnClickListener {
+            handleFullScreenButton()
+        }
     }
 
     private fun setupBackButtonNavigation() {
@@ -173,5 +178,17 @@ class DetailFragment : Fragment() {
         val drawableResId =
             if (isFav) R.drawable.add_fav_filled_icon else R.drawable.add_fav_empty_icon
         bindingDetail.favButton.setBackgroundResource(drawableResId)
+    }
+
+    private fun handleFullScreenButton() {
+        currentVideoId = videoAdapter.getCurrentVideoId()
+        Log.d(
+            "TAG_X",
+            "Detailfrag handleFullScreenButton currentVideoId: $currentVideoId",
+        )
+        val action = DetailFragmentDirections.actionDetailFragmentToVideoFullScreenActivity(
+            currentVideoId,
+        )
+        findNavController().navigate(action)
     }
 }
