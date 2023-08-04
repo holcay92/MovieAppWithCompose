@@ -348,20 +348,46 @@
                     tools:text="@string/app_name" />
 
             </LinearLayout>
-            <Button
-                android:id="@+id/fullscreen_button"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Toggle Full Screen" />
+                android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/trailer_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:paddingBottom="30dp"
-                tools:listitem="@layout/video_item"
-                tools:itemCount="1"/>
+                <ImageButton
+                    android:id="@+id/previous_button"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/previous_arrow" />
+                <Button
+                    android:id="@+id/fullscreen_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Toggle Full Screen" />
+
+
+
+                <ImageButton
+                    android:id="@+id/next_button"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/next_arrow" />
+            </LinearLayout>
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player_view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:videoId="KLqfVqDkXaI" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>
