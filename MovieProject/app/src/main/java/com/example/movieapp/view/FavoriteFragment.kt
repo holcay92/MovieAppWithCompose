@@ -52,6 +52,15 @@ class FavoriteFragment : Fragment() {
         binding.favoriteRecyclerView.adapter = adapter
         viewModel.favMovieList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
+            if(it.isEmpty()) {
+                binding.emptyFavListImage.visibility = View.VISIBLE
+                binding.emptyFavListText.visibility = View.VISIBLE
+                binding.favoriteRecyclerView.visibility = View.GONE
+            } else {
+                binding.emptyFavListImage.visibility = View.GONE
+                binding.emptyFavListText.visibility = View.GONE
+                binding.favoriteRecyclerView.visibility = View.VISIBLE
+            }
         }
     }
 }

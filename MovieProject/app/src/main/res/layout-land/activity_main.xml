@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_theme_landscape"
+    android:background="@drawable/app_bg_landscape"
     android:fitsSystemWindows="true"
     android:clipToPadding="false"
     tools:context=".view.homePage.MainActivity">

@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg"
-    tools:context=".view.FavoriteFragment"
-    android:paddingTop="50dp">
+    android:paddingTop="50dp"
+    tools:context=".view.FavoriteFragment">
+
+    <ImageView
+        android:id="@+id/emptyFavListImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/empty_fav_list_bg"
+        app:layout_constraintBottom_toTopOf="@id/emptyFavListText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyFavListText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/empty_fav_list_text"
+        android:textColor="@color/light_theme"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emptyFavListImage" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoriteRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
-
         android:padding="8dp"
         android:scrollbars="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="4"
         tools:listitem="@layout/movie_item_popular" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
