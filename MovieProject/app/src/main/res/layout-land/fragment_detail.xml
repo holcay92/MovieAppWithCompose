@@ -8,17 +8,13 @@
     android:paddingTop="35dp"
     tools:context=".view.DetailFragment">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/transparent"
-        app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-        app:cardElevation="@dimen/detailFragmentCardViewElevation">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingTop="10dp"
             android:padding="5dp">
 
             <LinearLayout
@@ -389,5 +385,4 @@
                 android:layout_height="wrap_content"
                 tools:videoId="KLqfVqDkXaI" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
 </ScrollView>
