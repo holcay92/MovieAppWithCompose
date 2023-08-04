@@ -52,6 +52,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // setup user interface
         setupViews()
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 alertDialog()

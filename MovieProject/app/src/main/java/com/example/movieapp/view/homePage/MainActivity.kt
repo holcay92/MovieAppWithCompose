@@ -151,4 +151,9 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.visibility = View.VISIBLE
         binding.toolbar.visibility = View.VISIBLE
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.fragmentContainerView)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 }
