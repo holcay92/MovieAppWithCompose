@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailBinding
 import com.example.movieapp.model.movieDetail.MovieDetail
@@ -34,6 +35,7 @@ class DetailFragment : Fragment() {
     private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private lateinit var adapter: MovieImageAdapter
     private lateinit var videoAdapter: VideoAdapter
+    private val snapHelper = LinearSnapHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -102,6 +104,7 @@ class DetailFragment : Fragment() {
         bindingDetail.trailerRecyclerView.adapter = videoAdapter
         bindingDetail.trailerRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        snapHelper.attachToRecyclerView(bindingDetail.trailerRecyclerView)
     }
 
     private fun adjustViewPagerHeight() {

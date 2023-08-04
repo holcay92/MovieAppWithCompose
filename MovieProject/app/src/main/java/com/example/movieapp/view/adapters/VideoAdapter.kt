@@ -9,7 +9,7 @@ import com.example.movieapp.databinding.VideoItemBinding
 import com.example.movieapp.model.videos.VideoResult
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class VideoAdapter(
@@ -25,28 +25,10 @@ class VideoAdapter(
         fun bind(video: VideoResult) {
             val bindingItem = VideoItemBinding.bind(itemView)
             lifecycle.addObserver(youTubePlayerView)
-            /* val iFramePlayerOptions = IFramePlayerOptions.Builder()
-                 .controls(1)
-                 .fullscreen(1)
-                 .build()
-             youTubePlayerView.addFullscreenListener(object : FullscreenListener {
-                 override fun onEnterFullscreen(fullscreenView: View, exitFullscreen: () -> Unit) {
-                     isFullscreen = true
-
-                     // the video will continue playing in fullscreenView
-                     youTubePlayerView.visibility = View.GONE
-                     fullscreenViewContainer.visibility = View.VISIBLE
-                     fullscreenViewContainer.addView(fullscreenView)
-
-                     // optionally request landscape orientation
-                     // requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                 }*/
-
-            youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.loadOrCueVideo(lifecycle, video.key, 0F)
-                }
-            })
+            val iFramePlayerOptions = IFramePlayerOptions.Builder()
+                .controls(1)
+                .fullscreen(1)
+                .build()
 
             bindingItem.apply {
                 bindingItem.youtubePlayerView.addYouTubePlayerListener(object :
