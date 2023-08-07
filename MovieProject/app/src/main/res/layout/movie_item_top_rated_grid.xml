@@ -29,6 +29,14 @@
                 android:layout_height="180dp"
                 android:contentDescription="@string/content_description" />
 
+            <ImageButton
+                android:id="@+id/favButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:background="@android:color/transparent"
+                android:src="@drawable/add_fav_empty_icon" />
+
             <!-- Use RelativeLayout to overlay views -->
 
         </FrameLayout>

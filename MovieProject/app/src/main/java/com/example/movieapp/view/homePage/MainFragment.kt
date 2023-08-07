@@ -31,7 +31,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListener {
+class MainFragment :
+    Fragment(),
+    PopularMovieAdapter.OnFavoriteStatusChangeListener,
+    TopRatedMovieAdapter.OnFavoriteStatusChangeListener {
     private lateinit var fragmentMainBinding: FragmentMainBinding
     private val popularMovieViewModel by viewModels<PopularMovieViewModel>()
     private val topRatedMovieViewModel by viewModels<TopRatedMovieViewModel>()
@@ -180,7 +183,8 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
         )
         fragmentMainBinding.rvPopularMovies.adapter = popularMovieAdapter
 
-        fragmentMainBinding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        fragmentMainBinding.rvPopularMovies.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -196,15 +200,19 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
 
         fragmentMainBinding.rvTopRatedMovies?.layoutManager =
             GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
-        topRatedMovieAdapter = TopRatedMovieAdapter(object : TopRatedMovieAdapter.OnItemClickListener {
-            override fun onItemClick(movie: ResultTopRated) {
-                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                    Constants.TOP_RATED,
-                    movie.id,
-                )
-                findNavController().navigate(action)
-            }
-        })
+        topRatedMovieAdapter =
+            TopRatedMovieAdapter(
+                object : TopRatedMovieAdapter.OnItemClickListener {
+                    override fun onItemClick(movie: ResultTopRated) {
+                        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.TOP_RATED,
+                            movie.id,
+                        )
+                        findNavController().navigate(action)
+                    }
+                },
+                this,
+            )
         fragmentMainBinding.rvTopRatedMovies?.adapter = topRatedMovieAdapter
     }
 
@@ -217,6 +225,20 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
     override fun onFavoriteStatusChanged(movie: ResultPopular) {
         favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
             popularMovieAdapter.updateFavoriteStatus(favoriteMovies)
+        }
+        favoriteMovieViewModel.actionFavButton(
+            FavoriteMovie(
+                0,
+                movie.id,
+                movie.title,
+                movie.poster_path,
+            ),
+        )
+    }
+
+    override fun onFavoriteStatusChanged(movie: ResultTopRated) {
+        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
+            topRatedMovieAdapter.updateFavoriteStatus(favoriteMovies)
         }
         favoriteMovieViewModel.actionFavButton(
             FavoriteMovie(
