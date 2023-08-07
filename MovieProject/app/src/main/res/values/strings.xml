@@ -27,4 +27,5 @@
     <string name="no_result">No Result</string>
     <string name="empty_fav_list_text">It is quiet right now...</string>
     <string name="toggle_full_screen">Enter Full Screen</string>
+    <string name="search_hint">Search a movie</string>
 </resources>

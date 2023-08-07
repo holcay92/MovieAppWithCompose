@@ -15,7 +15,6 @@ import androidx.navigation.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.service.MovieApiService
-import com.example.movieapp.view.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import javax.inject.Inject
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var movieApiService: MovieApiService
-    private var searchJob: Job? = null
 
     companion object {
         private const val SPLASH_DELAY = 2000
@@ -135,13 +133,6 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
-
-    private fun navigateToSearchFragment(query: String) {
-        val args = Bundle()
-        args.putString(SearchFragment.ARG_SEARCH_QUERY, query)
-        findNavController(R.id.fragmentContainerView).navigate(R.id.searchFragment, args)
-    }
-
     private fun hideNavigationBarAndToolbar() {
         binding.bottomNavigation.visibility = View.GONE
         binding.toolbar.visibility = View.GONE

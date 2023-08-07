@@ -2,7 +2,6 @@ package com.example.movieapp.view
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -27,7 +26,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -129,12 +127,10 @@ class DetailFragment : Fragment() {
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI(it)
         }
-        runBlocking {
-            viewModelForDetail.movieVideos.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    if (it.isNotEmpty()) {
-                        initFirstVideo(it[0])
-                    }
+        viewModelForDetail.movieVideos.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    initFirstVideo(it[0])
                 }
             }
         }
@@ -223,11 +219,10 @@ class DetailFragment : Fragment() {
 
     private fun updateVideoUI(video: VideoResult) {
         currentVideoId = video.key
-        // Get the existing YouTubePlayer instance
         val youTubePlayerView: YouTubePlayerView = bindingDetail.youtubePlayerView1
         youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
             override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(currentVideoId, 0f)
+                youTubePlayer.cueVideo(currentVideoId, 0f)
             }
         })
     }

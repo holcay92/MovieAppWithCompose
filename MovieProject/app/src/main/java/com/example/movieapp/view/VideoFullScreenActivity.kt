@@ -2,7 +2,6 @@ package com.example.movieapp.view
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +35,8 @@ class VideoFullScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoFullScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // Hide the status bar
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
         videoId = intent.getStringExtra("video_id").toString()
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
@@ -70,11 +71,8 @@ class VideoFullScreenActivity : AppCompatActivity() {
             object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@VideoFullScreenActivity.youTubePlayer = youTubePlayer
+                    // continue from where the user left off
                     youTubePlayer.loadVideo(videoId, 0f)
-                    val enterFullscreenButton = findViewById<Button>(R.id.enter_fullscreen_button)
-                    enterFullscreenButton.setOnClickListener {
-                        youTubePlayer.toggleFullscreen()
-                    }
                 }
             },
             iFramePlayerOptions,

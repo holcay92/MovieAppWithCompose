@@ -11,8 +11,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="@string/search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+       />
     <item
         android:id="@+id/favorites"
         android:enabled="true"
