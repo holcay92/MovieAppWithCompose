@@ -23,10 +23,8 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:iconifiedByDefault="true"
-            android:queryHint="@string/search_hint"
+            app:iconifiedByDefault="false"
             app:defaultQueryHint="@string/search_hint"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
             android:visibility="visible" />
     </LinearLayout>
 
