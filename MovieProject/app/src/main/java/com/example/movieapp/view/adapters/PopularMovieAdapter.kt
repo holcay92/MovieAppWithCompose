@@ -35,25 +35,19 @@ class PopularMovieAdapter(
     inner class MovieViewHolder(bindingItem: ViewBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
         init {
-            if (bindingItem is MovieItemPopularBinding) {
-                bindingItem.btnAddFav.setOnClickListener {
-                    val position = bindingAdapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        val movie = movieList[position]
-                        movie.isFavorite = !movie.isFavorite
-                        favStatusChangeListener.onFavoriteStatusChanged(movie)
-                        notifyItemChanged(position)
-                    }
-                }
-            } else if (bindingItem is MovieItemPopularGridViewBinding) {
-                bindingItem.btnAddFav.setOnClickListener {
-                    val position = bindingAdapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        val movie = movieList[position]
-                        movie.isFavorite = !movie.isFavorite
-                        favStatusChangeListener.onFavoriteStatusChanged(movie)
-                        notifyItemChanged(position)
-                    }
+            val btnAddFav = when (bindingItem) {
+                is MovieItemPopularBinding -> bindingItem.btnAddFav
+                is MovieItemPopularGridViewBinding -> bindingItem.btnAddFav
+                else -> null
+            }
+
+            btnAddFav?.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val movie = movieList[position]
+                    movie.isFavorite = !movie.isFavorite
+                    favStatusChangeListener.onFavoriteStatusChanged(movie)
+                    notifyItemChanged(position)
                 }
             }
         }
