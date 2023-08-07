@@ -31,6 +31,9 @@ class SearchFragment : Fragment() {
     ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         val searchView = binding.searchView
+        binding.searchLayout.setOnClickListener {
+            searchView.isIconified = false
+        }
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = "Search"
         searchView.setOnQueryTextListener(object :
