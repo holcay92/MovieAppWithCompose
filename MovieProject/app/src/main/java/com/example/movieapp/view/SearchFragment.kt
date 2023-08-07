@@ -69,7 +69,6 @@ class SearchFragment : Fragment() {
                 searchListAdapter.updateList(searchResults)
                 if (searchResults.isNullOrEmpty()) {
                     binding.searchBg.visibility = View.VISIBLE
-                    Log.d("TAG_X", "SearchFragment onViewCreated searchResults: $searchResults")
                 } else {
                     binding.searchBg.visibility = View.GONE
                 }
