@@ -1,6 +1,7 @@
 package com.example.movieapp.view.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +13,9 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.databinding.MovieItemPopularGridViewBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
+import com.example.movieapp.room.FavoriteMovie
 
-class PopularMovieAdapter(private val listener: OnItemClickListener) :
+class PopularMovieAdapter(private val listener: OnItemClickListener, private val favStatusChangeListener: OnFavoriteStatusChangeListener) :
     RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
     private var movieList = ArrayList<ResultPopular>()
     private var viewType = ViewType.LIST
@@ -30,6 +32,29 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
 
     inner class MovieViewHolder(bindingItem: ViewBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
+        init {
+            if (bindingItem is MovieItemPopularBinding) {
+                bindingItem.btnAddFav.setOnClickListener {
+                    val position = bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val movie = movieList[position]
+                        movie.isFavorite = !movie.isFavorite
+                        favStatusChangeListener.onFavoriteStatusChanged(movie)
+                        notifyItemChanged(position)
+                    }
+                }
+            } else if (bindingItem is MovieItemPopularGridViewBinding) {
+                bindingItem.btnAddFav.setOnClickListener {
+                    val position = bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val movie = movieList[position]
+                        movie.isFavorite = !movie.isFavorite
+                        favStatusChangeListener.onFavoriteStatusChanged(movie)
+                        notifyItemChanged(position)
+                    }
+                }
+            }
+        }
         fun bind(popularMovie: ResultPopular) {
             if (viewType == ViewType.LIST) {
                 val bindingItem = MovieItemPopularBinding.bind(itemView)
@@ -124,5 +149,15 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
         } else {
             "red"
         }
+    }
+    interface OnFavoriteStatusChangeListener {
+        fun onFavoriteStatusChanged(movie: ResultPopular)
+    }
+    fun updateFavoriteStatus(favoriteMovies: List<FavoriteMovie>) {
+        movieList.forEach { movie ->
+            val isFav = favoriteMovies.any { it.id == movie.id }
+            movie.isFavorite = isFav
+        }
+        notifyDataSetChanged()
     }
 }

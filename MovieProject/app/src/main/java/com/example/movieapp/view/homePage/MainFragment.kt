@@ -21,18 +21,21 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.model.topRated.ResultTopRated
+import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.view.adapters.PopularMovieAdapter
 import com.example.movieapp.view.adapters.TopRatedMovieAdapter
+import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
 import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListener {
     private lateinit var binding: FragmentMainBinding
     private val viewModelPopular by viewModels<PopularMovieViewModel>()
     private val viewModelTR by viewModels<TopRatedMovieViewModel>()
+    private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
     private lateinit var progressDialog: Dialog
     private lateinit var adapterPopular: PopularMovieAdapter
     private lateinit var adapterTR: TopRatedMovieAdapter
@@ -61,6 +64,8 @@ class MainFragment : Fragment() {
         }
 
         fetchData()
+        viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) {
+        }
     }
 
     private fun fetchData() {
@@ -161,15 +166,18 @@ class MainFragment : Fragment() {
 
     private fun setupRecyclerViews() {
         binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
-        adapterPopular = PopularMovieAdapter(object : PopularMovieAdapter.OnItemClickListener {
-            override fun onItemClick(movie: ResultPopular) {
-                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                    Constants.POPULAR,
-                    movie.id,
-                )
-                findNavController().navigate(action)
-            }
-        })
+        adapterPopular = PopularMovieAdapter(
+            object : PopularMovieAdapter.OnItemClickListener {
+                override fun onItemClick(movie: ResultPopular) {
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                        Constants.POPULAR,
+                        movie.id,
+                    )
+                    findNavController().navigate(action)
+                }
+            },
+            this,
+        )
         binding.rvPopularMovies.adapter = adapterPopular
 
         binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -204,5 +212,19 @@ class MainFragment : Fragment() {
         private var SPAN_COUNT = 2
         private var viewType = false
         private var page = 1
+    }
+
+    override fun onFavoriteStatusChanged(movie: ResultPopular) {
+        viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
+            adapterPopular.updateFavoriteStatus(favoriteMovies)
+        }
+        viewModelForFavorite.actionFavButton(
+            FavoriteMovie(
+                0,
+                movie.id,
+                movie.title,
+                movie.poster_path,
+            ),
+        )
     }
 }
