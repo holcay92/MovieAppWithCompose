@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -67,13 +68,30 @@ class FavoriteFragment : Fragment(), FavoriteMovieAdapter.OnRemoveFavoriteClickL
         favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) {
             favoriteMovieAdapter.updateList(it)
             val isListEmpty = it.isEmpty()
-            fragmentFavoriteBinding.emptyFavListImage.visibility = if (isListEmpty) View.VISIBLE else View.GONE
-            fragmentFavoriteBinding.emptyFavListText.visibility = if (isListEmpty) View.VISIBLE else View.GONE
-            fragmentFavoriteBinding.favoriteRecyclerView.visibility = if (isListEmpty) View.GONE else View.VISIBLE
+            fragmentFavoriteBinding.emptyFavListImage.visibility =
+                if (isListEmpty) View.VISIBLE else View.GONE
+            fragmentFavoriteBinding.emptyFavListText.visibility =
+                if (isListEmpty) View.VISIBLE else View.GONE
+            fragmentFavoriteBinding.favoriteRecyclerView.visibility =
+                if (isListEmpty) View.GONE else View.VISIBLE
         }
     }
 
     override fun onRemoveFavoriteClick(movie: FavoriteMovie) {
-        favoriteMovieViewModel.actionFavButton(movie)
+        alertDialog(movie)
+    }
+
+    private fun alertDialog(movie: FavoriteMovie) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Alert")
+        builder.setMessage("Are you sure you want to remove this movie from favorites?")
+        builder.setPositiveButton("Ok") { dialog, _ ->
+            favoriteMovieViewModel.actionFavButton(movie)
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 }
