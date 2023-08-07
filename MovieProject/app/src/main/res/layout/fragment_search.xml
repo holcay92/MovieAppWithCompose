@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="35dp"
-    android:background="@drawable/app_bg"
+    android:background="@color/main_theme_bg"
     tools:context=".view.SearchFragment">
 
     <TextView

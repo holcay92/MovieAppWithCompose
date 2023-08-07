@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/app_bg_landscape"
+    android:background="@color/main_theme_bg"
     android:layout_marginTop="10dp"
     android:padding="3dp">
 <!-- top bar popular and grid layout buttons-->

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_bg"
+    android:background="@color/main_theme_bg"
     android:paddingTop="35dp"
     tools:context=".view.DetailFragment">
 
@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="375dp"
                 android:paddingBottom="20dp"
+                android:paddingTop="10dp"
                 android:clipToPadding="false"
             tools:background="@color/light_theme" />
 
