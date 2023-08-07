@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var movieApiService: MovieApiService
 
     companion object {
-        private const val SPLASH_DELAY = 2000
+        private const val SPLASH_DELAY = 3000
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
