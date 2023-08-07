@@ -195,7 +195,7 @@ class DetailFragment : Fragment() {
         lifecycle.addObserver(youTubePlayerView)
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(currentVideoId, 0f)
+                youTubePlayer.cueVideo(currentVideoId, 0f)
             }
         })
     }

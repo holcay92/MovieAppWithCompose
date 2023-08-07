@@ -8,6 +8,7 @@
         <item name="colorSecondary">@color/secondary_theme_night</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/status_bar_color</item>
+        <item name="colorControlNormal" tools:targetApi="l">@color/white</item>
     </style>
 
     <style name="Theme.MovieApp.Night" parent="Base.Theme.MovieApp.Night" />

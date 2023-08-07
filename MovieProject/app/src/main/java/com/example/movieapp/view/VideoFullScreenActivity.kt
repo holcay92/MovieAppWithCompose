@@ -70,7 +70,7 @@ class VideoFullScreenActivity : AppCompatActivity() {
             object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@VideoFullScreenActivity.youTubePlayer = youTubePlayer
-                    youTubePlayer.cueVideo(videoId, 0f)
+                    youTubePlayer.loadVideo(videoId, 0f)
                     val enterFullscreenButton = findViewById<Button>(R.id.enter_fullscreen_button)
                     enterFullscreenButton.setOnClickListener {
                         youTubePlayer.toggleFullscreen()

@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.databinding.MovieItemPopularGridViewBinding
@@ -48,7 +50,7 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
                     )
                     Glide.with(itemView.context)
                         .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}")
-                        .centerCrop()
+                        .centerCrop().transform(CenterCrop(), RoundedCorners(20))
                         .into(movieImage)
                 }
             } else {

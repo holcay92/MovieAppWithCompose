@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,11 +78,7 @@ class MainFragment : Fragment() {
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     page++
-                    // showProgressDialog()
-                    Log.d("TAG_X", "Main Fragment page number: $page")
-                    // Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     viewModelPopular.getNextPage(page)
-                    // hideProgressDialog()
                 }
             }
         })

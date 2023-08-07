@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.movieapp.R
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.movieapp.databinding.MovieItemTopRatedGridBinding
 import com.example.movieapp.model.topRated.ResultTopRated
 
@@ -19,14 +20,15 @@ class TopRatedMovieAdapter(private val listener: OnItemClickListener) :
             val bindingItem = MovieItemTopRatedGridBinding.bind(itemView)
             bindingItem.apply {
                 // movieTitle.text = tRMovie.title
-               /* if (tRMovie.isFavorite) {
-                    btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
-                } else {
-                    btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
-                }*/
+                /* if (tRMovie.isFavorite) {
+                     btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
+                 } else {
+                     btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
+                 }*/
                 // tvMovieRating.text = tRMovie.vote_average.toString()
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${tRMovie.poster_path}").fitCenter()
+                    .transform(CenterCrop(), RoundedCorners(50))
                     .into(movieImage)
             }
         }
