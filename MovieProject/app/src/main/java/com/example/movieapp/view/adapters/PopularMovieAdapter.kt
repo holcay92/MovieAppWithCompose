@@ -56,7 +56,6 @@ class PopularMovieAdapter(private val listener: OnItemClickListener) :
             } else {
                 val bindingItem = MovieItemPopularGridViewBinding.bind(itemView)
                 bindingItem.apply {
-                    movieTitle.text = popularMovie.title
                     if (popularMovie.isFavorite) {
                         btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                     } else {

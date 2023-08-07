@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/main_theme_bg"
-
     android:padding="3dp">
 <!-- top bar popular and grid layout buttons-->
     <LinearLayout
@@ -39,6 +38,7 @@
             android:id="@+id/rvPopularMovies"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="horizontal"
             android:scrollbars="horizontal"
             tools:itemCount="4"

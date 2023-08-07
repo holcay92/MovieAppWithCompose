@@ -43,6 +43,11 @@ class DetailReviewFragment : Fragment() {
         viewModel.getReview(id)
         viewModel.reviewList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
+            if (it.isEmpty()) {
+                binding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
+            } else {
+                binding.tvDetailReviewNoReviewsFound.visibility = View.GONE
+            }
         }
     }
 }
