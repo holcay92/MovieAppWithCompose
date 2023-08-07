@@ -9,7 +9,10 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.room.FavoriteMovie
 
-class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) :
+class FavoriteMovieAdapter(
+    private val itemClickListener: OnItemClickListener,
+    private val removeListener: OnRemoveFavoriteClickListener,
+) :
     RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>() {
 
     private var favMovieList = ArrayList<FavoriteMovie>()
@@ -24,6 +27,10 @@ class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) :
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
                     .into(bindingItem.movieImage)
+
+                bindingItem.btnAddFav.setOnClickListener {
+                    removeListener.onRemoveFavoriteClick(popularMovie)
+                }
             }
         }
     }
@@ -55,5 +62,9 @@ class FavoriteMovieAdapter(private val itemClickListener: OnItemClickListener) :
 
     interface OnItemClickListener {
         fun onItemClick(movie: FavoriteMovie)
+    }
+
+    interface OnRemoveFavoriteClickListener {
+        fun onRemoveFavoriteClick(movie: FavoriteMovie)
     }
 }

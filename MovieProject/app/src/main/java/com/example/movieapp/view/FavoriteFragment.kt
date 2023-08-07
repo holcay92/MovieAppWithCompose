@@ -17,7 +17,7 @@ import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : Fragment(), FavoriteMovieAdapter.OnRemoveFavoriteClickListener {
     private val viewModel by viewModels<FavoriteMovieViewModel>()
     private lateinit var adapter: FavoriteMovieAdapter
     private lateinit var binding: FragmentFavoriteBinding
@@ -38,6 +38,16 @@ class FavoriteFragment : Fragment() {
         // Enable the back button
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        viewModel.favMovieList.observe(viewLifecycleOwner) {
+            adapter.updateList(it)
+            val isListEmpty = it.isEmpty()
+            binding.apply {
+                emptyFavListImage.visibility = if (isListEmpty) View.VISIBLE else View.GONE
+                emptyFavListText.visibility = if (isListEmpty) View.VISIBLE else View.GONE
+                favoriteRecyclerView.visibility = if (isListEmpty) View.GONE else View.VISIBLE
+            }
+        }
+
         adapter = FavoriteMovieAdapter(
             object : FavoriteMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: FavoriteMovie) {
@@ -48,6 +58,7 @@ class FavoriteFragment : Fragment() {
                     findNavController().navigate(action)
                 }
             },
+            this,
         )
         with(binding.favoriteRecyclerView) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -60,5 +71,9 @@ class FavoriteFragment : Fragment() {
             binding.emptyFavListText.visibility = if (isListEmpty) View.VISIBLE else View.GONE
             binding.favoriteRecyclerView.visibility = if (isListEmpty) View.GONE else View.VISIBLE
         }
+    }
+
+    override fun onRemoveFavoriteClick(movie: FavoriteMovie) {
+        viewModel.actionFavButton(movie)
     }
 }
