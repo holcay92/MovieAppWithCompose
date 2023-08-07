@@ -1,7 +1,6 @@
 package com.example.movieapp.view.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,10 @@ import com.example.movieapp.databinding.MovieItemPopularGridViewBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.room.FavoriteMovie
 
-class PopularMovieAdapter(private val listener: OnItemClickListener, private val favStatusChangeListener: OnFavoriteStatusChangeListener) :
+class PopularMovieAdapter(
+    private val listener: OnItemClickListener,
+    private val favStatusChangeListener: OnFavoriteStatusChangeListener,
+) :
     RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
     private var movieList = ArrayList<ResultPopular>()
     private var viewType = ViewType.LIST
@@ -55,6 +57,7 @@ class PopularMovieAdapter(private val listener: OnItemClickListener, private val
                 }
             }
         }
+
         fun bind(popularMovie: ResultPopular) {
             if (viewType == ViewType.LIST) {
                 val bindingItem = MovieItemPopularBinding.bind(itemView)
@@ -150,9 +153,11 @@ class PopularMovieAdapter(private val listener: OnItemClickListener, private val
             "red"
         }
     }
+
     interface OnFavoriteStatusChangeListener {
         fun onFavoriteStatusChanged(movie: ResultPopular)
     }
+
     fun updateFavoriteStatus(favoriteMovies: List<FavoriteMovie>) {
         movieList.forEach { movie ->
             val isFav = favoriteMovies.any { it.id == movie.id }

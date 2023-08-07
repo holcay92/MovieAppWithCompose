@@ -16,7 +16,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 class VideoFullScreenActivity : AppCompatActivity() {
 
     private lateinit var youTubePlayer: YouTubePlayer
-    private lateinit var binding: ActivityVideoFullScreenBinding
+    private lateinit var activityVideoFullScreenBinding: ActivityVideoFullScreenBinding
     private var videoId: String = ""
 
     private var isFullscreen = false
@@ -33,8 +33,8 @@ class VideoFullScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVideoFullScreenBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        activityVideoFullScreenBinding = ActivityVideoFullScreenBinding.inflate(layoutInflater)
+        setContentView(activityVideoFullScreenBinding.root)
         // Hide the status bar
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 

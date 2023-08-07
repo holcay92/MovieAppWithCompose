@@ -21,17 +21,17 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
-    private lateinit var binding: FragmentSearchBinding
-    private val viewModel by viewModels<SearchViewModel>()
+    private lateinit var fragmentSearchBinding: FragmentSearchBinding
+    private val searchViewModel by viewModels<SearchViewModel>()
     private lateinit var searchListAdapter: SearchListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
-        val searchView = binding.searchView
-        binding.searchLayout.setOnClickListener {
+        fragmentSearchBinding = FragmentSearchBinding.inflate(inflater, container, false)
+        val searchView = fragmentSearchBinding.searchView
+        fragmentSearchBinding.searchLayout.setOnClickListener {
             searchView.isIconified = false
         }
         val toolbar = activity as AppCompatActivity
@@ -54,7 +54,7 @@ class SearchFragment : Fragment() {
             }
         })
 
-        return binding.root
+        return fragmentSearchBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,21 +64,21 @@ class SearchFragment : Fragment() {
 
     private fun performSearch(searchQuery: String?) {
         searchQuery?.let {
-            viewModel.searchMovies(searchQuery)
-            viewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
+            searchViewModel.searchMovies(searchQuery)
+            searchViewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
                 searchListAdapter.updateList(searchResults)
                 if (searchResults.isNullOrEmpty()) {
-                    binding.searchBg.visibility = View.VISIBLE
+                    fragmentSearchBinding.searchBg.visibility = View.VISIBLE
                 } else {
-                    binding.searchBg.visibility = View.GONE
+                    fragmentSearchBinding.searchBg.visibility = View.GONE
                 }
             }
         }
         if (searchQuery == null) {
             Toast.makeText(requireContext(), "No search query", Toast.LENGTH_SHORT).show()
-            binding.searchBg.visibility = View.VISIBLE
+            fragmentSearchBinding.searchBg.visibility = View.VISIBLE
         }
-        binding.searchRV.layoutManager = LinearLayoutManager(requireContext())
+        fragmentSearchBinding.searchRV.layoutManager = LinearLayoutManager(requireContext())
 
         searchListAdapter = SearchListAdapter(
             object : SearchListAdapter.OnItemClickListener {
@@ -92,10 +92,10 @@ class SearchFragment : Fragment() {
                 }
             },
         )
-        binding.searchRV.adapter = searchListAdapter
+        fragmentSearchBinding.searchRV.adapter = searchListAdapter
 
         // Observe search results from ViewModel and update the adapter
-        viewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
+        searchViewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
             searchListAdapter.updateList(searchResults)
         }
     }

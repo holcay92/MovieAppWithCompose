@@ -32,22 +32,22 @@ import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListener {
-    private lateinit var binding: FragmentMainBinding
-    private val viewModelPopular by viewModels<PopularMovieViewModel>()
-    private val viewModelTR by viewModels<TopRatedMovieViewModel>()
-    private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
+    private lateinit var fragmentMainBinding: FragmentMainBinding
+    private val popularMovieViewModel by viewModels<PopularMovieViewModel>()
+    private val topRatedMovieViewModel by viewModels<TopRatedMovieViewModel>()
+    private val favoriteMovieViewModel by viewModels<FavoriteMovieViewModel>()
     private lateinit var progressDialog: Dialog
-    private lateinit var adapterPopular: PopularMovieAdapter
-    private lateinit var adapterTR: TopRatedMovieAdapter
+    private lateinit var popularMovieAdapter: PopularMovieAdapter
+    private lateinit var topRatedMovieAdapter: TopRatedMovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        fragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
         showProgressDialog()
-        return binding.root
+        return fragmentMainBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,24 +58,24 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
         setupRecyclerViews()
         setupGridButtonClickListener()
 
-        binding.gridBtn.setOnClickListener {
+        fragmentMainBinding.gridBtn.setOnClickListener {
             viewType = !viewType
             switchRecyclerViewLayout()
         }
 
         fetchData()
-        viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) {
+        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) {
         }
     }
 
     private fun fetchData() {
         runBlocking {
-            viewModelTR.tRMovieResponse.observe(viewLifecycleOwner) {
-                adapterTR.updateList(it)
+            topRatedMovieViewModel.tRMovieResponse.observe(viewLifecycleOwner) {
+                topRatedMovieAdapter.updateList(it)
             }
 
-            viewModelPopular.popularMovieResponse.observe(viewLifecycleOwner) {
-                adapterPopular.updateList(it)
+            popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner) {
+                popularMovieAdapter.updateList(it)
             }
         }
         hideProgressDialog()
@@ -102,7 +102,7 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
     }
 
     private fun setupGridButtonClickListener() {
-        binding.gridBtn.setOnClickListener {
+        fragmentMainBinding.gridBtn.setOnClickListener {
             viewType = !viewType
             switchRecyclerViewLayout()
         }
@@ -126,27 +126,27 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
 
     @SuppressLint("NotifyDataSetChanged")
     private fun switchRecyclerViewLayout() {
-        binding.rvPopularMovies.layoutManager =
+        fragmentMainBinding.rvPopularMovies.layoutManager =
             if (viewType) {
                 GridLayoutManager(requireContext(), SPAN_COUNT)
             } else {
                 LinearLayoutManager(requireContext())
             }
-        adapterPopular.setViewType(
+        popularMovieAdapter.setViewType(
             if (viewType) {
                 PopularMovieAdapter.ViewType.GRID
             } else {
                 PopularMovieAdapter.ViewType.LIST
             },
         )
-        binding.gridBtn.setImageResource(
+        fragmentMainBinding.gridBtn.setImageResource(
             if (viewType) {
                 R.drawable.list_view
             } else {
                 R.drawable.grid_view
             },
         )
-        binding.rvPopularMovies.adapter?.notifyDataSetChanged()
+        fragmentMainBinding.rvPopularMovies.adapter?.notifyDataSetChanged()
     }
 
     private fun alertDialog() {
@@ -165,8 +165,8 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
     }
 
     private fun setupRecyclerViews() {
-        binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
-        adapterPopular = PopularMovieAdapter(
+        fragmentMainBinding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        popularMovieAdapter = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: ResultPopular) {
                     val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
@@ -178,9 +178,9 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
             },
             this,
         )
-        binding.rvPopularMovies.adapter = adapterPopular
+        fragmentMainBinding.rvPopularMovies.adapter = popularMovieAdapter
 
-        binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        fragmentMainBinding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -189,14 +189,14 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     page++
-                    viewModelPopular.getNextPage(page)
+                    popularMovieViewModel.getNextPage(page)
                 }
             }
         })
 
-        binding.rvTopRatedMovies?.layoutManager =
+        fragmentMainBinding.rvTopRatedMovies?.layoutManager =
             GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
-        adapterTR = TopRatedMovieAdapter(object : TopRatedMovieAdapter.OnItemClickListener {
+        topRatedMovieAdapter = TopRatedMovieAdapter(object : TopRatedMovieAdapter.OnItemClickListener {
             override fun onItemClick(movie: ResultTopRated) {
                 val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
                     Constants.TOP_RATED,
@@ -205,7 +205,7 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
                 findNavController().navigate(action)
             }
         })
-        binding.rvTopRatedMovies?.adapter = adapterTR
+        fragmentMainBinding.rvTopRatedMovies?.adapter = topRatedMovieAdapter
     }
 
     companion object {
@@ -215,10 +215,10 @@ class MainFragment : Fragment(), PopularMovieAdapter.OnFavoriteStatusChangeListe
     }
 
     override fun onFavoriteStatusChanged(movie: ResultPopular) {
-        viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
-            adapterPopular.updateFavoriteStatus(favoriteMovies)
+        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
+            popularMovieAdapter.updateFavoriteStatus(favoriteMovies)
         }
-        viewModelForFavorite.actionFavButton(
+        favoriteMovieViewModel.actionFavButton(
             FavoriteMovie(
                 0,
                 movie.id,

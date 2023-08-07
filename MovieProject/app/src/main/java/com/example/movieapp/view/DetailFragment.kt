@@ -32,10 +32,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var bindingDetail: FragmentDetailBinding
-    private val viewModelForImage by viewModels<DetailFragmentMovieImageViewModel>()
-    private val viewModelForDetail by viewModels<DetailViewModel>()
-    private val viewModelForFavorite by viewModels<FavoriteMovieViewModel>()
-    private lateinit var adapter: MovieImageAdapter
+    private val detailFragmentMovieImageViewModel by viewModels<DetailFragmentMovieImageViewModel>()
+    private val detailViewModel by viewModels<DetailViewModel>()
+    private val favoriteMovieViewModel by viewModels<FavoriteMovieViewModel>()
+    private lateinit var movieImageAdapter: MovieImageAdapter
     private lateinit var currentVideoId: String
     private var videoNumber = 0
 
@@ -95,8 +95,8 @@ class DetailFragment : Fragment() {
     }
 
     private fun setupViewPager() {
-        adapter = MovieImageAdapter()
-        bindingDetail.viewPager.adapter = adapter
+        movieImageAdapter = MovieImageAdapter()
+        bindingDetail.viewPager.adapter = movieImageAdapter
         bindingDetail.viewPager.setPageTransformer(ZoomOutPageTransformer())
     }
 
@@ -121,19 +121,19 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeMovieImageList(movieId: Int) {
-        viewModelForImage.fetchMovieImageList(movieId)
-        viewModelForImage.imageResponse.observe(viewLifecycleOwner) {
-            adapter.updateList(it)
+        detailFragmentMovieImageViewModel.fetchMovieImageList(movieId)
+        detailFragmentMovieImageViewModel.imageResponse.observe(viewLifecycleOwner) {
+            movieImageAdapter.updateList(it)
         }
     }
 
     private fun observeMovieDetailAndVideos(movieId: Int) {
-        viewModelForDetail.fetchMovieDetail(movieId)
-        viewModelForDetail.fetchMovieVideos(movieId)
-        viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
+        detailViewModel.fetchMovieDetail(movieId)
+        detailViewModel.fetchMovieVideos(movieId)
+        detailViewModel.movieDetail.observe(viewLifecycleOwner) {
             updateUI(it)
         }
-        viewModelForDetail.movieVideos.observe(viewLifecycleOwner) { it ->
+        detailViewModel.movieVideos.observe(viewLifecycleOwner) { it ->
             it?.takeIf { it.isNotEmpty() }?.let { initFirstVideo(it[0]) }
         }
     }
@@ -147,13 +147,13 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeFavoriteMovieList(movieId: Int) {
-        viewModelForFavorite.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
+        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
             val isFav = favoriteMovies.any { it.id == movieId }
             updateFavButtonState(isFav)
             bindingDetail.favButton.setOnClickListener {
-                val movie = viewModelForDetail.movieDetail.value
+                val movie = detailViewModel.movieDetail.value
                 val favMovie = FavoriteMovie(0, movieId, movie?.title, movie?.poster_path)
-                viewModelForFavorite.actionFavButton(favMovie)
+                favoriteMovieViewModel.actionFavButton(favMovie)
             }
         }
     }
@@ -199,7 +199,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun switchToNextVideo() {
-        val videos = viewModelForDetail.movieVideos.value
+        val videos = detailViewModel.movieVideos.value
         if (!videos.isNullOrEmpty()) {
             videoNumber = (videoNumber + 1) % videos.size
             val nextVideo = videos[videoNumber]
@@ -208,7 +208,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun switchToPreviousVideo() {
-        val videos = viewModelForDetail.movieVideos.value
+        val videos = detailViewModel.movieVideos.value
         if (!videos.isNullOrEmpty()) {
             if (videoNumber == 0) {
                 videoNumber = videos.size // cycle to the last video

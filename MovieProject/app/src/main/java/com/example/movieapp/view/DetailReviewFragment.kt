@@ -15,17 +15,17 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailReviewFragment : Fragment() {
-    private lateinit var binding: FragmentDetailReviewBinding
-    private lateinit var adapter: DetailReviewAdapter
-    private val viewModel by viewModels<DetailReviewViewModel>()
+    private lateinit var fragmentDetailReviewBinding: FragmentDetailReviewBinding
+    private lateinit var detailReviewAdapter: DetailReviewAdapter
+    private val detailReviewViewModel by viewModels<DetailReviewViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
-        return binding.root
+        fragmentDetailReviewBinding = FragmentDetailReviewBinding.inflate(inflater, container, false)
+        return fragmentDetailReviewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,17 +36,17 @@ class DetailReviewFragment : Fragment() {
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = "Reviews"
 
-        adapter = DetailReviewAdapter()
-        binding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvDetailReview.adapter = adapter
+        detailReviewAdapter = DetailReviewAdapter()
+        fragmentDetailReviewBinding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())
+        fragmentDetailReviewBinding.rvDetailReview.adapter = detailReviewAdapter
         // linear layout manager is default for recyclerview
-        viewModel.getReview(id)
-        viewModel.reviewList.observe(viewLifecycleOwner) {
-            adapter.updateList(it)
+        detailReviewViewModel.getReview(id)
+        detailReviewViewModel.reviewList.observe(viewLifecycleOwner) {
+            detailReviewAdapter.updateList(it)
             if (it.isEmpty()) {
-                binding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
+                fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
             } else {
-                binding.tvDetailReviewNoReviewsFound.visibility = View.GONE
+                fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.GONE
             }
         }
     }

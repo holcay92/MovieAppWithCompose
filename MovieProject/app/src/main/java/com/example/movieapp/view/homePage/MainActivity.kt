@@ -16,12 +16,11 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var activityMainBinding: ActivityMainBinding
 
     @Inject
     lateinit var movieApiService: MovieApiService
@@ -32,8 +31,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(activityMainBinding.root)
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // Set the activity to full-screen mode
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -53,12 +52,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        val toolbar: Toolbar = binding.toolbar
+        val toolbar: Toolbar = activityMainBinding.toolbar
         setSupportActionBar(toolbar)
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+        activityMainBinding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
                     findNavController(R.id.fragmentContainerView).navigate(R.id.mainFragment)
@@ -134,13 +133,13 @@ class MainActivity : AppCompatActivity() {
         return true
     }
     private fun hideNavigationBarAndToolbar() {
-        binding.bottomNavigation.visibility = View.GONE
-        binding.toolbar.visibility = View.GONE
+        activityMainBinding.bottomNavigation.visibility = View.GONE
+        activityMainBinding.toolbar.visibility = View.GONE
     }
 
     private fun showNavigationBarAndToolbar() {
-        binding.bottomNavigation.visibility = View.VISIBLE
-        binding.toolbar.visibility = View.VISIBLE
+        activityMainBinding.bottomNavigation.visibility = View.VISIBLE
+        activityMainBinding.toolbar.visibility = View.VISIBLE
     }
 
     override fun onSupportNavigateUp(): Boolean {

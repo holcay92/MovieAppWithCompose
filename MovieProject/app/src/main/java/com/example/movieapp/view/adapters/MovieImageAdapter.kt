@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.movieapp.databinding.ItemImageBinding
 import com.example.movieapp.model.movieImages.Poster
@@ -21,7 +20,8 @@ class MovieImageAdapter : RecyclerView.Adapter<MovieImageAdapter.MovieImageViewH
             val itemImage = ItemImageBinding.bind(itemView)
             itemImage.apply {
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w500${image.file_path}").fitCenter().transform(
+                    .load("https://image.tmdb.org/t/p/w500${image.file_path}").fitCenter()
+                    .transform(
                         RoundedCorners(50),
                     )
                     .into(imageView)
