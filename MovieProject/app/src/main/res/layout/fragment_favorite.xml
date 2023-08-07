@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_theme_bg"
     android:paddingTop="50dp"
+    android:paddingBottom="20dp"
     tools:context=".view.FavoriteFragment">
 
     <ImageView
@@ -36,8 +37,7 @@
         android:id="@+id/favoriteRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:padding="8dp"
+
         android:scrollbars="vertical"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="4"
