@@ -51,65 +51,14 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // setup user interface
         setupViews()
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                alertDialog()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            onBackPressedCallback,
-        )
+        setupBackPressedCallback()
+        setupRecyclerViews()
+        setupGridButtonClickListener()
 
         binding.gridBtn.setOnClickListener {
             viewType = !viewType
             switchRecyclerViewLayout()
         }
-        binding.rvPopularMovies.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-        binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    page++
-                    viewModelPopular.getNextPage(page)
-                }
-            }
-        })
-        adapterPopular = PopularMovieAdapter(
-            object : PopularMovieAdapter.OnItemClickListener {
-                override fun onItemClick(movie: ResultPopular) {
-                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                        Constants.POPULAR,
-                        movie.id,
-
-                    )
-                    findNavController().navigate(action)
-                }
-            },
-        )
-        binding.rvPopularMovies.adapter = adapterPopular
-
-        binding.rvTopRatedMovies?.layoutManager =
-            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
-        adapterTR = TopRatedMovieAdapter(
-            object : TopRatedMovieAdapter.OnItemClickListener {
-                override fun onItemClick(movie: ResultTopRated) {
-                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                        Constants.TOP_RATED,
-                        movie.id,
-                    )
-                    findNavController().navigate(action)
-                }
-            },
-        )
-        binding.rvTopRatedMovies?.adapter = adapterTR
 
         fetchData()
     }
@@ -127,17 +76,7 @@ class MainFragment : Fragment() {
         hideProgressDialog()
     }
 
-    private fun setupViews() {
-        val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = ""
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        SPAN_COUNT = if (isLandscape) 5 else 2
-        setupBackButtonCallback()
-        setupGridButtonClickListener()
-        setupRecyclerViews()
-    }
-
-    private fun setupBackButtonCallback() {
+    private fun setupBackPressedCallback() {
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 alertDialog()
@@ -149,52 +88,19 @@ class MainFragment : Fragment() {
         )
     }
 
+    private fun setupViews() {
+        val toolbar = activity as AppCompatActivity
+        toolbar.supportActionBar?.title = ""
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        SPAN_COUNT = if (isLandscape) 5 else 2
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
     private fun setupGridButtonClickListener() {
         binding.gridBtn.setOnClickListener {
             viewType = !viewType
             switchRecyclerViewLayout()
         }
-    }
-
-    private fun setupRecyclerViews() {
-        binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
-        adapterPopular = PopularMovieAdapter(object : PopularMovieAdapter.OnItemClickListener {
-            override fun onItemClick(movie: ResultPopular) {
-                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                    Constants.POPULAR,
-                    movie.id,
-                )
-                findNavController().navigate(action)
-            }
-        })
-        binding.rvPopularMovies.adapter = adapterPopular
-
-        binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    page++
-                    viewModelPopular.getNextPage(page)
-                }
-            }
-        })
-
-        binding.rvTopRatedMovies?.layoutManager =
-            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
-        adapterTR = TopRatedMovieAdapter(object : TopRatedMovieAdapter.OnItemClickListener {
-            override fun onItemClick(movie: ResultTopRated) {
-                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                    Constants.TOP_RATED,
-                    movie.id,
-                )
-                findNavController().navigate(action)
-            }
-        })
-        binding.rvTopRatedMovies?.adapter = adapterTR
     }
 
     override fun onResume() {
@@ -251,6 +157,47 @@ class MainFragment : Fragment() {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    private fun setupRecyclerViews() {
+        binding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        adapterPopular = PopularMovieAdapter(object : PopularMovieAdapter.OnItemClickListener {
+            override fun onItemClick(movie: ResultPopular) {
+                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                    Constants.POPULAR,
+                    movie.id,
+                )
+                findNavController().navigate(action)
+            }
+        })
+        binding.rvPopularMovies.adapter = adapterPopular
+
+        binding.rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    page++
+                    viewModelPopular.getNextPage(page)
+                }
+            }
+        })
+
+        binding.rvTopRatedMovies?.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
+        adapterTR = TopRatedMovieAdapter(object : TopRatedMovieAdapter.OnItemClickListener {
+            override fun onItemClick(movie: ResultTopRated) {
+                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                    Constants.TOP_RATED,
+                    movie.id,
+                )
+                findNavController().navigate(action)
+            }
+        })
+        binding.rvTopRatedMovies?.adapter = adapterTR
     }
 
     companion object {
