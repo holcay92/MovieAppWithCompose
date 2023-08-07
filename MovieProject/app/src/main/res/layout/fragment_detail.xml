@@ -27,10 +27,9 @@
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="375dp"
-                android:paddingBottom="20dp"
-                android:paddingTop="10dp"
                 android:clipToPadding="false"
-            tools:background="@color/light_theme" />
+                android:paddingTop="10dp"
+                tools:background="@color/light_theme" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,6 +55,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="-20dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
                         android:text="@string/show_reviews"
                         android:textColor="@color/light_theme" />
                 </LinearLayout>
@@ -348,6 +350,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/light_theme" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -359,10 +362,11 @@
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_margin="10dp"
+                        android:contentDescription="@string/content_description"
                         android:layout_weight="1"
                         android:backgroundTint="@android:color/transparent"
                         android:src="@drawable/previous_arrow" />
+
                     <Button
                         android:id="@+id/fullscreen_button"
                         android:layout_width="wrap_content"
@@ -371,17 +375,22 @@
                         android:text="@string/toggle_full_screen" />
 
 
-
                     <ImageButton
                         android:id="@+id/next_button"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_margin="10dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/content_description"
                         android:backgroundTint="@android:color/transparent"
                         android:src="@drawable/next_arrow" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/light_theme" />
+
                 <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                     android:id="@+id/youtube_player_view1"
                     android:layout_width="wrap_content"

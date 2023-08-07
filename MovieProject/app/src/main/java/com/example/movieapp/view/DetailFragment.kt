@@ -1,11 +1,13 @@
 package com.example.movieapp.view
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -52,7 +54,7 @@ class DetailFragment : Fragment() {
         setupBackButtonNavigation()
         val movieId = extractMovieIdFromArguments()
         setupViewPager()
-        adjustViewPagerHeight()
+        adjustViewPagerDimensions()
         observeMovieImageList(movieId)
         observeMovieDetailAndVideos(movieId)
         setupShowReviewsButton(movieId)
@@ -106,12 +108,24 @@ class DetailFragment : Fragment() {
         bindingDetail.viewPager.setPageTransformer(ZoomOutPageTransformer())
     }
 
-    private fun adjustViewPagerHeight() {
+    private fun adjustViewPagerDimensions() {
         val displayMetrics = DisplayMetrics()
         requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
         val screenHeight = displayMetrics.heightPixels
         val halfScreenHeight = screenHeight / 2
         bindingDetail.viewPager.layoutParams.height = halfScreenHeight
+
+        val viewPager = bindingDetail.viewPager
+        val layoutParams = viewPager.layoutParams as LinearLayout.LayoutParams
+        // for the landscape mode
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutParams.width = resources.displayMetrics.widthPixels / 2
+        } else {
+            layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
+        }
+
+        viewPager.layoutParams = layoutParams
     }
 
     private fun observeMovieImageList(movieId: Int) {
@@ -127,12 +141,8 @@ class DetailFragment : Fragment() {
         viewModelForDetail.movieDetail.observe(viewLifecycleOwner) {
             updateUI(it)
         }
-        viewModelForDetail.movieVideos.observe(viewLifecycleOwner) {
-            if (it != null) {
-                if (it.isNotEmpty()) {
-                    initFirstVideo(it[0])
-                }
-            }
+        viewModelForDetail.movieVideos.observe(viewLifecycleOwner) { it ->
+            it?.takeIf { it.isNotEmpty() }?.let { initFirstVideo(it[0]) }
         }
     }
 
