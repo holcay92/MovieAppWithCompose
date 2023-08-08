@@ -181,7 +181,7 @@ class DetailFragment : Fragment() {
     private fun updateFavButtonState(isFav: Boolean) {
         val drawableResId =
             if (isFav) R.drawable.add_fav_filled_icon else R.drawable.add_fav_empty_icon
-        bindingDetail.favButton.setBackgroundResource(drawableResId)
+        bindingDetail.favButton.setImageResource(drawableResId)
     }
 
     private fun handleFullScreenButton() {
