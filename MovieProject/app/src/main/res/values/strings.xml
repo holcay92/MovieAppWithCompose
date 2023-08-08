@@ -5,7 +5,7 @@
     <string name="popular_movies">Popular</string>
     <string name="top_rated_movies">Top Rated</string>
     <string name="title">Title :</string>
-    <string name="vote">Vote :</string>
+    <string name="rating">Rating :</string>
     <string name="budget">Budget :</string>
     <string name="release_date">Release Date :</string>
     <string name="adult">Adult :</string>

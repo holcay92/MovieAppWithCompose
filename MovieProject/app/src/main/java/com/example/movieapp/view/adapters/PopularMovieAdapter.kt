@@ -58,19 +58,13 @@ class PopularMovieAdapter(
                 val bindingItem = MovieItemPopularBinding.bind(itemView)
                 bindingItem.apply {
                     movieTitle.text = popularMovie.title
+                    voteMovie?.text = popularMovie.voteAverage.toString()
                     if (popularMovie.isFavorite) {
                         btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                     } else {
                         btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
                     }
 
-                    movieVote.setBackgroundResource(
-                        when (popularMovie.voteAverage?.let { updateVoteStyle(it) }) {
-                            "green" -> R.drawable.good_vote
-                            "yellow" -> R.drawable.medium_vote
-                            else -> R.drawable.low_vote
-                        },
-                    )
                     Glide.with(itemView.context)
                         .load("https://image.tmdb.org/t/p/w500${popularMovie.posterPath}")
                         .centerCrop().transform(CenterCrop(), RoundedCorners(20))
@@ -80,17 +74,11 @@ class PopularMovieAdapter(
                 val bindingItem = MovieItemPopularGridViewBinding.bind(itemView)
                 bindingItem.apply {
                     if (popularMovie.isFavorite) {
-                        btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
+                        btnAddFav.setImageResource(R.drawable.add_fav_filled_icon_top_rated)
                     } else {
-                        btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
+                        btnAddFav.setImageResource(R.drawable.add_fav_empty_icon_top_rated)
                     }
-                    movieVote.setBackgroundResource(
-                        when (popularMovie.voteAverage?.let { updateVoteStyle(it) }) {
-                            "green" -> R.drawable.good_vote
-                            "yellow" -> R.drawable.medium_vote
-                            else -> R.drawable.low_vote
-                        },
-                    )
+
                     Glide.with(itemView.context)
                         .load("https://image.tmdb.org/t/p/w500${popularMovie.posterPath}")
                         .centerCrop()

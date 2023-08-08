@@ -100,7 +100,7 @@ class MainFragment :
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = ""
         val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        SPAN_COUNT = if (isLandscape) 5 else 2
+        SPAN_COUNT = if (isLandscape) 5 else 3
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 

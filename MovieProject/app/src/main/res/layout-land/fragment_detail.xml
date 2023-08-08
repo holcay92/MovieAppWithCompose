@@ -51,7 +51,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/vote"
+                            android:text="@string/rating"
                             android:textColor="@color/light_theme"
                             android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                             android:textStyle="bold" />
@@ -60,6 +60,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:contentDescription="@string/content_description"
+                            android:src="@drawable/vote_star"/>
 
                         <TextView
                             android:id="@+id/movieVote"
@@ -179,6 +185,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:contentDescription="@string/content_description"
+                            android:src="@drawable/budget_icon"/>
 
                         <TextView
                             android:id="@+id/movieBudget"
