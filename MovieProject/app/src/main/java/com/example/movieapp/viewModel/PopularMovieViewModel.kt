@@ -40,7 +40,7 @@ class PopularMovieViewModel @Inject constructor(
                         val results = response.body()?.results
                         results?.forEach { movie ->
                             viewModelScope.launch {
-                                movie.isFavorite = isMovieInFavorites(movie.id)
+                                movie.isFavorite = movie.id?.let { isMovieInFavorites(it) } == true
                             }
                         }
                         popularMovieResponse.value = results

@@ -166,7 +166,11 @@ class DetailFragment : Fragment() {
                 movieOverview.text = it.overview
                 movieVote.text = it.vote_average.toString()
                 movieBudget.text = it.budget.toString()
-                movieAdult.text = if (it.adult!!) "Yes" else "No"
+                if (it.adult == true) {
+                    movieAdult.setText(R.string.yes)
+                } else {
+                    movieAdult.setText(R.string.no)
+                }
                 movieVoteCount.text = it.vote_count.toString()
                 val toolbar = activity as AppCompatActivity
                 toolbar.supportActionBar?.title = it.title

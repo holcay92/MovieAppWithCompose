@@ -64,14 +64,14 @@ class PopularMovieAdapter(
                     }
 
                     movieVote.setBackgroundResource(
-                        when (updateVoteStyle(popularMovie.vote_average)) {
+                        when (popularMovie.voteAverage?.let { updateVoteStyle(it) }) {
                             "green" -> R.drawable.good_vote
                             "yellow" -> R.drawable.medium_vote
                             else -> R.drawable.low_vote
                         },
                     )
                     Glide.with(itemView.context)
-                        .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}")
+                        .load("https://image.tmdb.org/t/p/w500${popularMovie.posterPath}")
                         .centerCrop().transform(CenterCrop(), RoundedCorners(20))
                         .into(movieImage)
                 }
@@ -84,14 +84,14 @@ class PopularMovieAdapter(
                         btnAddFav.setImageResource(R.drawable.add_fav_empty_icon)
                     }
                     movieVote.setBackgroundResource(
-                        when (updateVoteStyle(popularMovie.vote_average)) {
+                        when (popularMovie.voteAverage?.let { updateVoteStyle(it) }) {
                             "green" -> R.drawable.good_vote
                             "yellow" -> R.drawable.medium_vote
                             else -> R.drawable.low_vote
                         },
                     )
                     Glide.with(itemView.context)
-                        .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}")
+                        .load("https://image.tmdb.org/t/p/w500${popularMovie.posterPath}")
                         .centerCrop()
                         .into(movieImage)
                 }

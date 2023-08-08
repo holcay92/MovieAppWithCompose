@@ -31,10 +31,10 @@
 
             <ImageButton
                 android:id="@+id/favButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom|end"
-                android:background="@android:color/transparent"
+                android:background="@drawable/rounded_bg"
                 android:src="@drawable/add_fav_empty_icon" />
 
             <!-- Use RelativeLayout to overlay views -->

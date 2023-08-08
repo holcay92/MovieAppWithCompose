@@ -172,11 +172,15 @@ class MainFragment :
         popularMovieAdapter = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: ResultPopular) {
-                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                        Constants.POPULAR,
-                        movie.id,
-                    )
-                    findNavController().navigate(action)
+                    val action = movie.id?.let {
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.POPULAR,
+                            it,
+                        )
+                    }
+                    if (action != null) {
+                        findNavController().navigate(action)
+                    }
                 }
             },
             this,
@@ -231,7 +235,7 @@ class MainFragment :
                 0,
                 movie.id,
                 movie.title,
-                movie.poster_path,
+                movie.posterPath,
             ),
         )
     }

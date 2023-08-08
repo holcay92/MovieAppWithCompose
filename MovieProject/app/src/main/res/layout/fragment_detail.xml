@@ -36,13 +36,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                >
 
                 <LinearLayout
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="top">
 
                     <ImageButton
                         android:id="@+id/showReviews"
@@ -58,6 +59,7 @@
                         android:layout_marginTop="-20dp"
                         android:paddingStart="15dp"
                         android:paddingEnd="15dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/show_reviews"
                         android:textColor="@color/light_theme" />
                 </LinearLayout>
