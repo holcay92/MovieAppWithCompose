@@ -35,15 +35,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="top">
+                    android:layout_gravity="top"
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/showReviews"
@@ -85,251 +84,219 @@
                 android:layout_height="2dp"
                 android:background="@color/light_theme" />
 
-            <androidx.cardview.widget.CardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                android:backgroundTint="@android:color/transparent"
-                app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-                app:cardElevation="@dimen/detailFragmentCardViewElevation">
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:padding="5dp">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:text="@string/rating"
+                    android:textColor="@color/light_theme"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rating"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:contentDescription="@string/content_description"
-                        android:src="@drawable/vote_star"/>
-
-                    <TextView
-                        android:id="@+id/movieVote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold"
-                        tools:text="movieVote" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                android:backgroundTint="@android:color/transparent"
-                app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-                app:cardElevation="@dimen/detailFragmentCardViewElevation">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ratingStar"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/vote_star"
+                    app:layout_constraintStart_toEndOf="@+id/rating"
+                    app:layout_constraintTop_toTopOf="@+id/rating"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/movieTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold"
-                        tools:text="movieTitle" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                android:backgroundTint="@android:color/transparent"
-                app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-                app:cardElevation="@dimen/detailFragmentCardViewElevation">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/ratingValue"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/light_theme"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/rating"
+                    app:layout_constraintStart_toEndOf="@id/ratingStar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="9.0" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/release_date"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/movieReleaseDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold"
-                        tools:text="movieReleaseDate" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                android:backgroundTint="@android:color/transparent"
-                app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-                app:cardElevation="@dimen/detailFragmentCardViewElevation">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/ratingDivider"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:text=" /10  ("
+                    android:textColor="@color/light_theme"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ratingValue"
+                    app:layout_constraintStart_toEndOf="@id/ratingValue"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/budget"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:contentDescription="@string/content_description"
-                        android:src="@drawable/budget_icon"/>
-
-                    <TextView
-                        android:id="@+id/movieBudget"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        tools:text="@string/budget"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                android:backgroundTint="@android:color/transparent"
-                app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-                app:cardElevation="@dimen/detailFragmentCardViewElevation">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/ratingCount"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:text=""
+                    android:textColor="@color/light_theme"
+                    android:textSize="11sp"
+                    tools:text="1000"
+                    app:layout_constraintBottom_toBottomOf="@+id/ratingValue"
+                    app:layout_constraintStart_toEndOf="@id/ratingDivider"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/vote_count"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/movieVoteCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold"
-                        tools:text="movieOriginalTitle" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detailFragmentCardViewMargin"
-                android:backgroundTint="@android:color/transparent"
-                app:cardCornerRadius="@dimen/detailFragmentCardViewCornerRadius"
-                app:cardElevation="@dimen/detailFragmentCardViewElevation">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/ratingDivider2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:text=")"
+                    android:textColor="@color/light_theme"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ratingValue"
+                    app:layout_constraintStart_toEndOf="@id/ratingCount"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical"
+                    android:background="@color/light_theme"
+                    android:backgroundTint="@color/light_theme"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/runtime"
+                    app:layout_constraintEnd_toStartOf="@+id/releaseDate"
+                    app:layout_constraintStart_toEndOf="@+id/ratingDivider2"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/adult"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/releaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/release_date"
+                    android:textColor="@color/light_theme"
+                    app:layout_constraintEnd_toStartOf="@+id/releaseDateValue"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/movieAdult"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/light_theme"
-                        android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
-                        android:textStyle="bold"
-                        tools:text="movieAdult" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/releaseDateValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/light_theme"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2022" />
+
+                <TextView
+                    android:id="@+id/runtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Duration: "
+                    android:textColor="@color/light_theme"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rating" />
+
+                <TextView
+                    android:id="@+id/runtimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120 "
+                    android:textColor="@color/light_theme"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/runtime"
+                    app:layout_constraintTop_toTopOf="@+id/runtime" />
+                <TextView
+                    android:id="@+id/adult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adult Content : "
+                    android:textColor="@color/light_theme"
+                    app:layout_constraintEnd_toStartOf="@+id/adultValue"
+                    app:layout_constraintTop_toTopOf="@+id/runtime" />
+                <TextView
+                    android:id="@+id/adultValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adult "
+                    android:textColor="@color/light_theme"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/adult" />
+
+                <TextView
+                    android:id="@+id/budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Budget :"
+                    android:textColor="@color/light_theme"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/runtime" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/budgetIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/budget_icon"
+                    app:layout_constraintTop_toTopOf="@id/budget"
+                    app:layout_constraintStart_toEndOf="@+id/budget"/>
+
+                <TextView
+                    android:id="@+id/budgetValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120000 "
+                    android:textColor="@color/light_theme"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/budgetIcon"
+                    app:layout_constraintTop_toTopOf="@+id/budget" />
+
+                <TextView
+                    android:id="@+id/genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Genres : "
+                    android:textColor="@color/light_theme"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/genreValue1"
+                    app:layout_constraintTop_toBottomOf="@+id/adult" />
+                <ImageView
+                    android:id="@+id/genreValue1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="genre"
+                    android:src="@drawable/vote_star"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/genreValue2"
+                    app:layout_constraintTop_toTopOf="@+id/genre" />
+                <ImageView
+                    android:id="@+id/genreValue2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="genre"
+                    android:src="@drawable/vote_star"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/genreValue3"
+                    app:layout_constraintTop_toTopOf="@+id/genre" />
+                <ImageView
+                    android:id="@+id/genreValue3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="genre"
+                    android:src="@drawable/vote_star"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/genre" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/light_theme" />
 
             <LinearLayout
@@ -358,7 +325,7 @@
                     android:textColor="@color/light_theme"
                     android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                     android:textStyle="bold"
-                    tools:text="@string/app_name" />
+                    tools:text="@string/overView_placeholder" />
 
                 <View
                     android:layout_width="match_parent"
@@ -376,9 +343,9 @@
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/content_description"
                         android:layout_weight="1"
                         android:backgroundTint="@android:color/transparent"
+                        android:contentDescription="@string/content_description"
                         android:src="@drawable/previous_trailer_arrow" />
 
                     <Button
@@ -395,8 +362,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:contentDescription="@string/content_description"
                         android:backgroundTint="@android:color/transparent"
+                        android:contentDescription="@string/content_description"
                         android:src="@drawable/next_trailer_arrow" />
                 </LinearLayout>
 

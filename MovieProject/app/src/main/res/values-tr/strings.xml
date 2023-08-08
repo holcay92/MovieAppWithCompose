@@ -6,7 +6,7 @@
     <string name="popular_movies">Popüler</string>
     <string name="top_rated_movies">En yüksek puan</string>
     <string name="title">Başlık :</string>
-    <string name="rating">Puan :</string>
+    <string name="rating">IMDB :</string>
     <string name="budget">Bütçe :</string>
     <string name="release_date">Yayınlanma tarihi :</string>
     <string name="adult">Yetişkin :</string>
@@ -34,5 +34,6 @@
     <string name="cancel">Vazgeç</string>
     <string name="remove_fav_movie_message">Favorilerden çıkarmak istediğinize emin misiniz?</string>
     <string name="quite_from_app__message">Çıkmak istediğinize emin misiniz?</string>
+    <string name="overView_placeholder">OverView</string>
 
 </resources>
