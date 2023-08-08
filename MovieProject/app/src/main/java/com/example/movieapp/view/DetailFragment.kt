@@ -59,10 +59,7 @@ class DetailFragment : Fragment() {
         handleShowReviewsButton(movieId)
         observeFavoriteMovieList(movieId)
         // Enable the back button
-        val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-        val backButton = R.drawable.ic_back_toolbar
-        actionBar?.setHomeAsUpIndicator(backButton)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         bindingDetail.apply {
             fullscreenButton.setOnClickListener {

@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Menu
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -54,6 +53,9 @@ class MainActivity : AppCompatActivity() {
     private fun setupToolbar() {
         val toolbar: Toolbar = activityMainBinding.toolbar
         setSupportActionBar(toolbar)
+        val actionBar = supportActionBar
+        val backButton = R.drawable.ic_back_toolbar
+        actionBar?.setHomeAsUpIndicator(backButton)
     }
 
     private fun setupBottomNavigation() {
