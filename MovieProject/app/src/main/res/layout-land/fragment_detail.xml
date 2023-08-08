@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.viewpager2.widget.ViewPager2
@@ -155,7 +156,7 @@
                     android:id="@+id/adult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adult Content : "
+                    android:text="@string/adult"
                     android:textColor="@color/light_theme"
                     app:layout_constraintEnd_toStartOf="@+id/adultValue"
                     app:layout_constraintTop_toTopOf="@+id/runtime" />
@@ -163,7 +164,7 @@
                     android:id="@+id/adultValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adult "
+                    tools:text="Adult "
                     android:textColor="@color/light_theme"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +174,7 @@
                     android:id="@+id/budget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Budget :"
+                    android:text="@string/budget"
                     android:textColor="@color/light_theme"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
