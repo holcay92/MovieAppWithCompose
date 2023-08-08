@@ -144,9 +144,9 @@ class MainFragment :
         )
         fragmentMainBinding.gridBtn.setImageResource(
             if (viewType) {
-                R.drawable.list_view
+                R.drawable.list_view_icon
             } else {
-                R.drawable.grid_view
+                R.drawable.grid_view_icon
             },
         )
         fragmentMainBinding.rvPopularMovies.adapter?.notifyDataSetChanged()
@@ -154,13 +154,13 @@ class MainFragment :
 
     private fun alertDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Alert")
-        builder.setMessage("Do you want to exit?")
+        builder.setTitle(R.string.warning)
+        builder.setMessage(R.string.quite_from_app__message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton(R.string.yes) { _, _ ->
             requireActivity().finish() // Exit the app
         }
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton(R.string.no) { _, _ ->
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)

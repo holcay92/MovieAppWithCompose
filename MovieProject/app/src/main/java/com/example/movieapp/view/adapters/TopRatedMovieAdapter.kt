@@ -14,7 +14,7 @@ import com.example.movieapp.room.FavoriteMovie
 
 class TopRatedMovieAdapter(
     private val listener: OnItemClickListener,
-    private val favStatusChangeListener: TopRatedMovieAdapter.OnFavoriteStatusChangeListener,
+    private val favStatusChangeListener: OnFavoriteStatusChangeListener,
 ) :
     RecyclerView.Adapter<TopRatedMovieAdapter.TopRatedMovieViewHolder>() {
     private var tRMovieList = ArrayList<ResultTopRated>()
@@ -38,13 +38,11 @@ class TopRatedMovieAdapter(
         fun bind(tRMovie: ResultTopRated) {
             val bindingItem = MovieItemTopRatedGridBinding.bind(itemView)
             bindingItem.apply {
-                // movieTitle.text = tRMovie.title
                 if (tRMovie.isFavorite) {
                     favButton.setImageResource(R.drawable.add_fav_filled_icon)
                 } else {
                     favButton.setImageResource(R.drawable.add_fav_empty_icon)
                 }
-                // tvMovieRating.text = tRMovie.vote_average.toString()
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${tRMovie.poster_path}").fitCenter()
                     .transform(CenterCrop(), RoundedCorners(50))

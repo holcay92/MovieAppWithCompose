@@ -65,9 +65,9 @@ class PopularMovieAdapter(
 
                     movieVote.setBackgroundResource(
                         when (updateVoteStyle(popularMovie.vote_average)) {
-                            "green" -> R.drawable.good
-                            "yellow" -> R.drawable.intermediate
-                            else -> R.drawable.normal
+                            "green" -> R.drawable.good_vote
+                            "yellow" -> R.drawable.medium_vote
+                            else -> R.drawable.low_vote
                         },
                     )
                     Glide.with(itemView.context)
@@ -85,9 +85,9 @@ class PopularMovieAdapter(
                     }
                     movieVote.setBackgroundResource(
                         when (updateVoteStyle(popularMovie.vote_average)) {
-                            "green" -> R.drawable.good
-                            "yellow" -> R.drawable.intermediate
-                            else -> R.drawable.normal
+                            "green" -> R.drawable.good_vote
+                            "yellow" -> R.drawable.medium_vote
+                            else -> R.drawable.low_vote
                         },
                     )
                     Glide.with(itemView.context)

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailReviewBinding
 import com.example.movieapp.view.adapters.DetailReviewAdapter
 import com.example.movieapp.viewModel.DetailReviewViewModel
@@ -34,7 +35,7 @@ class DetailReviewFragment : Fragment() {
             requireArguments(),
         ).movieId
         val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = "Reviews"
+        toolbar.supportActionBar?.setTitle(R.string.show_reviews)
 
         detailReviewAdapter = DetailReviewAdapter()
         fragmentDetailReviewBinding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())

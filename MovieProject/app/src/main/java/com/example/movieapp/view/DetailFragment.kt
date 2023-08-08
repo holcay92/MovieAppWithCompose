@@ -60,7 +60,7 @@ class DetailFragment : Fragment() {
         observeFavoriteMovieList(movieId)
         // Enable the back button
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-        val backButton = R.drawable.ic_back
+        val backButton = R.drawable.ic_back_toolbar
         actionBar?.setHomeAsUpIndicator(backButton)
         actionBar?.setDisplayHomeAsUpEnabled(true)
 

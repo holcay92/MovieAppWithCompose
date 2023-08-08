@@ -84,7 +84,7 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/grid_view"
+                android:src="@drawable/grid_view_icon"
                 android:contentDescription="@string/content_description" />
         </LinearLayout>
 

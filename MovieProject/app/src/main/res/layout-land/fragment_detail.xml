@@ -286,7 +286,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/transparent"
-                                android:src="@drawable/read_reviews"
+                                android:src="@drawable/read_reviews_icon"
                                 android:contentDescription="@string/content_description" />
 
                             <TextView
@@ -358,7 +358,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="@android:color/transparent"
-                    android:src="@drawable/previous_arrow" />
+                    android:src="@drawable/previous_trailer_arrow" />
                 <Button
                     android:id="@+id/fullscreen_button"
                     android:layout_width="wrap_content"
@@ -376,7 +376,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="@android:color/transparent"
-                    android:src="@drawable/next_arrow" />
+                    android:src="@drawable/next_trailer_arrow" />
             </LinearLayout>
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view1"

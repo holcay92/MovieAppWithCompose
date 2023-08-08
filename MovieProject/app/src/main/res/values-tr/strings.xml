@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="please_wait">Lütfen Bekleyin…</string>
+    <string name="popular_movies">Popüler</string>
+    <string name="top_rated_movies">En yüksek puan</string>
+    <string name="title">Başlık :</string>
+    <string name="vote">Puan :</string>
+    <string name="budget">Bütçe :</string>
+    <string name="release_date">Yayınlanma tarihi :</string>
+    <string name="adult">Yetişkin :</string>
+    <string name="vote_count">Oylanma sayısı :</string>
+    <string name="overview">Özet :</string>
+    <string name="search">Ara</string>
+    <string name="home">Ana menü</string>
+    <string name="favorites">Favoriler</string>
+    <string name="show_reviews">Yorumlar</string>
+    <string name="review">Yorum:</string>
+    <string name="author">Yazar:</string>
+    <string name="author_vote">Puan:</string>
+    <string name="no_results_found">Sonuç bulunamadı</string>
+    <string name="content_description">content value</string>
+    <string name="trailers">"Fragmanlar "</string>
+    <string name="vote_placeholder">9.0</string>
+    <string name="no_result">Sonuç yok</string>
+    <string name="empty_fav_list_text">Şimdilik burası sessiz…</string>
+    <string name="toggle_full_screen">Tam Ekran</string>
+    <string name="search_hint">Film Ara</string>
+    <string name="no_reviews_found">Yorum bulunamadı</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="warning">Uyarı</string>
+    <string name="cancel">Vazgeç</string>
+    <string name="remove_fav_movie_message">Favorilerden çıkarmak istediğinize emin misiniz?</string>
+    <string name="quite_from_app__message">Çıkmak istediğinize emin misiniz?</string>
+
+</resources>

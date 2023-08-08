@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.Constants
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentFavoriteBinding
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.view.adapters.FavoriteMovieAdapter
@@ -35,7 +36,7 @@ class FavoriteFragment : Fragment(), FavoriteMovieAdapter.OnRemoveFavoriteClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Set toolbar text as "Favorites"
-        (activity as AppCompatActivity).supportActionBar?.title = "Favorites"
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.favorites)
         // Enable the back button
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -83,13 +84,13 @@ class FavoriteFragment : Fragment(), FavoriteMovieAdapter.OnRemoveFavoriteClickL
 
     private fun alertDialog(movie: FavoriteMovie) {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Alert")
-        builder.setMessage("Are you sure you want to remove this movie from favorites?")
-        builder.setPositiveButton("Ok") { dialog, _ ->
+        builder.setTitle(R.string.warning)
+        builder.setMessage(R.string.remove_fav_movie_message)
+        builder.setPositiveButton(R.string.yes) { dialog, _ ->
             favoriteMovieViewModel.actionFavButton(movie)
             dialog.dismiss()
         }
-        builder.setNegativeButton("Cancel") { dialog, _ ->
+        builder.setNegativeButton(R.string.cancel) { dialog, _ ->
             dialog.dismiss()
         }
         builder.show()

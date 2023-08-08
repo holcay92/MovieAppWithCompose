@@ -29,7 +29,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/grid_view_landscape"
+            android:src="@drawable/grid_view_landscape_icon"
             android:contentDescription="@string/content_description" />
     </LinearLayout>
 <!-- top rated landscape hidden. todo: switch button to be added-->

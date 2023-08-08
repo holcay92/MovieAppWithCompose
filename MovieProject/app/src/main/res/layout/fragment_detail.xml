@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@android:color/transparent"
                         android:contentDescription="@string/content_description"
-                        android:src="@drawable/read_reviews" />
+                        android:src="@drawable/read_reviews_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -230,7 +230,7 @@
                         android:id="@+id/movieBudget"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/budget"
+                        tools:text="@string/budget"
                         android:textColor="@color/light_theme"
                         android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                         android:textStyle="bold" />
@@ -365,7 +365,7 @@
                         android:contentDescription="@string/content_description"
                         android:layout_weight="1"
                         android:backgroundTint="@android:color/transparent"
-                        android:src="@drawable/previous_arrow" />
+                        android:src="@drawable/previous_trailer_arrow" />
 
                     <Button
                         android:id="@+id/fullscreen_button"
@@ -383,7 +383,7 @@
                         android:layout_weight="1"
                         android:contentDescription="@string/content_description"
                         android:backgroundTint="@android:color/transparent"
-                        android:src="@drawable/next_arrow" />
+                        android:src="@drawable/next_trailer_arrow" />
                 </LinearLayout>
 
                 <View

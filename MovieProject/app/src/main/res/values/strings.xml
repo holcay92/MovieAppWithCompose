@@ -1,21 +1,19 @@
 <resources>
     <string name="app_name">MovieApp</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="please_wait">Please Wait..</string>
+    <string name="please_wait">Please Wait…</string>
     <string name="popular_movies">Popular</string>
     <string name="top_rated_movies">Top Rated</string>
-    <string name="title">Title:</string>
-    <string name="vote">Vote:</string>
-    <string name="budget">Budget:</string>
-    <string name="release_date">Release Date:</string>
+    <string name="title">Title :</string>
+    <string name="vote">Vote :</string>
+    <string name="budget">Budget :</string>
+    <string name="release_date">Release Date :</string>
     <string name="adult">Adult :</string>
-    <string name="vote_count">Vote Count:</string>
-    <string name="overview">Overview:</string>
+    <string name="vote_count">Vote Count :</string>
+    <string name="overview">Overview :</string>
     <string name="search">Search</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="show_reviews">Reviews</string>
     <string name="review">Review:</string>
     <string name="author">Author:</string>
@@ -25,8 +23,14 @@
     <string name="trailers">"Trailers "</string>
     <string name="vote_placeholder">9.0</string>
     <string name="no_result">No Result</string>
-    <string name="empty_fav_list_text">It is quiet right now...</string>
+    <string name="empty_fav_list_text">It is quiet right now…</string>
     <string name="toggle_full_screen">Enter Full Screen</string>
     <string name="search_hint">Search a movie</string>
     <string name="no_reviews_found">No Reviews Found</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="warning">Warning</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove_fav_movie_message">Are you sure you want to remove this movie from favorites?</string>
+    <string name="quite_from_app__message">Do you want to exit?</string>
 </resources>
