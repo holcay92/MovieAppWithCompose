@@ -125,7 +125,7 @@
                     android:id="@+id/releaseDateValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     android:textColor="@color/light_theme"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -196,6 +196,29 @@
                     app:layout_constraintStart_toEndOf="@+id/budgetIcon"
                     app:layout_constraintTop_toTopOf="@+id/budget" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="40dp"
+                    app:layout_constraintTop_toTopOf="@+id/budget"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageButton
+                        android:id="@+id/showReviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/content_description"
+                        android:src="@drawable/read_reviews_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_reviews"
+                        android:textColor="@color/light_theme" />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/genre"
                     android:layout_width="wrap_content"
@@ -235,6 +258,16 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/genre" />
+                <ImageView
+                    android:id="@+id/favButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="40dp"
+                    android:contentDescription="@string/content_description"
+                    android:src="@drawable/add_fav_empty_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/genre"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
