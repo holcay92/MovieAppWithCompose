@@ -10,9 +10,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.Constants
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentSearchBinding
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 import com.example.movieapp.view.adapters.SearchListAdapter
@@ -35,7 +37,7 @@ class SearchFragment : Fragment() {
             searchView.isIconified = false
         }
         val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = "Search"
+        toolbar.supportActionBar?.setTitle(R.string.search)
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -43,13 +45,11 @@ class SearchFragment : Fragment() {
                 // performSearch(query)
                 // hide keyboard
                 searchView.clearFocus()
-                Log.d("TAG_X", "SearchFragment onViewCreated query: $query")
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                performSearch(newText)
-                Log.d("TAG_X", "SearchFragment onViewCreated newText: $newText")
+                performSearch(newText) // instant search
                 return true
             }
         })
@@ -69,14 +69,17 @@ class SearchFragment : Fragment() {
                 searchListAdapter.updateList(searchResults)
                 if (searchResults.isNullOrEmpty()) {
                     fragmentSearchBinding.searchBg.visibility = View.VISIBLE
+                    fragmentSearchBinding.noResult.visibility = View.VISIBLE
                 } else {
                     fragmentSearchBinding.searchBg.visibility = View.GONE
+                    fragmentSearchBinding.noResult.visibility = View.GONE
                 }
             }
         }
+
         if (searchQuery == null) {
-            Toast.makeText(requireContext(), "No search query", Toast.LENGTH_SHORT).show()
             fragmentSearchBinding.searchBg.visibility = View.VISIBLE
+            fragmentSearchBinding.noResult.visibility = View.GONE
         }
         fragmentSearchBinding.searchRV.layoutManager = LinearLayoutManager(requireContext())
 
