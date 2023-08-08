@@ -7,12 +7,14 @@
     android:layout_gravity="center_horizontal"
     android:padding="3dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
         app:cardCornerRadius="10dp"
         app:cardElevation="30dp"
+        app:strokeWidth="0.5dp"
+        app:strokeColor="@color/light_theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +86,7 @@
         </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

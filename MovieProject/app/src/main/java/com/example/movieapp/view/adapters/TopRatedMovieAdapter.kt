@@ -39,9 +39,9 @@ class TopRatedMovieAdapter(
             val bindingItem = MovieItemTopRatedGridBinding.bind(itemView)
             bindingItem.apply {
                 if (tRMovie.isFavorite) {
-                    favButton.setImageResource(R.drawable.add_fav_filled_icon)
+                    favButton.setImageResource(R.drawable.add_fav_filled_icon_top_rated)
                 } else {
-                    favButton.setImageResource(R.drawable.add_fav_empty_icon)
+                    favButton.setImageResource(R.drawable.add_fav_empty_icon_top_rated)
                 }
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${tRMovie.poster_path}").fitCenter()

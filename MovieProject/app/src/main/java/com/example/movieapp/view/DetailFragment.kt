@@ -56,7 +56,7 @@ class DetailFragment : Fragment() {
         adjustViewPagerDimensions()
         observeMovieImageList(movieId)
         observeMovieDetailAndVideos(movieId)
-        setupShowReviewsButton(movieId)
+        handleShowReviewsButton(movieId)
         observeFavoriteMovieList(movieId)
         // Enable the back button
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
@@ -138,7 +138,7 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun setupShowReviewsButton(movieId: Int) {
+    private fun handleShowReviewsButton(movieId: Int) {
         bindingDetail.showReviews.setOnClickListener {
             val action =
                 DetailFragmentDirections.actionDetailFragmentToDetailReviewFragment(movieId)

@@ -3,6 +3,7 @@ package com.example.movieapp.view.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
@@ -73,7 +74,7 @@ class PopularMovieAdapter(
                     Glide.with(itemView.context)
                         .load("https://image.tmdb.org/t/p/w500${popularMovie.posterPath}")
                         .centerCrop().transform(CenterCrop(), RoundedCorners(20))
-                        .into(movieImage)
+                        .into(movieImage as ImageView)
                 }
             } else {
                 val bindingItem = MovieItemPopularGridViewBinding.bind(itemView)

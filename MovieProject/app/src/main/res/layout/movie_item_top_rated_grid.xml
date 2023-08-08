@@ -7,12 +7,14 @@
     android:layout_gravity="center_horizontal"
     android:padding="5dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:cardElevation="20dp"
         android:backgroundTint="@android:color/transparent"
-
+        app:strokeColor="@color/light_theme"
+        app:strokeWidth="0.5dp"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,14 +35,15 @@
                 android:id="@+id/favButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_margin="5dp"
                 android:layout_gravity="bottom|end"
                 android:background="@drawable/rounded_bg"
-                android:src="@drawable/add_fav_empty_icon" />
+                android:src="@drawable/add_fav_empty_icon_top_rated" />
 
             <!-- Use RelativeLayout to overlay views -->
 
         </FrameLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

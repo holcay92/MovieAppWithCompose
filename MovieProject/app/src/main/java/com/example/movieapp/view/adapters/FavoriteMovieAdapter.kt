@@ -1,8 +1,10 @@
 package com.example.movieapp.view.adapters
 
 import android.annotation.SuppressLint
+import android.provider.ContactsContract.CommonDataKinds.Im
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
@@ -26,7 +28,7 @@ class FavoriteMovieAdapter(
                 bindingItem.btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
-                    .into(bindingItem.movieImage)
+                    .into(bindingItem.movieImage as ImageView)
 
                 bindingItem.btnAddFav.setOnClickListener {
                     removeListener.onRemoveFavoriteClick(popularMovie)

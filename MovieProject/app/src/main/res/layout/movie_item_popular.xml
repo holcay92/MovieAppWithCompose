@@ -5,26 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-
+    android:animateLayoutChanges="true"
     android:padding="3dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/movie_item_color_popular"
         app:cardCornerRadius="10dp"
-
+        app:cardElevation="10dp"
+        app:strokeColor="@color/light_theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0.5dp"
+      >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,7 +34,7 @@
                 android:gravity="center|start"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/movieImage"
                     android:layout_width="60dp"
                     android:layout_height="75dp"
@@ -67,16 +69,16 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:backgroundTint="@android:color/transparent"
-                    android:src="@drawable/add_fav_empty_icon"
-                    android:contentDescription="@string/content_description" />
+                    android:contentDescription="@string/content_description"
+                    android:src="@drawable/add_fav_empty_icon" />
 
                 <ImageView
                     android:id="@+id/movieVote"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:contentDescription="@string/content_description"
                     android:gravity="bottom"
-                    tools:src="@color/light_theme"
-                    android:contentDescription="@string/content_description" />
+                    tools:src="@color/light_theme" />
 
             </LinearLayout>
 
@@ -84,7 +86,7 @@
         </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
