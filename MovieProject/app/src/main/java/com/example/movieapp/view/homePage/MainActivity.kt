@@ -96,42 +96,6 @@ class MainActivity : AppCompatActivity() {
             hideSystemUI()
         }
     }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        /* menuInflater.inflate(R.menu.menu_main, menu)
-         val searchItem = menu.findItem(R.id.action_search)
-         val searchView = searchItem.actionView as SearchView
-         val searchEditText =
-             searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
-         searchEditText.setTextColor(resources.getColor(R.color.light_theme))*/
-
-        /* searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-             override fun onQueryTextSubmit(query: String): Boolean {
-                 Log.d("TAG_X ", "onQueryTextSubmit $query")
-                 searchView.clearFocus()
-                 if (query.isNotBlank()) {
-                     // Handle query submission
-                     navigateToSearchFragment(query)
-                 }
-                 return true
-             }
-
-             override fun onQueryTextChange(query: String): Boolean {
-                 Log.d("TAG_X ", "onQueryTextChange $query")
-                 // Cancel the previous search job if it's still running to avoid unnecessary requests
-                 searchJob?.cancel()
-
-                 // Delay the search request by a small amount of time to avoid making todo: implement
-                 // requests for every single character typed by the user.
-                 searchJob = lifecycleScope.launch {
-                     delay(300)
-                 }
-                 return true
-             }
-         })*/
-
-        return true
-    }
     private fun hideNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.GONE
         activityMainBinding.toolbar.visibility = View.GONE
