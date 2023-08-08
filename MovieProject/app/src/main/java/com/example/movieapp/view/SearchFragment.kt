@@ -1,16 +1,15 @@
 package com.example.movieapp.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.Constants
@@ -26,6 +25,7 @@ class SearchFragment : Fragment() {
     private lateinit var fragmentSearchBinding: FragmentSearchBinding
     private val searchViewModel by viewModels<SearchViewModel>()
     private lateinit var searchListAdapter: SearchListAdapter
+    private lateinit var progressDialog: Dialog
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,6 +49,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+                showProgressDialog()
                 performSearch(newText) // instant search
                 return true
             }
@@ -71,6 +72,7 @@ class SearchFragment : Fragment() {
                     fragmentSearchBinding.searchBg.visibility = View.VISIBLE
                     fragmentSearchBinding.noResult.visibility = View.VISIBLE
                 } else {
+                    hideProgressDialog()
                     fragmentSearchBinding.searchBg.visibility = View.GONE
                     fragmentSearchBinding.noResult.visibility = View.GONE
                 }
@@ -101,5 +103,17 @@ class SearchFragment : Fragment() {
         searchViewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
             searchListAdapter.updateList(searchResults)
         }
+    }
+
+    private fun showProgressDialog() {
+        progressDialog = Dialog(requireContext())
+        progressDialog.setContentView(R.layout.progress_dialog)
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+        Log.d("TAGX", "showProgressDialog started  ")
+    }
+
+    private fun hideProgressDialog() {
+        progressDialog.dismiss()
     }
 }

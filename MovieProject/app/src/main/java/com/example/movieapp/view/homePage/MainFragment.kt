@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,6 @@ import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
 import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainFragment :
@@ -69,19 +69,17 @@ class MainFragment :
         fetchData()
         favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) {
         }
+        hideProgressDialog()
     }
 
     private fun fetchData() {
-        runBlocking {
-            topRatedMovieViewModel.tRMovieResponse.observe(viewLifecycleOwner) {
-                topRatedMovieAdapter.updateList(it)
-            }
-
-            popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner) {
-                popularMovieAdapter.updateList(it)
-            }
+        topRatedMovieViewModel.tRMovieResponse.observe(viewLifecycleOwner) {
+            topRatedMovieAdapter.updateList(it)
         }
-        hideProgressDialog()
+
+        popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner) {
+            popularMovieAdapter.updateList(it)
+        }
     }
 
     private fun setupBackPressedCallback() {
@@ -121,10 +119,14 @@ class MainFragment :
         progressDialog.setContentView(R.layout.progress_dialog)
         progressDialog.setCancelable(false)
         progressDialog.show()
+        Log.d("TAGX", "showProgressDialog started  ")
     }
 
     private fun hideProgressDialog() {
-        progressDialog.dismiss()
+        val handler = android.os.Handler()
+        handler.postDelayed({
+            progressDialog.dismiss()
+        }, 400)
     }
 
     @SuppressLint("NotifyDataSetChanged")
