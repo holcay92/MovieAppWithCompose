@@ -2,7 +2,6 @@ package com.example.movieapp.view
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -117,15 +116,9 @@ class SearchFragment : Fragment() {
         progressDialog.setContentView(R.layout.progress_dialog)
         progressDialog.setCancelable(false)
         progressDialog.show()
-        Log.d("TAGX", "showProgressDialog started 1 ")
     }
 
     private fun hideProgressDialog() {
-        val handler = android.os.Handler()
-        handler.postDelayed({
-            progressDialog.dismiss()
-        }, 1000)
-       // progressDialog.dismiss()
-        Log.d("TAGX", "hideProgressDialog started 1  ")
+        progressDialog.dismiss()
     }
 }

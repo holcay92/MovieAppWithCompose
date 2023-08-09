@@ -42,7 +42,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/rating"
                     android:textColor="@color/light_theme"
-
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <com.google.android.material.imageview.ShapeableImageView
@@ -59,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:textColor="@color/light_theme"
+                    android:textColor="@color/light_bold_theme"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/rating"
@@ -83,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/light_theme"
+                    android:textColor="@color/light_bold_theme"
                     android:textSize="11sp"
                     tools:text="1000"
                     app:layout_constraintBottom_toBottomOf="@+id/ratingValue"
@@ -127,8 +126,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:textColor="@color/light_theme"
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="2022" />
@@ -137,7 +138,7 @@
                     android:id="@+id/runtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Duration: "
+                    android:text="@string/runtime"
                     android:textColor="@color/light_theme"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -147,28 +148,11 @@
                     android:id="@+id/runtimeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="120 "
-                    android:textColor="@color/light_theme"
+                    tools:text="120 "
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/runtime"
                     app:layout_constraintTop_toTopOf="@+id/runtime" />
-                <TextView
-                    android:id="@+id/adult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/adult"
-                    android:textColor="@color/light_theme"
-                    app:layout_constraintEnd_toStartOf="@+id/adultValue"
-                    app:layout_constraintTop_toTopOf="@+id/runtime" />
-                <TextView
-                    android:id="@+id/adultValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Adult "
-                    android:textColor="@color/light_theme"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/adult" />
 
                 <TextView
                     android:id="@+id/budget"
@@ -191,8 +175,8 @@
                     android:id="@+id/budgetValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="120000 "
-                    android:textColor="@color/light_theme"
+                    tools:text="120000 "
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/budgetIcon"
                     app:layout_constraintTop_toTopOf="@+id/budget" />
@@ -224,41 +208,52 @@
                     android:id="@+id/genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Genres : "
-                    android:textColor="@color/light_theme"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintEnd_toStartOf="@+id/genreValue1"
-                    app:layout_constraintTop_toBottomOf="@+id/adult" />
-                <ImageView
-                    android:id="@+id/genreValue1"
+                    android:text="@string/genres"
+                    android:textColor="@color/light_theme"
+                    app:layout_constraintStart_toStartOf="@+id/releaseDate"
+                    app:layout_constraintEnd_toStartOf="@+id/genre1"
+                    app:layout_constraintTop_toBottomOf="@+id/releaseDate" />
+
+                <TextView
+                    android:id="@+id/genre1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="genre"
-                    android:src="@drawable/vote_star"
                     android:backgroundTint="@android:color/transparent"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/genreValue2"
-                    app:layout_constraintTop_toTopOf="@+id/genre" />
-                <ImageView
-                    android:id="@+id/genreValue2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="genre"
-                    android:src="@drawable/vote_star"
-                    android:backgroundTint="@android:color/transparent"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/genreValue3"
-                    app:layout_constraintTop_toTopOf="@+id/genre" />
-                <ImageView
-                    android:id="@+id/genreValue3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="genre"
-                    android:src="@drawable/vote_star"
-                    android:backgroundTint="@android:color/transparent"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/genre" />
+                    app:layout_constraintTop_toTopOf="@+id/genre"
+                    tools:text="Action" />
+
+                <TextView
+                    android:id="@+id/genre2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColor="@color/light_bold_theme"
+                    android:textStyle="bold"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    app:layout_constraintEnd_toEndOf="@id/genre1"
+                    app:layout_constraintTop_toBottomOf="@+id/genre1"
+                    tools:text="Action" />
+
+                <TextView
+                    android:id="@+id/genre3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/light_bold_theme"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/genre1"
+                    app:layout_constraintTop_toBottomOf="@+id/genre2"
+                    tools:text="Action" />
+
                 <ImageView
                     android:id="@+id/favButton"
                     android:layout_width="44dp"

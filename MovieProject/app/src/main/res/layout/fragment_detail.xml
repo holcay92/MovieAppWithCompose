@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_theme_bg"
-    android:paddingTop="40dp"
+    android:paddingTop="@dimen/detailFragmentPortraitScrollPaddingTop"
     tools:context=".view.DetailFragment">
 
 
@@ -20,15 +20,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="@dimen/detailFragmentPortraitLinearPadding">
 
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="375dp"
+                android:layout_height="@dimen/detailFragmentPortraitViewPagerHeight"
                 android:clipToPadding="false"
-                android:paddingTop="10dp"
+                android:paddingTop="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                 tools:background="@color/light_theme" />
 
             <LinearLayout
@@ -71,8 +71,8 @@
 
                 <ImageView
                     android:id="@+id/favButton"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center|end"
                     android:contentDescription="@string/content_description"
                     android:src="@drawable/add_fav_empty_icon" />
@@ -87,8 +87,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:paddingTop="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp">
 
                 <TextView
                     android:id="@+id/rating"
@@ -96,9 +96,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/rating"
                     android:textColor="@color/light_theme"
-
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/ratingStar"
                     android:layout_width="wrap_content"
@@ -106,15 +106,15 @@
                     android:layout_marginStart="5dp"
                     android:src="@drawable/vote_star"
                     app:layout_constraintStart_toEndOf="@+id/rating"
-                    app:layout_constraintTop_toTopOf="@+id/rating"/>
+                    app:layout_constraintTop_toTopOf="@+id/rating" />
 
                 <TextView
                     android:id="@+id/ratingValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:textColor="@color/light_theme"
-                    android:textSize="14sp"
+                    android:textColor="@color/light_bold_theme"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/rating"
                     app:layout_constraintStart_toEndOf="@id/ratingStar"
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:text=" /10  ("
                     android:textColor="@color/light_theme"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/ratingValue"
                     app:layout_constraintStart_toEndOf="@id/ratingValue"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -137,42 +137,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/light_theme"
+                    android:textColor="@color/light_bold_theme"
                     android:textSize="11sp"
-                    tools:text="1000"
                     app:layout_constraintBottom_toBottomOf="@+id/ratingValue"
                     app:layout_constraintStart_toEndOf="@id/ratingDivider"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="1000" />
 
                 <TextView
                     android:id="@+id/ratingDivider2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=")"
+                    android:text=" votes)"
                     android:textColor="@color/light_theme"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="@+id/ratingValue"
                     app:layout_constraintStart_toEndOf="@id/ratingCount"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <View
+                    android:id="@+id/divider"
                     android:layout_width="1dp"
-                    android:layout_height="100dp"
-                    android:orientation="vertical"
+                    android:layout_height="80dp"
                     android:background="@color/light_theme"
                     android:backgroundTint="@color/light_theme"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/runtime"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/releaseDate"
-                    app:layout_constraintStart_toEndOf="@+id/ratingDivider2"/>
+                    app:layout_constraintStart_toEndOf="@+id/ratingDivider2"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView
                     android:id="@+id/releaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:text="@string/release_date"
                     android:textColor="@color/light_theme"
+                    app:layout_constraintStart_toStartOf="@+id/divider"
                     app:layout_constraintEnd_toStartOf="@+id/releaseDateValue"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -180,8 +183,9 @@
                     android:id="@+id/releaseDateValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textColor="@color/light_theme"
+                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -191,9 +195,9 @@
                     android:id="@+id/runtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Duration: "
+                    android:layout_marginTop="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:text="@string/runtime"
                     android:textColor="@color/light_theme"
-                    android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rating" />
 
@@ -201,95 +205,92 @@
                     android:id="@+id/runtimeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="120 "
-                    android:textColor="@color/light_theme"
+                    android:textColor="@color/light_bold_theme"
+                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/runtime"
-                    app:layout_constraintTop_toTopOf="@+id/runtime" />
-                <TextView
-                    android:id="@+id/adult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adult Content : "
-                    android:textColor="@color/light_theme"
-                    app:layout_constraintEnd_toStartOf="@+id/adultValue"
-                    app:layout_constraintTop_toTopOf="@+id/runtime" />
-                <TextView
-                    android:id="@+id/adultValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adult "
-                    android:textColor="@color/light_theme"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/adult" />
+                    app:layout_constraintTop_toTopOf="@+id/runtime"
+                    tools:text="120 " />
+
 
                 <TextView
                     android:id="@+id/budget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Budget :"
+                    android:layout_marginTop="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:text="@string/budget"
                     android:textColor="@color/light_theme"
-                    android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/runtime" />
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/budgetIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/budget_icon"
-                    app:layout_constraintTop_toTopOf="@id/budget"
-                    app:layout_constraintStart_toEndOf="@+id/budget"/>
+                    app:layout_constraintStart_toEndOf="@+id/budget"
+                    app:layout_constraintTop_toTopOf="@id/budget" />
 
                 <TextView
                     android:id="@+id/budgetValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="120000 "
-                    android:textColor="@color/light_theme"
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/budgetIcon"
-                    app:layout_constraintTop_toTopOf="@+id/budget" />
+                    app:layout_constraintTop_toTopOf="@+id/budget"
+                    tools:text="120000 " />
 
                 <TextView
                     android:id="@+id/genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Genres : "
+                    android:layout_marginTop="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:text="@string/genres"
                     android:textColor="@color/light_theme"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintEnd_toStartOf="@+id/genreValue1"
-                    app:layout_constraintTop_toBottomOf="@+id/adult" />
-                <ImageView
-                    android:id="@+id/genreValue1"
+                    app:layout_constraintStart_toStartOf="@+id/releaseDate"
+                    app:layout_constraintEnd_toStartOf="@+id/genre1"
+                    app:layout_constraintTop_toBottomOf="@+id/releaseDate" />
+
+                <TextView
+                    android:id="@+id/genre1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="genre"
-                    android:src="@drawable/vote_star"
                     android:backgroundTint="@android:color/transparent"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/genreValue2"
-                    app:layout_constraintTop_toTopOf="@+id/genre" />
-                <ImageView
-                    android:id="@+id/genreValue2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="genre"
-                    android:src="@drawable/vote_star"
-                    android:backgroundTint="@android:color/transparent"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/genreValue3"
-                    app:layout_constraintTop_toTopOf="@+id/genre" />
-                <ImageView
-                    android:id="@+id/genreValue3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="genre"
-                    android:src="@drawable/vote_star"
-                    android:backgroundTint="@android:color/transparent"
+                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/genre" />
+                    app:layout_constraintTop_toTopOf="@+id/genre"
+                    tools:text="Action" />
+
+                <TextView
+                    android:id="@+id/genre2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColor="@color/light_bold_theme"
+                    android:textStyle="bold"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    app:layout_constraintEnd_toEndOf="@id/genre1"
+                    app:layout_constraintTop_toBottomOf="@+id/genre1"
+                    tools:text="Action" />
+
+                <TextView
+                    android:id="@+id/genre3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:textColor="@color/light_bold_theme"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/genre1"
+                    app:layout_constraintTop_toBottomOf="@+id/genre2"
+                    tools:text="Action" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -308,7 +309,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                     android:text="@string/overview"
                     android:textColor="@color/light_theme"
                     android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
@@ -318,11 +319,11 @@
                     android:id="@+id/movieOverview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                     android:gravity="center"
                     android:paddingStart="30dp"
-                    android:paddingEnd="10dp"
-                    android:textColor="@color/light_theme"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:textColor="@color/light_bold_theme"
                     android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                     android:textStyle="bold"
                     tools:text="@string/overView_placeholder" />

@@ -35,4 +35,9 @@
     <string name="quite_from_app__message">Do you want to exit?</string>
     <string name="overView_placeholder">OverView</string>
     <string name="error_message">Error occurred, try again</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="ok">Ok</string>
+    <string name="runtime">Duration: </string>
+    <string name="genres">Genres : </string>
 </resources>

@@ -2,16 +2,13 @@ package com.example.movieapp.view.homePage
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +20,7 @@ import com.example.movieapp.databinding.FragmentMainBinding
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.model.topRated.ResultTopRated
 import com.example.movieapp.room.FavoriteMovie
+import com.example.movieapp.view.BaseFragment
 import com.example.movieapp.view.adapters.PopularMovieAdapter
 import com.example.movieapp.view.adapters.TopRatedMovieAdapter
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
@@ -32,14 +30,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment :
-    Fragment(),
+    BaseFragment(),
     PopularMovieAdapter.OnFavoriteStatusChangeListener,
     TopRatedMovieAdapter.OnFavoriteStatusChangeListener {
     private lateinit var fragmentMainBinding: FragmentMainBinding
     private val popularMovieViewModel by viewModels<PopularMovieViewModel>()
     private val topRatedMovieViewModel by viewModels<TopRatedMovieViewModel>()
     private val favoriteMovieViewModel by viewModels<FavoriteMovieViewModel>()
-    private lateinit var progressDialog: Dialog
+
     private lateinit var popularMovieAdapter: PopularMovieAdapter
     private lateinit var topRatedMovieAdapter: TopRatedMovieAdapter
 
@@ -116,19 +114,6 @@ class MainFragment :
     override fun onResume() {
         super.onResume()
         fetchData()
-    }
-
-    private fun showProgressDialog() {
-        progressDialog = Dialog(requireContext())
-        progressDialog.setContentView(R.layout.progress_dialog)
-        progressDialog.setCancelable(false)
-        progressDialog.show()
-        Log.d("TAGX", "showProgressDialog started  ")
-    }
-
-    private fun hideProgressDialog() {
-        progressDialog.dismiss()
-        Log.d("TAGX", "hideProgressDialog started  ")
     }
 
     private fun checkAndHideProgressDialog() {

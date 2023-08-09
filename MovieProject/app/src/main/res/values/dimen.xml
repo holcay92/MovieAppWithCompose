@@ -12,4 +12,8 @@
     <dimen name="detailFragmentCardViewCornerRadius">10dp</dimen>
     <dimen name="detailFragmentCardViewElevation">20dp</dimen>
     <dimen name="detailFragmentCardViewDetailTextSize">14sp</dimen>
+    <dimen name="detailFragmentCardViewDetailTextPaddingValue10dp">10dp</dimen>
+    <dimen name="detailFragmentPortraitScrollPaddingTop">40dp</dimen>
+    <dimen name="detailFragmentPortraitLinearPadding">5dp</dimen>
+    <dimen name="detailFragmentPortraitViewPagerHeight">375dp</dimen>
 </resources>

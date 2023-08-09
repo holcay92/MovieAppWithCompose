@@ -1,15 +1,16 @@
 package com.example.movieapp.view
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
@@ -29,7 +30,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class DetailFragment : BaseFragment() {
 
     private lateinit var bindingDetail: FragmentDetailBinding
     private val detailFragmentMovieImageViewModel by viewModels<DetailFragmentMovieImageViewModel>()
@@ -125,18 +126,25 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeMovieDetailAndVideos(movieId: Int) {
+        showProgressDialog()
         detailViewModel.fetchMovieDetail(movieId)
         detailViewModel.fetchMovieVideos(movieId)
         detailViewModel.movieDetail.observe(viewLifecycleOwner) {
-            updateUI(it)
+            if (it != null) {
+                hideProgressDialog()
+                updateUI(it)
+            }
         }
         detailViewModel.movieVideos.observe(viewLifecycleOwner) { it ->
-            it?.takeIf { it.isNotEmpty() }?.let { initFirstVideo(it[0]) }
+            if (!it.isNullOrEmpty()) {
+                hideProgressDialog()
+                initFirstVideo(it[0])
+            }
         }
     }
 
     private fun handleShowReviewsButton(movieId: Int) {
-        bindingDetail.showReviews?.setOnClickListener {
+        bindingDetail.showReviews.setOnClickListener {
             val action =
                 DetailFragmentDirections.actionDetailFragmentToDetailReviewFragment(movieId)
             findNavController().navigate(action)
@@ -147,7 +155,7 @@ class DetailFragment : Fragment() {
         favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
             val isFav = favoriteMovies.any { it.id == movieId }
             updateFavButtonState(isFav)
-            bindingDetail.favButton?.setOnClickListener {
+            bindingDetail.favButton.setOnClickListener {
                 val movie = detailViewModel.movieDetail.value
                 val favMovie = FavoriteMovie(0, movieId, movie?.title, movie?.posterPath)
                 favoriteMovieViewModel.actionFavButton(favMovie)
@@ -155,25 +163,20 @@ class DetailFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUI(movieDetail: MovieDetail?) {
         bindingDetail.apply {
             movieDetail?.let {
-               // movieTitle?.text = it.title
-                releaseDateValue?.text = it.releaseDate
+                // movieTitle?.text = it.title
+                releaseDateValue.text = it.releaseDate?.take(4)
                 movieOverview.text = it.overview
-                ratingValue?.text = it.voteAverage.toString()
-                budgetValue?.text = it.budget.toString()
-                if (it.adult == true) {
-                    adultValue?.setText(R.string.yes)
-                } else {
-                    adultValue?.setText(R.string.no)
-                }
-                ratingCount?.text = it.voteCount.toString()
-                runtimeValue?.text = "${movieDetail.runtime.toInt()?.toString()} min"
-                // genreValue1?.text = movieDetail.genres?.get(0)?.name
-                // genreValue2?.text = movieDetail.genres?.get(1)?.name
-                // genreValue3?.text = movieDetail.genres?.get(2)?.name
-
+                ratingValue.text = it.voteAverage.toString()
+                budgetValue.text = it.budget.toString()
+                ratingCount.text = it.voteCount.toString()
+                runtimeValue.text = "${movieDetail.runtime.toInt()} min"
+                genre1?.text = it.genres?.get(0)?.name
+                genre2?.text = it.genres?.get(1)?.name
+                genre3?.text = it.genres?.get(2)?.name
                 val toolbar = activity as AppCompatActivity
                 toolbar.supportActionBar?.title = it.title
             }
@@ -183,7 +186,7 @@ class DetailFragment : Fragment() {
     private fun updateFavButtonState(isFav: Boolean) {
         val drawableResId =
             if (isFav) R.drawable.add_fav_filled_icon else R.drawable.add_fav_empty_icon
-        bindingDetail.favButton?.setImageResource(drawableResId)
+        bindingDetail.favButton.setImageResource(drawableResId)
     }
 
     private fun handleFullScreenButton() {
@@ -233,9 +236,5 @@ class DetailFragment : Fragment() {
                 youTubePlayer.cueVideo(currentVideoId, 0f)
             }
         })
-    }
-
-    fun updateGenreField(movieDetail: MovieDetail) {
-        // movieDetail.genres.forEach()
     }
 }

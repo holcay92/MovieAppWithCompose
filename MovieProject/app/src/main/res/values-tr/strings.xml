@@ -20,7 +20,7 @@
     <string name="author">Yazar : </string>
     <string name="author_vote">Puan : </string>
     <string name="no_results_found">Sonuç bulunamadı!</string>
-    <string name="content_description">content value</string>
+    <string name="content_description">İçerik değeri</string>
     <string name="trailers">"Fragmanlar "</string>
     <string name="vote_placeholder">9.0</string>
     <string name="no_result">Sonuç yok</string>
@@ -34,7 +34,10 @@
     <string name="cancel">Vazgeç</string>
     <string name="remove_fav_movie_message">Favorilerden çıkarmak istediğinize emin misiniz?</string>
     <string name="quite_from_app__message">Çıkmak istediğinize emin misiniz?</string>
-    <string name="overView_placeholder">OverView</string>
-    <string name="error_message">Error occured</string>
+    <string name="overView_placeholder">Özet</string>
+    <string name="error_message">Hata oluştu!</string>
+    <string name="runtime">Süre : </string>
+    <string name="ok">Tamam</string>
+    <string name="genres">Tür :</string>
 
 </resources>
