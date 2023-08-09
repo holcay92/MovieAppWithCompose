@@ -35,5 +35,6 @@
     <string name="remove_fav_movie_message">Favorilerden çıkarmak istediğinize emin misiniz?</string>
     <string name="quite_from_app__message">Çıkmak istediğinize emin misiniz?</string>
     <string name="overView_placeholder">OverView</string>
+    <string name="error_message">Error occured</string>
 
 </resources>

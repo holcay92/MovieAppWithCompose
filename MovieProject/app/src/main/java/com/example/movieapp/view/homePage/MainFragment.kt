@@ -49,7 +49,6 @@ class MainFragment :
         savedInstanceState: Bundle?,
     ): View {
         fragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
-        showProgressDialog()
         return fragmentMainBinding.root
     }
 
@@ -60,26 +59,31 @@ class MainFragment :
         setupBackPressedCallback()
         setupRecyclerViews()
         setupGridButtonClickListener()
-
+        showProgressDialog()
+        fetchData()
         fragmentMainBinding.gridBtn.setOnClickListener {
             viewType = !viewType
             switchRecyclerViewLayout()
         }
 
-        fetchData()
         favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) {
         }
-        hideProgressDialog()
     }
 
     private fun fetchData() {
+        val handler = android.os.Handler()
         topRatedMovieViewModel.tRMovieResponse.observe(viewLifecycleOwner) {
             topRatedMovieAdapter.updateList(it)
+            checkAndHideProgressDialog()
         }
 
         popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner) {
             popularMovieAdapter.updateList(it)
+            checkAndHideProgressDialog()
         }
+        handler.postDelayed({
+            checkAndHideProgressDialog()
+        }, 4000)
     }
 
     private fun setupBackPressedCallback() {
@@ -123,10 +127,20 @@ class MainFragment :
     }
 
     private fun hideProgressDialog() {
-        val handler = android.os.Handler()
-        handler.postDelayed({
-            progressDialog.dismiss()
-        }, 400)
+        progressDialog.dismiss()
+        Log.d("TAGX", "hideProgressDialog started  ")
+    }
+
+    private fun checkAndHideProgressDialog() {
+        val popularMoviesEmpty = popularMovieAdapter.itemCount == 0
+        val topRatedMoviesEmpty = topRatedMovieAdapter.itemCount == 0
+
+        if (popularMoviesEmpty && topRatedMoviesEmpty) {
+            hideProgressDialog()
+            showErrorDialog()
+        } else if (!popularMoviesEmpty && !topRatedMoviesEmpty) {
+            hideProgressDialog()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -152,6 +166,26 @@ class MainFragment :
             },
         )
         fragmentMainBinding.rvPopularMovies.adapter?.notifyDataSetChanged()
+    }
+
+    private fun showErrorDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(R.string.warning)
+        builder.setMessage(R.string.error_message)
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        builder.setPositiveButton(R.string.yes) { _, _ ->
+            // Retry fetching data
+            fetchData()
+            showProgressDialog()
+        }
+        builder.setNegativeButton(R.string.no) { _, _ ->
+            requireActivity().finish() // Exit the app
+        }
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
     private fun alertDialog() {

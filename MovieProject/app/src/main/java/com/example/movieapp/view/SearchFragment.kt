@@ -49,8 +49,13 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                showProgressDialog()
-                performSearch(newText) // instant search
+                // showProgressDialog()
+                // add delay
+                val handler = android.os.Handler()
+                handler.postDelayed({
+                    performSearch(newText) // instant search
+                }, 300)
+
                 return true
             }
         })
@@ -64,6 +69,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun performSearch(searchQuery: String?) {
+        showProgressDialog()
         searchQuery?.let {
             searchViewModel.searchMovies(searchQuery)
             searchViewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
@@ -72,7 +78,7 @@ class SearchFragment : Fragment() {
                     fragmentSearchBinding.searchBg.visibility = View.VISIBLE
                     fragmentSearchBinding.noResult.visibility = View.VISIBLE
                 } else {
-                    hideProgressDialog()
+                    // hideProgressDialog()
                     fragmentSearchBinding.searchBg.visibility = View.GONE
                     fragmentSearchBinding.noResult.visibility = View.GONE
                 }
@@ -103,6 +109,7 @@ class SearchFragment : Fragment() {
         searchViewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
             searchListAdapter.updateList(searchResults)
         }
+        hideProgressDialog()
     }
 
     private fun showProgressDialog() {
@@ -110,10 +117,15 @@ class SearchFragment : Fragment() {
         progressDialog.setContentView(R.layout.progress_dialog)
         progressDialog.setCancelable(false)
         progressDialog.show()
-        Log.d("TAGX", "showProgressDialog started  ")
+        Log.d("TAGX", "showProgressDialog started 1 ")
     }
 
     private fun hideProgressDialog() {
-        progressDialog.dismiss()
+        val handler = android.os.Handler()
+        handler.postDelayed({
+            progressDialog.dismiss()
+        }, 1000)
+       // progressDialog.dismiss()
+        Log.d("TAGX", "hideProgressDialog started 1  ")
     }
 }
