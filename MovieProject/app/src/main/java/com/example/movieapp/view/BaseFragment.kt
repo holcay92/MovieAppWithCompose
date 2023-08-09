@@ -1,5 +1,6 @@
 package com.example.movieapp.view
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,6 +31,17 @@ open class BaseFragment : Fragment() {
         progressDialog.dismiss()
     }
 
+    fun showErrorDialog(message: String?) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(R.string.warning)
+        builder.setMessage(message)
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
 
-
+        builder.setPositiveButton(R.string.ok) { _, _ ->
+            requireActivity().finish() // Exit the app
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
 }

@@ -68,15 +68,14 @@ class MainFragment :
     }
 
     private fun fetchData() {
-        val handler = android.os.Handler()
         topRatedMovieViewModel.tRMovieResponse.observe(viewLifecycleOwner) {
             topRatedMovieAdapter.updateList(it)
-            checkAndHideProgressDialog()
+            hideProgressDialog()
         }
 
         popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner) {
             popularMovieAdapter.updateList(it)
-            checkAndHideProgressDialog()
+            hideProgressDialog()
             isLoading = false
         }
         popularMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
@@ -89,10 +88,6 @@ class MainFragment :
                 showErrorDialog(message) // show error dialog for fetching top rated movies
             }
         }
-
-        handler.postDelayed({
-            checkAndHideProgressDialog()
-        }, 10000)
     }
 
     private fun setupBackPressedCallback() {
@@ -127,18 +122,6 @@ class MainFragment :
         popularMovieViewModel.updateFavoriteResult()
         topRatedMovieViewModel.updateFavoriteResult()
         fetchData()
-    }
-
-    private fun checkAndHideProgressDialog() {
-        val popularMoviesEmpty = popularMovieAdapter.itemCount == 0
-        val topRatedMoviesEmpty = topRatedMovieAdapter.itemCount == 0
-
-        if (popularMoviesEmpty && topRatedMoviesEmpty) {
-            hideProgressDialog()
-            // showErrorDialog()
-        } else if (!popularMoviesEmpty && !topRatedMoviesEmpty) {
-            hideProgressDialog()
-        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -224,26 +207,6 @@ class MainFragment :
         private var SPAN_COUNT = 2
         private var viewType = false
         private var page = 1
-    }
-
-    private fun showErrorDialog(message: String?) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(R.string.warning)
-        builder.setMessage(message)
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-
-        builder.setPositiveButton(R.string.yes) { _, _ ->
-            // Retry fetching data
-            fetchData()
-            showProgressDialog()
-        }
-        builder.setNegativeButton(R.string.no) { _, _ ->
-            requireActivity().finish() // Exit the app
-        }
-
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
     }
 
     private fun alertDialog() {

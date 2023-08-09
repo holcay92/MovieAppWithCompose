@@ -140,6 +140,14 @@ class DetailFragment : BaseFragment() {
                 initFirstVideo(it[0])
             }
         }
+        detailViewModel.errorMessageMovieDetail.observe(viewLifecycleOwner) {
+            hideProgressDialog()
+            showErrorDialog(it)
+        }
+        detailViewModel.errorMessageMovieVideos.observe(viewLifecycleOwner) {
+            hideProgressDialog()
+            showErrorDialog(it)
+        }
     }
 
     private fun handleShowReviewsButton(movieId: Int) {
