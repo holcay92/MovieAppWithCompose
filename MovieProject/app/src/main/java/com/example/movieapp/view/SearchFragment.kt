@@ -98,7 +98,7 @@ class SearchFragment : Fragment() {
 
     private fun updateSearchResults(searchResults: List<SearchResult>) {
         searchListAdapter.updateList(searchResults)
-        val noResultsVisibility = if (searchResults.isNullOrEmpty()) View.VISIBLE else View.GONE
+        val noResultsVisibility = if (searchResults.isEmpty()) View.VISIBLE else View.GONE
         binding.searchBg.visibility = noResultsVisibility
         binding.noResult.visibility = noResultsVisibility
     }

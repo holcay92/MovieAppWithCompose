@@ -234,6 +234,7 @@ class MainFragment :
                 movie.id,
                 movie.title,
                 movie.posterPath,
+                movie.voteAverage,
             ),
         )
     }
@@ -248,6 +249,7 @@ class MainFragment :
                 movie.id,
                 movie.title,
                 movie.poster_path,
+                movie.voteAverage,
             ),
         )
     }

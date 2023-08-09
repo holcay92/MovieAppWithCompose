@@ -15,4 +15,6 @@ data class FavoriteMovie(
     var title: String?,
     @ColumnInfo(name = "movie_poster_path")
     var poster_path: String?,
+    @ColumnInfo(name = "average_vote")
+    var average_vote: Double?,
 )

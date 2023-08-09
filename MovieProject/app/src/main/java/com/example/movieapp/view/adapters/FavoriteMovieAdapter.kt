@@ -25,6 +25,7 @@ class FavoriteMovieAdapter(
             val bindingItem = MovieItemPopularBinding.bind(itemView)
             bindingItem.apply {
                 bindingItem.movieTitle.text = popularMovie.title
+                bindingItem.voteMovie?.text = popularMovie.average_vote.toString()
                 bindingItem.btnAddFav.setImageResource(R.drawable.add_fav_filled_icon)
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${popularMovie.poster_path}").centerCrop()
