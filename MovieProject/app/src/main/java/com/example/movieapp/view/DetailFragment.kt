@@ -170,7 +170,11 @@ class DetailFragment : BaseFragment() {
                 releaseDateValue.text = it.releaseDate?.take(4)
                 movieOverview.text = it.overview
                 ratingValue.text = it.voteAverage.toString()
-                budgetValue.text = it.budget.toString()
+                bindingDetail.budgetValue.text = if (it.budget == 0) {
+                    getString(R.string.not_available)
+                } else {
+                    it.budget.toString()
+                }
                 ratingCount.text = it.voteCount.toString()
                 runtimeValue.text = "${movieDetail.runtime.toInt()} min"
                 val genreViews =

@@ -39,5 +39,6 @@
     <string name="runtime">Süre : </string>
     <string name="ok">Tamam</string>
     <string name="genres">Tür :</string>
+    <string name="not_available">Bilinmiyor</string>
 
 </resources>
