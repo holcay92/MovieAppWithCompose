@@ -113,6 +113,7 @@ class MainFragment :
 
     override fun onResume() {
         super.onResume()
+        popularMovieViewModel.updateFavoriteResult()
         fetchData()
     }
 
@@ -122,7 +123,7 @@ class MainFragment :
 
         if (popularMoviesEmpty && topRatedMoviesEmpty) {
             hideProgressDialog()
-            showErrorDialog()
+            // showErrorDialog()
         } else if (!popularMoviesEmpty && !topRatedMoviesEmpty) {
             hideProgressDialog()
         }

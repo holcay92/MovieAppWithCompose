@@ -48,7 +48,7 @@ class PopularMovieViewModel @Inject constructor(
                 }
 
                 override fun onFailure(call: Call<PopularResponse?>, t: Throwable) {
-                    popularMovieResponse.postValue(null)
+                    popularMovieResponse.postValue(null) // todo error message
                 }
             },
         )
@@ -60,5 +60,15 @@ class PopularMovieViewModel @Inject constructor(
 
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {
         return runBlocking { movieDatabase.dao().getMovieById(movieId) != null }
+    }
+
+    fun updateFavoriteResult() {
+        viewModelScope.launch {
+            val list = popularMovieResponse.value
+            list?.forEach { movie ->
+                movie.isFavorite = movie.id?.let { isMovieInFavorites(it) } == true
+            }
+            popularMovieResponse.postValue(list)
+        }
     }
 }

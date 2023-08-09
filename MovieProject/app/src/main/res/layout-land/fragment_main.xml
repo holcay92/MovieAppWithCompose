@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/main_theme_bg"
+    android:orientation="vertical"
     android:padding="3dp">
-<!-- top bar popular and grid layout buttons-->
+    <!-- top bar popular and grid layout buttons-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,18 +29,18 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/grid_view_landscape_icon"
-            android:contentDescription="@string/content_description" />
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/grid_view_landscape_icon" />
     </LinearLayout>
-<!-- top rated landscape hidden. todo: switch button to be added-->
+    <!-- top rated landscape hidden. todo: switch button to be added-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPopularMovies"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:scrollbars="horizontal"
-            tools:itemCount="4"
-            tools:listitem="@layout/movie_item_popular" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPopularMovies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
+        tools:itemCount="4"
+        tools:listitem="@layout/movie_item_popular" />
 </LinearLayout>
