@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
@@ -15,7 +14,7 @@ import com.example.movieapp.viewModel.DetailReviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailReviewFragment : Fragment() {
+class DetailReviewFragment : BaseFragment() {
     private lateinit var fragmentDetailReviewBinding: FragmentDetailReviewBinding
     private lateinit var detailReviewAdapter: DetailReviewAdapter
     private val detailReviewViewModel by viewModels<DetailReviewViewModel>()
@@ -25,7 +24,8 @@ class DetailReviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        fragmentDetailReviewBinding = FragmentDetailReviewBinding.inflate(inflater, container, false)
+        fragmentDetailReviewBinding =
+            FragmentDetailReviewBinding.inflate(inflater, container, false)
         return fragmentDetailReviewBinding.root
     }
 
@@ -38,19 +38,25 @@ class DetailReviewFragment : Fragment() {
         toolbar.supportActionBar?.setTitle(R.string.show_reviews)
 
         detailReviewAdapter = DetailReviewAdapter()
-        fragmentDetailReviewBinding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())
+        fragmentDetailReviewBinding.rvDetailReview.layoutManager =
+            LinearLayoutManager(requireContext())
         fragmentDetailReviewBinding.rvDetailReview.adapter = detailReviewAdapter
-        // linear layout manager is default for recyclerview
+        showProgressDialog()
         detailReviewViewModel.getReview(id)
         detailReviewViewModel.reviewList.observe(viewLifecycleOwner) {
             if (it != null) {
                 detailReviewAdapter.updateList(it)
+                hideProgressDialog()
             }
             if (it?.isEmpty() == true) {
                 fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
             } else {
                 fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.GONE
             }
+        }
+        detailReviewViewModel.errorMessageMovieReview.observe(viewLifecycleOwner) {
+            hideProgressDialog()
+            showErrorDialog(it)
         }
     }
 }
