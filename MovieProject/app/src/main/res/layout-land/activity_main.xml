@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginBottom="20dp"
-        android:colorBackground="@color/secondary_theme"
+        android:background="@color/toolbar_main_theme"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"

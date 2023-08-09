@@ -1,7 +1,6 @@
 package com.example.movieapp.view.adapters
 
 import android.annotation.SuppressLint
-import android.provider.ContactsContract.CommonDataKinds.Im
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView

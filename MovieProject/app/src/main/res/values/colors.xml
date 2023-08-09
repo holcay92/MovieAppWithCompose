@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="main_theme">#040732</color>
+    <color name="toolbar_main_theme">#A4151E3C</color>
     <color name="main_theme_landscape">#A4152C75</color>
     <color name="main_theme_bg">#1D2953</color>
     <color name="main_theme_night">#A33030</color>
