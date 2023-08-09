@@ -35,21 +35,18 @@ class FavoriteFragment : Fragment(), FavoriteMovieAdapter.OnRemoveFavoriteClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Set toolbar text as "Favorites"
-        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.favorites)
-        // Enable the back button
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setupToolbar()
+        setupFavoriteRecyclerView()
+        observeFavoriteMovies()
+    }
 
-        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) {
-            favoriteMovieAdapter.updateList(it)
-            val isListEmpty = it.isEmpty()
-            fragmentFavoriteBinding.apply {
-                emptyFavListImage.visibility = if (isListEmpty) View.VISIBLE else View.GONE
-                emptyFavListText.visibility = if (isListEmpty) View.VISIBLE else View.GONE
-                favoriteRecyclerView.visibility = if (isListEmpty) View.GONE else View.VISIBLE
-            }
-        }
+    private fun setupToolbar() {
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.setTitle(R.string.favorites)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
+    private fun setupFavoriteRecyclerView() {
         favoriteMovieAdapter = FavoriteMovieAdapter(
             object : FavoriteMovieAdapter.OnItemClickListener {
                 override fun onItemClick(movie: FavoriteMovie) {
@@ -62,37 +59,40 @@ class FavoriteFragment : Fragment(), FavoriteMovieAdapter.OnRemoveFavoriteClickL
             },
             this,
         )
-        with(fragmentFavoriteBinding.favoriteRecyclerView) {
+
+        fragmentFavoriteBinding.favoriteRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@FavoriteFragment.favoriteMovieAdapter
+            adapter = favoriteMovieAdapter
         }
-        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) {
-            favoriteMovieAdapter.updateList(it)
-            val isListEmpty = it.isEmpty()
-            fragmentFavoriteBinding.emptyFavListImage.visibility =
-                if (isListEmpty) View.VISIBLE else View.GONE
-            fragmentFavoriteBinding.emptyFavListText.visibility =
-                if (isListEmpty) View.VISIBLE else View.GONE
-            fragmentFavoriteBinding.favoriteRecyclerView.visibility =
-                if (isListEmpty) View.GONE else View.VISIBLE
+    }
+
+    private fun observeFavoriteMovies() {
+        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
+            favoriteMovieAdapter.updateList(favoriteMovies)
+            val isListEmpty = favoriteMovies.isEmpty()
+            fragmentFavoriteBinding.apply {
+                emptyFavListImage.visibility = if (isListEmpty) View.VISIBLE else View.GONE
+                emptyFavListText.visibility = if (isListEmpty) View.VISIBLE else View.GONE
+                favoriteRecyclerView.visibility = if (isListEmpty) View.GONE else View.VISIBLE
+            }
         }
     }
 
     override fun onRemoveFavoriteClick(movie: FavoriteMovie) {
-        alertDialog(movie)
+        showRemoveConfirmationDialog(movie)
     }
 
-    private fun alertDialog(movie: FavoriteMovie) {
+    private fun showRemoveConfirmationDialog(movie: FavoriteMovie) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(R.string.warning)
-        builder.setMessage(R.string.remove_fav_movie_message)
-        builder.setPositiveButton(R.string.yes) { dialog, _ ->
-            favoriteMovieViewModel.actionFavButton(movie)
-            dialog.dismiss()
-        }
-        builder.setNegativeButton(R.string.cancel) { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.show()
+            .setMessage(R.string.remove_fav_movie_message)
+            .setPositiveButton(R.string.yes) { dialog, _ ->
+                favoriteMovieViewModel.actionFavButton(movie)
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }
