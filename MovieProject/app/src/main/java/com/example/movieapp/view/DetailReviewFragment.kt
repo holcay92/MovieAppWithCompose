@@ -15,8 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailReviewFragment : BaseFragment() {
-    private lateinit var fragmentDetailReviewBinding: FragmentDetailReviewBinding
-    private lateinit var detailReviewAdapter: DetailReviewAdapter
+    private lateinit var binding: FragmentDetailReviewBinding
+    private lateinit var reviewAdapter: DetailReviewAdapter
     private val detailReviewViewModel by viewModels<DetailReviewViewModel>()
 
     override fun onCreateView(
@@ -24,39 +24,48 @@ class DetailReviewFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        fragmentDetailReviewBinding =
-            FragmentDetailReviewBinding.inflate(inflater, container, false)
-        return fragmentDetailReviewBinding.root
+        binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val id = DetailReviewFragmentArgs.fromBundle(
-            requireArguments(),
-        ).movieId
+        setupToolbar()
+        setupRecyclerView()
+        setupReviewObservers()
+    }
+
+    private fun setupToolbar() {
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.setTitle(R.string.show_reviews)
+    }
 
-        detailReviewAdapter = DetailReviewAdapter()
-        fragmentDetailReviewBinding.rvDetailReview.layoutManager =
-            LinearLayoutManager(requireContext())
-        fragmentDetailReviewBinding.rvDetailReview.adapter = detailReviewAdapter
+    private fun setupRecyclerView() {
+        reviewAdapter = DetailReviewAdapter()
+        binding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvDetailReview.adapter = reviewAdapter
+    }
+
+    private fun setupReviewObservers() {
+        val movieId = DetailReviewFragmentArgs.fromBundle(requireArguments()).movieId
+
         showProgressDialog()
-        detailReviewViewModel.getReview(id)
-        detailReviewViewModel.reviewList.observe(viewLifecycleOwner) {
-            if (it != null) {
-                detailReviewAdapter.updateList(it)
-                hideProgressDialog()
-            }
-            if (it?.isEmpty() == true) {
-                fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
+        detailReviewViewModel.getReview(movieId)
+
+        detailReviewViewModel.reviewList.observe(viewLifecycleOwner) { reviews ->
+            hideProgressDialog()
+
+            if (reviews.isNullOrEmpty()) {
+                binding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
             } else {
-                fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.GONE
+                binding.tvDetailReviewNoReviewsFound.visibility = View.GONE
+                reviewAdapter.updateList(reviews)
             }
         }
-        detailReviewViewModel.errorMessageMovieReview.observe(viewLifecycleOwner) {
+
+        detailReviewViewModel.errorMessageMovieReview.observe(viewLifecycleOwner) { errorMessage ->
             hideProgressDialog()
-            showErrorDialog(it)
+            showErrorDialog(errorMessage)
         }
     }
 }
