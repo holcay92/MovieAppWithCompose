@@ -43,8 +43,10 @@ class DetailReviewFragment : Fragment() {
         // linear layout manager is default for recyclerview
         detailReviewViewModel.getReview(id)
         detailReviewViewModel.reviewList.observe(viewLifecycleOwner) {
-            detailReviewAdapter.updateList(it)
-            if (it.isEmpty()) {
+            if (it != null) {
+                detailReviewAdapter.updateList(it)
+            }
+            if (it?.isEmpty() == true) {
                 fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
             } else {
                 fragmentDetailReviewBinding.tvDetailReviewNoReviewsFound.visibility = View.GONE

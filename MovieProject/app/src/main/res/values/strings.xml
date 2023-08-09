@@ -42,4 +42,5 @@
     <string name="genres">Genres : </string>
     <string name="not_available">Not Available</string>
     <string name="movie_fetch_error">Failed to fetch movies. Please check your internet connection.</string>
+    <string name="error_message_movie_review">Failed to fetch reviews. Please check your internet connection.</string>
 </resources>
