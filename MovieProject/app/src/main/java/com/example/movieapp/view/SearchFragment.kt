@@ -2,10 +2,10 @@ package com.example.movieapp.view
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,94 +21,104 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
-    private lateinit var fragmentSearchBinding: FragmentSearchBinding
+    private lateinit var binding: FragmentSearchBinding
     private val searchViewModel by viewModels<SearchViewModel>()
     private lateinit var searchListAdapter: SearchListAdapter
     private lateinit var progressDialog: Dialog
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        fragmentSearchBinding = FragmentSearchBinding.inflate(inflater, container, false)
-        val searchView = fragmentSearchBinding.searchView
-        fragmentSearchBinding.searchLayout.setOnClickListener {
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        setupSearchView()
+        setupToolbar()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupToolbarBackButton()
+    }
+
+    private fun setupSearchView() {
+        val searchView = binding.searchView
+        binding.searchLayout.setOnClickListener {
             searchView.isIconified = false
         }
-        val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.setTitle(R.string.search)
         searchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            private val searchDelayHandler = Handler()
+
             override fun onQueryTextSubmit(query: String): Boolean {
-                // performSearch(query)
-                // hide keyboard
                 searchView.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                // showProgressDialog()
-                // add delay
-                val handler = android.os.Handler()
-                handler.postDelayed({
-                    performSearch(newText) // instant search
-                }, 300)
-
+                searchDelayHandler.removeCallbacksAndMessages(null)
+                searchDelayHandler.postDelayed({
+                    performSearch(newText)
+                }, SEARCH_DELAY_MILLIS)
                 return true
             }
         })
-
-        return fragmentSearchBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setupToolbar() {
+        val toolbar = activity as AppCompatActivity
+        toolbar.supportActionBar?.setTitle(R.string.search)
+    }
+
+    private fun setupToolbarBackButton() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun performSearch(searchQuery: String?) {
         showProgressDialog()
+
         searchQuery?.let {
             searchViewModel.searchMovies(searchQuery)
             searchViewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
-                searchListAdapter.updateList(searchResults)
-                if (searchResults.isNullOrEmpty()) {
-                    fragmentSearchBinding.searchBg.visibility = View.VISIBLE
-                    fragmentSearchBinding.noResult.visibility = View.VISIBLE
-                } else {
-                    // hideProgressDialog()
-                    fragmentSearchBinding.searchBg.visibility = View.GONE
-                    fragmentSearchBinding.noResult.visibility = View.GONE
+                if (searchResults != null) {
+                    updateSearchResults(searchResults)
                 }
             }
         }
 
         if (searchQuery == null) {
-            fragmentSearchBinding.searchBg.visibility = View.VISIBLE
-            fragmentSearchBinding.noResult.visibility = View.GONE
+            updateSearchResults(emptyList())
         }
-        fragmentSearchBinding.searchRV.layoutManager = LinearLayoutManager(requireContext())
 
-        searchListAdapter = SearchListAdapter(
-            object : SearchListAdapter.OnItemClickListener {
-                override fun onItemClick(movie: SearchResult) {
-                    val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(
-                        Constants.TOP_RATED,
-                        movie.id!!,
-                    )
-
-                    findNavController().navigate(action)
-                }
-            },
-        )
-        fragmentSearchBinding.searchRV.adapter = searchListAdapter
-
-        // Observe search results from ViewModel and update the adapter
-        searchViewModel.searchList.observe(viewLifecycleOwner) { searchResults ->
-            searchListAdapter.updateList(searchResults)
-        }
+        binding.searchRV.layoutManager = LinearLayoutManager(requireContext())
+        setupSearchListAdapter()
         hideProgressDialog()
+    }
+
+    private fun updateSearchResults(searchResults: List<SearchResult>) {
+        searchListAdapter.updateList(searchResults)
+        val noResultsVisibility = if (searchResults.isNullOrEmpty()) View.VISIBLE else View.GONE
+        binding.searchBg.visibility = noResultsVisibility
+        binding.noResult.visibility = noResultsVisibility
+    }
+
+    private fun setupSearchListAdapter() {
+        val onItemClickListener = object : SearchListAdapter.OnItemClickListener {
+            override fun onItemClick(movie: SearchResult) {
+                movie.id?.let { navigateToDetailFragment(it) }
+            }
+        }
+        searchListAdapter = SearchListAdapter(onItemClickListener)
+        binding.searchRV.adapter = searchListAdapter
+    }
+
+    private fun navigateToDetailFragment(movieId: Int) {
+        val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(
+            Constants.TOP_RATED,
+            movieId,
+        )
+        findNavController().navigate(action)
     }
 
     private fun showProgressDialog() {
@@ -120,5 +130,9 @@ class SearchFragment : Fragment() {
 
     private fun hideProgressDialog() {
         progressDialog.dismiss()
+    }
+
+    companion object {
+        private const val SEARCH_DELAY_MILLIS = 300L
     }
 }
