@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -174,11 +173,20 @@ class DetailFragment : BaseFragment() {
                 budgetValue.text = it.budget.toString()
                 ratingCount.text = it.voteCount.toString()
                 runtimeValue.text = "${movieDetail.runtime.toInt()} min"
-                genre1?.text = it.genres?.get(0)?.name
-                genre2?.text = it.genres?.get(1)?.name
-                genre3?.text = it.genres?.get(2)?.name
-                val toolbar = activity as AppCompatActivity
-                toolbar.supportActionBar?.title = it.title
+                val genreViews =
+                    listOf(bindingDetail.genre1, bindingDetail.genre2, bindingDetail.genre3)
+                val genres = movieDetail.genres
+
+                genreViews.forEachIndexed { index, genreView ->
+                    if (genres != null) {
+                        if (index < genres.size) {
+                            genreView.text = genres[index].name
+                        }
+                    }
+
+                    val toolbar = activity as AppCompatActivity
+                    toolbar.supportActionBar?.title = it.title
+                }
             }
         }
     }
