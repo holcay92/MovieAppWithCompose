@@ -3,6 +3,7 @@ package com.example.movieapp.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movieapp.R
 import com.example.movieapp.model.popularMovie.PopularResponse
 import com.example.movieapp.model.popularMovie.ResultPopular
 import com.example.movieapp.room.MovieDatabase
@@ -22,7 +23,7 @@ class PopularMovieViewModel @Inject constructor(
 ) :
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
-
+    var errorMessage = MutableLiveData<String>()
     init {
         fetchMovieList(1)
     }
@@ -48,7 +49,8 @@ class PopularMovieViewModel @Inject constructor(
                 }
 
                 override fun onFailure(call: Call<PopularResponse?>, t: Throwable) {
-                    popularMovieResponse.postValue(null) // todo error message
+                    errorMessage.postValue(R.string.movie_fetch_error.toString())
+                    popularMovieResponse.postValue(null)
                 }
             },
         )

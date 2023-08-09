@@ -41,4 +41,5 @@
     <string name="runtime">Duration: </string>
     <string name="genres">Genres : </string>
     <string name="not_available">Not Available</string>
+    <string name="movie_fetch_error">Failed to fetch movies. Please check your internet connection.</string>
 </resources>

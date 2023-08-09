@@ -3,6 +3,7 @@ package com.example.movieapp.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movieapp.R
 import com.example.movieapp.model.topRated.ResultTopRated
 import com.example.movieapp.model.topRated.TopRated
 import com.example.movieapp.room.MovieDatabase
@@ -22,6 +23,7 @@ class TopRatedMovieViewModel @Inject constructor(
 ) :
     ViewModel() {
     var tRMovieResponse = MutableLiveData<List<ResultTopRated>?>()
+    var errorMessage = MutableLiveData<String>()
 
     init {
         fetchMovieList()
@@ -48,6 +50,7 @@ class TopRatedMovieViewModel @Inject constructor(
                 }
 
                 override fun onFailure(call: Call<TopRated?>, t: Throwable) {
+                    errorMessage.postValue(R.string.movie_fetch_error.toString())
                     tRMovieResponse.postValue(null)
                 }
             },
@@ -56,5 +59,14 @@ class TopRatedMovieViewModel @Inject constructor(
 
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {
         return runBlocking { movieDatabase.dao().getMovieById(movieId) != null }
+    }
+    fun updateFavoriteResult() {
+        viewModelScope.launch {
+            val list = tRMovieResponse.value
+            list?.forEach { movie ->
+                movie.isFavorite = movie.id?.let { isMovieInFavorites(it) } == true
+            }
+            tRMovieResponse.postValue(list)
+        }
     }
 }

@@ -79,6 +79,17 @@ class MainFragment :
             checkAndHideProgressDialog()
             isLoading = false
         }
+        popularMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (!message.isNullOrEmpty()) {
+                showErrorDialog(message) // show error dialog for fetching popular movies
+            }
+        }
+        topRatedMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (!message.isNullOrEmpty()) {
+                showErrorDialog(message) // show error dialog for fetching top rated movies
+            }
+        }
+
         handler.postDelayed({
             checkAndHideProgressDialog()
         }, 10000)
@@ -114,6 +125,7 @@ class MainFragment :
     override fun onResume() {
         super.onResume()
         popularMovieViewModel.updateFavoriteResult()
+        topRatedMovieViewModel.updateFavoriteResult()
         fetchData()
     }
 
@@ -214,10 +226,10 @@ class MainFragment :
         private var page = 1
     }
 
-    private fun showErrorDialog() {
+    private fun showErrorDialog(message: String?) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(R.string.warning)
-        builder.setMessage(R.string.error_message)
+        builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         builder.setPositiveButton(R.string.yes) { _, _ ->

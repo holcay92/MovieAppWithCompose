@@ -40,5 +40,6 @@
     <string name="ok">Tamam</string>
     <string name="genres">Tür :</string>
     <string name="not_available">Bilinmiyor</string>
+    <string name="movie_fetch_error">Filmler yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.</string>
 
 </resources>
