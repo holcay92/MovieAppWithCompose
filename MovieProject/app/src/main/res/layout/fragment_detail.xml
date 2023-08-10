@@ -159,10 +159,10 @@
                     android:id="@+id/divider"
                     android:layout_width="1dp"
                     android:layout_height="80dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/light_theme"
                     android:backgroundTint="@color/light_theme"
                     android:orientation="vertical"
-                    android:layout_marginTop="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/releaseDate"
                     app:layout_constraintStart_toEndOf="@+id/ratingDivider2"
@@ -175,8 +175,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/release_date"
                     android:textColor="@color/light_theme"
-                    app:layout_constraintStart_toStartOf="@+id/divider"
                     app:layout_constraintEnd_toStartOf="@+id/releaseDateValue"
+                    app:layout_constraintStart_toStartOf="@+id/divider"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -205,9 +205,9 @@
                     android:id="@+id/runtimeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/light_bold_theme"
                     android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                     android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/runtime"
                     app:layout_constraintTop_toTopOf="@+id/runtime"
@@ -241,6 +241,29 @@
                     app:layout_constraintStart_toEndOf="@+id/budgetIcon"
                     app:layout_constraintTop_toTopOf="@+id/budget"
                     tools:text="120000 " />
+                <TextView
+                    android:id="@+id/director"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/director"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/light_theme"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/budget" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/directorValue"
+                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:textColor="@color/light_bold_theme"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/director"
+                    app:layout_constraintTop_toTopOf="@+id/director"
+                    tools:text="James Cameron" />
+
+
 
                 <TextView
                     android:id="@+id/genre"
@@ -249,8 +272,8 @@
                     android:layout_marginTop="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                     android:text="@string/genres"
                     android:textColor="@color/light_theme"
-                    app:layout_constraintStart_toStartOf="@+id/releaseDate"
                     app:layout_constraintEnd_toStartOf="@+id/genre1"
+                    app:layout_constraintStart_toStartOf="@+id/releaseDate"
                     app:layout_constraintTop_toBottomOf="@+id/releaseDate" />
 
                 <TextView
@@ -271,10 +294,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/transparent"
+                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
+                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                     android:textColor="@color/light_bold_theme"
                     android:textStyle="bold"
-                    android:paddingEnd="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
-                    android:paddingStart="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
                     app:layout_constraintEnd_toEndOf="@id/genre1"
                     app:layout_constraintTop_toBottomOf="@+id/genre1"
                     tools:text="Action" />
@@ -327,6 +350,18 @@
                     android:textSize="@dimen/detailFragmentCardViewDetailTextSize"
                     android:textStyle="bold"
                     tools:text="@string/overView_placeholder" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/light_theme" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/actorRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal" />
 
                 <View
                     android:layout_width="match_parent"

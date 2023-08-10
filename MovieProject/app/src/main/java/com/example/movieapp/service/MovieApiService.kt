@@ -1,5 +1,7 @@
 package com.example.movieapp.service
 
+import com.example.movieapp.model.actor.Actor
+import com.example.movieapp.model.credits.Credits
 import com.example.movieapp.model.movieDetail.MovieDetail
 import com.example.movieapp.model.movieImages.MovieImages
 import com.example.movieapp.model.movieSearchResponse.MovieSearchResponse
@@ -44,4 +46,12 @@ interface MovieApiService {
     fun getMovieVideos(
         @Path("movie_id") movieId: Int,
     ): Call<Videos>
+
+    @GET("movie/{movie_id}/credits")
+    fun getMovieCredits(@Path("movie_id") movieId: Int): Call<Credits?>?
+
+    @GET("person/{person_id}")
+    fun getActorDetails(
+        @Path("person_id") personId: Int,
+    ): Call<Actor>
 }
