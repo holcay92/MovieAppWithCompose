@@ -11,6 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:elevation="4dp"
         android:background="@color/toolbar_main_theme"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,8 +22,8 @@
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:src="@drawable/tmdb_icon"
-            android:contentDescription="@string/content_description" />
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/tmdb_icon" />
     </androidx.appcompat.widget.Toolbar>
 
 
@@ -30,8 +31,8 @@
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:background="@color/main_theme_bg"
         android:layout_height="match_parent"
+        android:background="@color/main_theme_bg"
         android:paddingBottom="50dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
-<!-- todo material rail or drawer-->
+    <!-- todo material rail or drawer-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
