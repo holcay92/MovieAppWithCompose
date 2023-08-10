@@ -31,7 +31,6 @@ class ActorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val actorId = extractActorIdFromArguments()
-        Log.d("TAGX", "Actor fragment onViewCreated actorId: $actorId")
 
         actorId?.let {
             actorViewModel.getActorDetail(it)

@@ -28,7 +28,7 @@ class CreditsViewModel @Inject constructor(private val movieApiService: MovieApi
                 }
 
                 override fun onFailure(call: Call<Credits?>, t: Throwable) {
-                    creditsResponse.postValue(null)
+                    creditsResponse.postValue(null) // todo error check
                 }
             },
         )

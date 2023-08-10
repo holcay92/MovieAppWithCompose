@@ -7,7 +7,7 @@
 
     <application
         android:name=".NavigationComponentApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

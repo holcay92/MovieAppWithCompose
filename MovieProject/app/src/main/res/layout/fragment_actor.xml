@@ -4,14 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/main_theme_bg"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:padding="5dp"
     android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/main_theme_bg"
         android:paddingTop="50dp"
+        android:layout_gravity="center"
         tools:context=".view.ActorFragment">
 
 
@@ -20,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/light_theme"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +33,8 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/actor_image"
                 android:layout_width="200dp"
-                android:layout_height="300dp" />
+                android:layout_height="300dp"
+                android:layout_gravity="center"/>
         </com.google.android.material.card.MaterialCardView>
 
 
@@ -58,7 +61,6 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actor_card"
-
             tools:text="Halil Olcay" />
 
         <TextView

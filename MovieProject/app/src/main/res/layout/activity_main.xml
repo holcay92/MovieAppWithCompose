@@ -11,8 +11,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:elevation="4dp"
         android:background="@color/toolbar_main_theme"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/light_theme">
@@ -46,6 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/secondary_theme"
+        android:pointerIcon="grabbing"
+        app:itemIconTint="@color/light_bold_theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/navigation_bar" />
 
