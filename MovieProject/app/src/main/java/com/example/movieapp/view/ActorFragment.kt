@@ -1,7 +1,6 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ class ActorFragment : Fragment() {
 
         val actorId = extractActorIdFromArguments()
 
-        actorId?.let {
+        actorId.let {
             actorViewModel.getActorDetail(it)
         }
         actorViewModel.actorResponse.observe(viewLifecycleOwner) {
@@ -45,6 +44,7 @@ class ActorFragment : Fragment() {
                 .into(binding.actorImage)
         }
     }
+
     private fun extractActorIdFromArguments(): Int {
         return ActorFragmentArgs.fromBundle(requireArguments()).actorId
     }

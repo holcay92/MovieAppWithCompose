@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class MainFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        showProgressDialog()
         fragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
         return fragmentMainBinding.root
     }
@@ -57,7 +59,7 @@ class MainFragment :
         setupBackPressedCallback()
         setupRecyclerViews()
         setupGridButtonClickListener()
-        showProgressDialog()
+
         fragmentMainBinding.gridBtn.setOnClickListener {
             viewType = !viewType
             switchRecyclerViewLayout()
@@ -80,12 +82,13 @@ class MainFragment :
         }
         popularMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             if (!message.isNullOrEmpty()) {
-                showErrorDialog(message) // show error dialog for fetching popular movies
+                Log.d("TAGX", "fetchData: $message")
+                showErrorDialog(message.toString()) // show error dialog for fetching popular movies
             }
         }
         topRatedMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             if (!message.isNullOrEmpty()) {
-                showErrorDialog(message) // show error dialog for fetching top rated movies
+                showErrorDialog(message.toString()) // show error dialog for fetching top rated movies
             }
         }
     }

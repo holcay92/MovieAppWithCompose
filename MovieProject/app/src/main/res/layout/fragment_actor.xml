@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/main_theme_bg"
     android:layout_width="match_parent"
-    android:padding="5dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/main_theme_bg"
+    android:padding="5dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="@color/main_theme_bg"
         android:paddingTop="50dp"
-        android:layout_gravity="center"
         tools:context=".view.ActorFragment">
 
 
@@ -21,20 +21,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/light_theme"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            >
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/light_theme"
+            app:strokeWidth="1dp">
+
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/actor_image"
                 android:layout_width="200dp"
                 android:layout_height="300dp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
         </com.google.android.material.card.MaterialCardView>
 
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="30dp"
-            android:text="Actor Name : "
+            android:text="@string/actor_name"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
             android:id="@+id/actor_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Birthday : "
+            android:text="@string/birthday"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +77,7 @@
             android:id="@+id/actor_birthday_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
@@ -89,7 +90,7 @@
             android:id="@+id/actor_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Country : "
+            android:text="@string/country"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,6 +100,7 @@
             android:id="@+id/actor_country_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
@@ -111,8 +113,8 @@
             android:id="@+id/actor_bio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Biography : "
             android:paddingTop="10dp"
+            android:text="@string/biography"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
 
@@ -123,13 +125,13 @@
             android:id="@+id/actor_bio_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="40dp"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:paddingTop="10dp"
-            android:paddingBottom="40dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actor_bio"
             tools:text="OBSS OBSS OBSS OBSS OBSS OBSS OBSS OBSS OBSS OBSS " />
 

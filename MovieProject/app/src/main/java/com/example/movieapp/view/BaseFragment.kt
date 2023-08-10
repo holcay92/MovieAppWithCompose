@@ -34,7 +34,7 @@ open class BaseFragment : Fragment() {
     fun showErrorDialog(message: String?) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(R.string.warning)
-        builder.setMessage(message)
+        builder.setMessage(message.toString())
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         builder.setPositiveButton(R.string.ok) { _, _ ->

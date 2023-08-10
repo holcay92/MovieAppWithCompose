@@ -43,5 +43,9 @@
     <string name="not_available">Bilinmiyor</string>
     <string name="movie_fetch_error">Filmler yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.</string>
     <string name="error_message_movie_review">Yorumlar yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.</string>
+    <string name="actor_name">İsim :</string>
+    <string name="birthday">Doğum Tarihi :</string>
+    <string name="country">Ülke :</string>
+    <string name="biography">Özgeçmiş :</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.movieapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -49,7 +50,7 @@ class PopularMovieViewModel @Inject constructor(
                 }
 
                 override fun onFailure(call: Call<PopularResponse?>, t: Throwable) {
-                    errorMessage.postValue(R.string.movie_fetch_error.toString())
+                    errorMessage.postValue("Failed to fetch movies. Please check your internet connection.")
                     popularMovieResponse.postValue(null)
                 }
             },
