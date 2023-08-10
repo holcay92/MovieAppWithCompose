@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDetailBinding
+import com.example.movieapp.model.credits.Cast
+import com.example.movieapp.model.credits.Crew
 import com.example.movieapp.model.movieDetail.MovieDetail
 import com.example.movieapp.model.videos.VideoResult
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.utils.ZoomOutPageTransformer
+import com.example.movieapp.view.adapters.ActorAdapter
 import com.example.movieapp.view.adapters.MovieImageAdapter
+import com.example.movieapp.viewModel.CreditsViewModel
 import com.example.movieapp.viewModel.DetailFragmentMovieImageViewModel
 import com.example.movieapp.viewModel.DetailViewModel
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
@@ -35,7 +40,9 @@ class DetailFragment : BaseFragment() {
     private val detailFragmentMovieImageViewModel by viewModels<DetailFragmentMovieImageViewModel>()
     private val detailViewModel by viewModels<DetailViewModel>()
     private val favoriteMovieViewModel by viewModels<FavoriteMovieViewModel>()
+    private val creditsViewModel by viewModels<CreditsViewModel>()
     private lateinit var movieImageAdapter: MovieImageAdapter
+    private lateinit var actorAdapter: ActorAdapter
     private lateinit var currentVideoId: String
     private var videoNumber = 0
 
@@ -128,6 +135,7 @@ class DetailFragment : BaseFragment() {
         showProgressDialog()
         detailViewModel.fetchMovieDetail(movieId)
         detailViewModel.fetchMovieVideos(movieId)
+        creditsViewModel.getMovieCredits(movieId)
         detailViewModel.movieDetail.observe(viewLifecycleOwner) {
             if (it != null) {
                 hideProgressDialog()
@@ -140,6 +148,25 @@ class DetailFragment : BaseFragment() {
                 initFirstVideo(it[0])
             }
         }
+        creditsViewModel.creditsResponse.observe(viewLifecycleOwner) { credits ->
+            hideProgressDialog()
+
+            if (credits != null) {
+                actorAdapter = ActorAdapter(object : ActorAdapter.OnItemClickListener {
+                    override fun onItemClick(actor: Cast) {
+                        val action =
+                            DetailFragmentDirections.actionDetailFragmentToActorFragment(actor.id)
+                        Log.d("TAGX", "Detail fragment observeMovieDetailAndVideos: ${actor.id}")
+                        findNavController().navigate(action)
+                    }
+                })
+
+                bindingDetail.actorRv.adapter = actorAdapter
+                actorAdapter.updateList(credits.cast)
+                updateDirector(credits.crew)
+            }
+        }
+
         detailViewModel.errorMessageMovieDetail.observe(viewLifecycleOwner) {
             hideProgressDialog()
             showErrorDialog(it)
@@ -164,7 +191,8 @@ class DetailFragment : BaseFragment() {
             updateFavButtonState(isFav)
             bindingDetail.favButton.setOnClickListener {
                 val movie = detailViewModel.movieDetail.value
-                val favMovie = FavoriteMovie(0, movieId, movie?.title, movie?.posterPath, movie?.voteAverage)
+                val favMovie =
+                    FavoriteMovie(0, movieId, movie?.title, movie?.posterPath, movie?.voteAverage)
                 favoriteMovieViewModel.actionFavButton(favMovie)
             }
         }
@@ -256,5 +284,14 @@ class DetailFragment : BaseFragment() {
                 youTubePlayer.cueVideo(currentVideoId, 0f)
             }
         })
+    }
+
+    private fun updateDirector(crew: List<Crew>?) {
+        if (crew != null) {
+            val director = crew.find { it.job == "Director" }
+            if (director != null) {
+                bindingDetail.directorValue?.text = director.name
+            }
+        }
     }
 }

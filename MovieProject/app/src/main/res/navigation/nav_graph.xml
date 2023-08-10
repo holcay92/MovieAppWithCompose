@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_detailFragment_to_videoFullScreenActivity"
             app:destination="@id/videoFullScreenActivity" />
+        <action
+            android:id="@+id/action_detailFragment_to_actorFragment"
+            app:destination="@id/actorFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -100,4 +103,13 @@
             android:name="video_id"
             app:argType="string" />
     </activity>
+    <fragment
+        android:id="@+id/actorFragment"
+        android:name="com.example.movieapp.view.ActorFragment"
+        android:label="fragment_actor"
+        tools:layout="@layout/fragment_actor" >
+        <argument
+            android:name="actor_id"
+            app:argType="integer" />
+    </fragment>
 </navigation>
