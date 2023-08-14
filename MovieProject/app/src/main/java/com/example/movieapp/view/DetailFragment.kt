@@ -155,9 +155,15 @@ class DetailFragment : BaseFragment() {
                 actorAdapter = ActorAdapter(object : ActorAdapter.OnItemClickListener {
                     override fun onItemClick(actor: Cast) {
                         val action =
-                            DetailFragmentDirections.actionDetailFragmentToActorFragment(actor.id)
+                            actor.id?.let {
+                                DetailFragmentDirections.actionDetailFragmentToActorFragment(
+                                    it,
+                                )
+                            }
                         Log.d("TAGX", "Detail fragment observeMovieDetailAndVideos: ${actor.id}")
-                        findNavController().navigate(action)
+                        if (action != null) {
+                            findNavController().navigate(action)
+                        }
                     }
                 })
 

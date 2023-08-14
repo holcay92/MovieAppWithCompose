@@ -1,5 +1,6 @@
 package com.example.movieapp.view.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,16 +16,17 @@ class ActorAdapter(private val onClickListener: OnItemClickListener) :
     inner class ActorViewHolder(bindingItem: ActorItemBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
 
-        fun bind(actor: Cast) {
+        fun bind(actor: Cast?) {
             val bindingItem = ActorItemBinding.bind(itemView)
             bindingItem.apply {
-                actorName.text = actor.name
-                if (actor.profile_path == null) {
+                actorName.text = actor?.name
+                if (actor?.profilePath == null) {
                     actorImage.setImageResource(com.example.movieapp.R.drawable.empty_person)
+                } else {
+                    Glide.with(actorImage.context)
+                        .load("https://image.tmdb.org/t/p/w500${actor.profilePath}")
+                        .into(actorImage)
                 }
-                Glide.with(actorImage.context)
-                    .load("https://image.tmdb.org/t/p/w500${actor.profile_path}")
-                    .into(actorImage)
             }
         }
     }

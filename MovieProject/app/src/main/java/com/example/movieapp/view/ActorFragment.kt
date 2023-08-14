@@ -44,11 +44,16 @@ class ActorFragment : Fragment() {
         actorViewModel.actorResponse.observe(viewLifecycleOwner) {
             binding.actorNameValue.text = it?.name
             binding.actorBirthdayValue.text = it?.birthday
-            binding.actorCountryValue.text = it?.place_of_birth
+            binding.actorCountryValue.text = it?.placeOfBirth
             binding.actorBioValue.text = it?.biography
-            Glide.with(binding.actorImage.context)
-                .load("https://image.tmdb.org/t/p/w500${it?.profile_path}")
-                .into(binding.actorImage)
+
+            if (it?.profilePath == null) {
+                binding.actorImage.setImageResource(com.example.movieapp.R.drawable.empty_person)
+            } else {
+                Glide.with(binding.actorImage.context)
+                    .load("https://image.tmdb.org/t/p/w500${it.profilePath}")
+                    .into(binding.actorImage)
+            }
         }
 
         actorMoviesViewModel.getActorMovies(actorId)

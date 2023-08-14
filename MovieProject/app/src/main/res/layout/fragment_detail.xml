@@ -29,7 +29,8 @@
                 android:layout_height="@dimen/detailFragmentPortraitViewPagerHeight"
                 android:clipToPadding="false"
                 android:paddingTop="@dimen/detailFragmentCardViewDetailTextPaddingValue10dp"
-                tools:background="@color/light_theme" />
+                android:background="@drawable/blank_movie_image"
+                tools:background="@drawable/blank_movie_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"

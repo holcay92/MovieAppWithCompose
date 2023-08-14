@@ -1,5 +1,6 @@
 package com.example.movieapp.view.adapters
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,9 +14,9 @@ class ActorMoviesAdapter(private val onActorMovieClickListener: OnActorMovieClic
 
     inner class ActorMoviesViewHolder(itemView: ActorMovieItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        fun bind(actorMovie: ActorMoviesCrew) {
+        fun bind(actorMovie: ActorMoviesCrew?) {
             val bindingItem = ActorMovieItemBinding.bind(itemView)
-            if (actorMovie.posterPath == null) {
+            if (actorMovie?.posterPath == null) {
                 bindingItem.actorMovieImage.setImageResource(com.example.movieapp.R.drawable.blank_movie_image)
             } else {
                 Glide.with(itemView.context)

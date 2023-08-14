@@ -1,15 +1,10 @@
 package com.example.movieapp.model.credits
 
+import com.google.gson.annotations.SerializedName
+
 data class Crew(
-    val adult: Boolean,
-    val credit_id: String,
-    val department: String,
-    val gender: Int,
-    val id: Int,
-    val job: String,
-    val known_for_department: String,
-    val name: String,
-    val original_name: String,
-    val popularity: Double,
-    val profile_path: String,
+    @SerializedName("id") val id: Int?,
+    @SerializedName("job") val job: String?,
+    @SerializedName("name") val name: String?,
+    @SerializedName("profile_path") val profilePath: String?,
 )

@@ -1,18 +1,13 @@
 package com.example.movieapp.model.actor
 
+import com.google.gson.annotations.SerializedName
+
 data class Actor(
-    val adult: Boolean,
-    val also_known_as: List<String>,
-    val biography: String,
-    val birthday: String,
-    val deathday: Any,
-    val gender: Int,
-    val homepage: Any,
-    val id: Int,
-    val imdb_id: String,
-    val known_for_department: String,
-    val name: String,
-    val place_of_birth: String,
-    val popularity: Double,
-    val profile_path: String
+    @SerializedName("biography") val biography: String?,
+    @SerializedName("birthday") val birthday: String?,
+    @SerializedName("homepage") val homepage: Any?,
+    @SerializedName("id") val id: Int?,
+    @SerializedName("name") val name: String?,
+    @SerializedName("place_of_birth") val placeOfBirth: String?,
+    @SerializedName("profile_path") val profilePath: String?
 )
