@@ -18,7 +18,7 @@ class DetailReviewAdapter : RecyclerView.Adapter<DetailReviewAdapter.DetailRevie
             bindingItem.apply {
                 reviewAuthor.text = review.author
                 reviewContent.text = review.content
-                reviewVote.text = review.author_details.rating.toString()
+                reviewVote.text = review.authorDetails.rating.toString()
             }
         }
     }

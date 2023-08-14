@@ -1,14 +1,8 @@
 package com.example.movieapp.model.videos
 
+import com.google.gson.annotations.SerializedName
+
 data class VideoResult(
-    val id: String,
-    val iso_3166_1: String,
-    val iso_639_1: String,
-    val key: String,
-    val name: String,
-    val official: Boolean,
-    val published_at: String,
-    val site: String,
-    val size: Int,
-    val type: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("key") val key: String,
 )

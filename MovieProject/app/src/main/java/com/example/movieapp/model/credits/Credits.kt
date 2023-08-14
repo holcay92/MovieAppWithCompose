@@ -1,7 +1,9 @@
 package com.example.movieapp.model.credits
 
+import com.google.gson.annotations.SerializedName
+
 data class Credits(
-    val cast: List<Cast>,
-    val crew: List<Crew>,
-    val id: Int
+    @SerializedName("cast") val cast: List<Cast>,
+    @SerializedName("crew") val crew: List<Crew>,
+    @SerializedName("id") val id: Int
 )

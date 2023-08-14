@@ -1,9 +1,9 @@
 package com.example.movieapp.model.review
 
+import com.google.gson.annotations.SerializedName
+
 data class Review(
-    val id: Int,
-    val page: Int,
-    val results: List<ReviewResult>,
-    val total_pages: Int,
-    val total_results: Int,
+    @SerializedName("id") val id: Int,
+    @SerializedName("results") val results: List<ReviewResult>,
+
 )

@@ -1,6 +1,8 @@
 package com.example.movieapp.model.videos
 
+import com.google.gson.annotations.SerializedName
+
 data class Videos(
-    val id: Int,
-    val results: List<VideoResult>,
+    @SerializedName("id") val id: Int,
+    @SerializedName("results") val results: List<VideoResult>,
 )

@@ -29,7 +29,7 @@ class SearchListAdapter(private val listener: OnItemClickListener) :
                 }
 
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w500${movie.poster_path}").centerCrop()
+                    .load("https://image.tmdb.org/t/p/w500${movie.posterPath}").centerCrop()
                     .into(moviePoster)
             }
         }
