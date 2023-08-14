@@ -111,5 +111,8 @@
         <argument
             android:name="actor_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_actorFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 </navigation>

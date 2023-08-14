@@ -6,14 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.movieapp.Constants
 import com.example.movieapp.databinding.FragmentActorBinding
+import com.example.movieapp.view.adapters.ActorMoviesAdapter
+import com.example.movieapp.viewModel.ActorMoviesViewModel
 import com.example.movieapp.viewModel.ActorViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ActorFragment : Fragment() {
     private lateinit var binding: FragmentActorBinding
+    private val actorMoviesViewModel by viewModels<ActorMoviesViewModel>()
+    private lateinit var actorMoviesAdapter: ActorMoviesAdapter
 
     private val actorViewModel by viewModels<ActorViewModel>()
     override fun onCreateView(
@@ -42,6 +49,28 @@ class ActorFragment : Fragment() {
             Glide.with(binding.actorImage.context)
                 .load("https://image.tmdb.org/t/p/w500${it?.profile_path}")
                 .into(binding.actorImage)
+        }
+
+        actorMoviesViewModel.getActorMovies(actorId)
+        actorMoviesViewModel.actorMovies.observe(viewLifecycleOwner) {
+            actorMoviesAdapter =
+                ActorMoviesAdapter(object : ActorMoviesAdapter.OnActorMovieClickListener {
+                    override fun onActorMovieClick(actorMovie: com.example.movieapp.model.actorMovies.ActorMoviesCrew) {
+                        val action = ActorFragmentDirections.actionActorFragmentToDetailFragment(
+                            Constants.POPULAR,
+                            actorMovie.id,
+                        )
+                        view.findNavController().navigate(action)
+                    }
+                })
+            binding.actorMoviesRecyclerView?.adapter = actorMoviesAdapter
+            binding.actorMoviesRecyclerView?.layoutManager =
+                LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false,
+                )
+            actorMoviesAdapter.updateActorMovies(it ?: emptyList())
         }
     }
 
