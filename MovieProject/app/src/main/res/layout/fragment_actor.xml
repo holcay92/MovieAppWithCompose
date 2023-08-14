@@ -109,6 +109,48 @@
             app:layout_constraintTop_toBottomOf="@id/actor_birthday"
             tools:text="Turkey" />
 
+        <View
+            android:id="@+id/actor_divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/actor_country_value"
+            android:background="@color/light_transparent_theme" />
+
+        <TextView
+            android:id="@+id/actor_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_theme"
+            android:textSize="20sp"
+            android:paddingTop="10dp"
+            android:text="@string/movies"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actor_divider"
+            tools:text="Movies" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/actor_movies_recycler_view"
+            android:paddingTop="10dp"
+            android:paddingBottom="30dp"
+            app:layout_constraintTop_toBottomOf="@id/actor_movies"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+        <View
+            android:id="@+id/actor_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/actor_movies_recycler_view"
+            android:background="@color/light_transparent_theme" />
+
         <TextView
             android:id="@+id/actor_bio"
             android:layout_width="wrap_content"
@@ -117,9 +159,8 @@
             android:text="@string/biography"
             android:textColor="@color/light_theme"
             android:textSize="20sp"
-
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/actor_country" />
+            app:layout_constraintTop_toBottomOf="@id/actor_movies_recycler_view" />
 
         <TextView
             android:id="@+id/actor_bio_value"
@@ -135,16 +176,7 @@
             app:layout_constraintTop_toBottomOf="@id/actor_bio"
             tools:text="OBSS OBSS OBSS OBSS OBSS OBSS OBSS OBSS OBSS OBSS " />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/actor_movies_recycler_view"
-            android:paddingTop="10dp"
-            android:paddingBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@id/actor_bio_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

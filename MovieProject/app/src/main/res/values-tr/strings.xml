@@ -47,5 +47,6 @@
     <string name="birthday">Doğum Tarihi :</string>
     <string name="country">Ülke :</string>
     <string name="biography">Özgeçmiş :</string>
+    <string name="movies">Filmler :</string>
 
 </resources>
