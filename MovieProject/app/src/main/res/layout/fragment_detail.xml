@@ -82,7 +82,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/light_theme" />
+                android:background="@color/light_transparent_theme" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -160,8 +160,7 @@
                     android:layout_width="1dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/light_theme"
-                    android:backgroundTint="@color/light_theme"
+                    android:background="@color/light_transparent_theme"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/releaseDate"
@@ -321,7 +320,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/light_theme" />
+                android:background="@color/light_transparent_theme" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -354,7 +353,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/light_theme" />
+                    android:background="@color/light_transparent_theme" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/actorRv"
@@ -366,7 +365,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/light_theme" />
+                    android:background="@color/light_transparent_theme" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -406,7 +405,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/light_theme" />
+                    android:background="@color/light_transparent_theme" />
 
                 <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                     android:id="@+id/youtube_player_view1"
@@ -418,7 +417,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/light_theme" />
+                    android:background="@color/light_transparent_theme" />
 
 
             </LinearLayout>
