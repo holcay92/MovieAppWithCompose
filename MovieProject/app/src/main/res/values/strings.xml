@@ -47,4 +47,6 @@
     <string name="country">Country :</string>
     <string name="biography">Biography :</string>
     <string name="movies">Movies :</string>
+    <string name="now_playing_movies">Now Playing</string>
+    <string name="trending_movies">Now Playing</string>
 </resources>

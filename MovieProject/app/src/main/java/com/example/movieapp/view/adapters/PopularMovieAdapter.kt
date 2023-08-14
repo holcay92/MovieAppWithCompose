@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieItemPopularBinding
 import com.example.movieapp.databinding.MovieItemPopularGridViewBinding
-import com.example.movieapp.model.popularMovie.ResultPopular
+import com.example.movieapp.model.movie.MovieResult
 import com.example.movieapp.room.FavoriteMovie
 
 class PopularMovieAdapter(
@@ -20,7 +20,7 @@ class PopularMovieAdapter(
     private val favStatusChangeListener: OnFavoriteStatusChangeListener,
 ) :
     RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
-    private var movieList = ArrayList<ResultPopular>()
+    private var movieList = ArrayList<MovieResult>()
     private var viewType = ViewType.LIST
 
     enum class ViewType {
@@ -53,7 +53,7 @@ class PopularMovieAdapter(
             }
         }
 
-        fun bind(popularMovie: ResultPopular) {
+        fun bind(popularMovie: MovieResult) {
             if (viewType == ViewType.LIST) {
                 val bindingItem = MovieItemPopularBinding.bind(itemView)
                 bindingItem.apply {
@@ -118,13 +118,13 @@ class PopularMovieAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(list: List<ResultPopular>?) {
+    fun updateList(list: List<MovieResult>?) {
         movieList.addAll(list ?: emptyList())
         notifyDataSetChanged()
     }
 
     interface OnItemClickListener {
-        fun onItemClick(movie: ResultPopular)
+        fun onItemClick(movie: MovieResult)
     }
 
     fun updateVoteStyle(vote: Double): String {
@@ -138,7 +138,7 @@ class PopularMovieAdapter(
     }
 
     interface OnFavoriteStatusChangeListener {
-        fun onFavoriteStatusChanged(movie: ResultPopular)
+        fun onFavoriteStatusChanged(movie: MovieResult)
     }
 
     fun updateFavoriteStatus(favoriteMovies: List<FavoriteMovie>) {

@@ -48,5 +48,7 @@
     <string name="country">Ülke :</string>
     <string name="biography">Özgeçmiş :</string>
     <string name="movies">Filmler :</string>
+    <string name="now_playing_movies">Gösterimdekiler :</string>
+    <string name="trending_movies">Trendler</string>
 
 </resources>

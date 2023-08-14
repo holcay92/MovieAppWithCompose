@@ -12,14 +12,14 @@ import com.example.movieapp.databinding.MovieItemGridBinding
 import com.example.movieapp.model.movie.MovieResult
 import com.example.movieapp.room.FavoriteMovie
 
-class TopRatedMovieAdapter(
+class NowPlayingMovieAdapter(
     private val listener: OnItemClickListener,
     private val favStatusChangeListener: OnFavoriteStatusChangeListener,
 ) :
-    RecyclerView.Adapter<TopRatedMovieAdapter.TopRatedMovieViewHolder>() {
-    private var tRMovieList = ArrayList<MovieResult>()
+    RecyclerView.Adapter<NowPlayingMovieAdapter.TrendingMovieViewHolder>() {
+    private var trendingMovieList = ArrayList<MovieResult>()
 
-    inner class TopRatedMovieViewHolder(bindingItem: MovieItemGridBinding) :
+    inner class TrendingMovieViewHolder(bindingItem: MovieItemGridBinding) :
         RecyclerView.ViewHolder(bindingItem.root) {
         init {
             val btnAddFav = bindingItem.favButton
@@ -27,24 +27,24 @@ class TopRatedMovieAdapter(
             btnAddFav.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val movie = tRMovieList[position]
+                    val movie = trendingMovieList[position]
                     movie.isFavorite = !movie.isFavorite
-                    favStatusChangeListener.onFavoriteStatusChanged1(movie)
+                    favStatusChangeListener.onFavoriteStatusChanged3(movie)
                     notifyItemChanged(position)
                 }
             }
         }
 
-        fun bind(tRMovie: MovieResult) {
+        fun bind(trendingMovie: MovieResult) {
             val bindingItem = MovieItemGridBinding.bind(itemView)
             bindingItem.apply {
-                if (tRMovie.isFavorite) {
+                if (trendingMovie.isFavorite) {
                     favButton.setImageResource(R.drawable.add_fav_filled_icon_top_rated)
                 } else {
                     favButton.setImageResource(R.drawable.add_fav_empty_icon_top_rated)
                 }
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w500${tRMovie.posterPath}").fitCenter()
+                    .load("https://image.tmdb.org/t/p/w500${trendingMovie.posterPath}").fitCenter()
                     .transform(CenterCrop(), RoundedCorners(50))
                     .into(movieImage)
             }
@@ -54,29 +54,29 @@ class TopRatedMovieAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): TopRatedMovieViewHolder {
+    ): TrendingMovieViewHolder {
         val itemView =
             MovieItemGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return TopRatedMovieViewHolder(itemView)
+        return TrendingMovieViewHolder(itemView)
     }
 
     override fun onBindViewHolder(
-        holder: TopRatedMovieViewHolder,
+        holder: TrendingMovieViewHolder,
         position: Int,
     ) {
-        holder.bind(tRMovieList[position])
+        holder.bind(trendingMovieList[position])
         holder.itemView.setOnClickListener {
-            listener.onItemClick(tRMovieList[position])
+            listener.onItemClick(trendingMovieList[position])
         }
     }
 
-    override fun getItemCount() = tRMovieList.size
+    override fun getItemCount() = trendingMovieList.size
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<MovieResult>?) {
-        tRMovieList.clear()
-        tRMovieList.addAll(list ?: emptyList())
+        trendingMovieList.clear()
+        trendingMovieList.addAll(list ?: emptyList())
         notifyDataSetChanged()
     }
 
@@ -85,11 +85,11 @@ class TopRatedMovieAdapter(
     }
 
     interface OnFavoriteStatusChangeListener {
-        fun onFavoriteStatusChanged1(movie: MovieResult)
+        fun onFavoriteStatusChanged3(movie: MovieResult)
     }
 
     fun updateFavoriteStatus(favoriteMovies: List<FavoriteMovie>) {
-        tRMovieList.forEach { movie ->
+        trendingMovieList.forEach { movie ->
             val isFav = favoriteMovies.any { it.id == movie.id }
             movie.isFavorite = isFav
         }

@@ -1,12 +1,10 @@
 package com.example.movieapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.R
-import com.example.movieapp.model.popularMovie.PopularResponse
-import com.example.movieapp.model.popularMovie.ResultPopular
+import com.example.movieapp.model.movie.Movie
+import com.example.movieapp.model.movie.MovieResult
 import com.example.movieapp.room.MovieDatabase
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +21,7 @@ class PopularMovieViewModel @Inject constructor(
     private val movieDatabase: MovieDatabase,
 ) :
     ViewModel() {
-    var popularMovieResponse = MutableLiveData<List<ResultPopular>?>()
+    var popularMovieResponse = MutableLiveData<List<MovieResult>?>()
     var errorMessage = MutableLiveData<String>()
     init {
         fetchMovieList(1)
@@ -33,10 +31,10 @@ class PopularMovieViewModel @Inject constructor(
         val call = movieApiService.getPopularMovies(page)
 
         call.enqueue(
-            object : Callback<PopularResponse?> {
+            object : Callback<Movie?> {
                 override fun onResponse(
-                    call: Call<PopularResponse?>,
-                    response: Response<PopularResponse?>,
+                    call: Call<Movie?>,
+                    response: Response<Movie?>,
                 ) {
                     if (response.isSuccessful) {
                         val results = response.body()?.results
@@ -49,7 +47,7 @@ class PopularMovieViewModel @Inject constructor(
                     }
                 }
 
-                override fun onFailure(call: Call<PopularResponse?>, t: Throwable) {
+                override fun onFailure(call: Call<Movie?>, t: Throwable) {
                     errorMessage.postValue("Failed to fetch movies. Please check your internet connection.")
                     popularMovieResponse.postValue(null)
                 }

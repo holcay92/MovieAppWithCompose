@@ -3,12 +3,11 @@ package com.example.movieapp.service
 import com.example.movieapp.model.actor.Actor
 import com.example.movieapp.model.actorMovies.ActorMovies
 import com.example.movieapp.model.credits.Credits
+import com.example.movieapp.model.movie.Movie
 import com.example.movieapp.model.movieDetail.MovieDetail
 import com.example.movieapp.model.movieImages.MovieImages
 import com.example.movieapp.model.movieSearchResponse.MovieSearchResponse
-import com.example.movieapp.model.popularMovie.PopularResponse
 import com.example.movieapp.model.review.Review
-import com.example.movieapp.model.topRated.TopRated
 import com.example.movieapp.model.videos.Videos
 import retrofit2.Call
 import retrofit2.http.GET
@@ -22,7 +21,7 @@ interface MovieApiService {
     ): Call<MovieSearchResponse>
 
     @GET("movie/popular")
-    fun getPopularMovies(@Query("page") page: Int): Call<PopularResponse>
+    fun getPopularMovies(@Query("page") page: Int): Call<Movie>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(
@@ -35,14 +34,13 @@ interface MovieApiService {
     ): Call<MovieImages>
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(): Call<TopRated>
+    fun getTopRatedMovies(): Call<Movie>
 
     @GET("movie/{movie_id}/reviews")
     fun getMovieReviews(
         @Path("movie_id") movieId: Int,
     ): Call<Review>
 
-    // get movie videos todo: add to detail fragment
     @GET("movie/{movie_id}/videos")
     fun getMovieVideos(
         @Path("movie_id") movieId: Int,
@@ -60,4 +58,7 @@ interface MovieApiService {
     fun getActorMovies(
         @Path("person_id") personId: Int,
     ): Call<ActorMovies>
+
+    @GET("movie/now_playing")
+    fun getNowPlayingMovies(): Call<Movie>
 }

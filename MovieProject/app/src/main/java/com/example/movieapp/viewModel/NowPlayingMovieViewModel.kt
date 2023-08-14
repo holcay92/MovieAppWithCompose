@@ -16,23 +16,23 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class TopRatedMovieViewModel @Inject constructor(
+class NowPlayingMovieViewModel @Inject constructor(
     private val movieApiService: MovieApiService,
     private val movieDatabase: MovieDatabase,
-) :
-    ViewModel() {
-    var tRMovieResponse = MutableLiveData<List<MovieResult>?>()
-    var errorMessage = MutableLiveData<String>()
+) : ViewModel() {
+
+    var nowPlayingMovies = MutableLiveData<List<MovieResult>?>()
+    var errorMessageNowPlayingMovies = MutableLiveData<String>()
 
     init {
-        fetchMovieList()
+        fetchTrendingMovies()
     }
 
-    private fun fetchMovieList() {
-        val call = movieApiService.getTopRatedMovies()
+    private fun fetchTrendingMovies() {
+        val call = movieApiService.getNowPlayingMovies()
 
         call.enqueue(
-            object : Callback<Movie> {
+            object : Callback<Movie?> {
                 override fun onResponse(
                     call: Call<Movie?>,
                     response: Response<Movie?>,
@@ -44,13 +44,13 @@ class TopRatedMovieViewModel @Inject constructor(
                                 movie.isFavorite = movie.id?.let { isMovieInFavorites(it) } == true
                             }
                         }
-                        tRMovieResponse.value = results
+                        nowPlayingMovies.value = results
                     }
                 }
 
                 override fun onFailure(call: Call<Movie?>, t: Throwable) {
-                    errorMessage.postValue("Failed to fetch movies. Please check your internet connection.")
-                    tRMovieResponse.postValue(null)
+                    errorMessageNowPlayingMovies.postValue("Failed to fetch movies. Please check your internet connection.")
+                    nowPlayingMovies.postValue(null)
                 }
             },
         )
@@ -62,11 +62,11 @@ class TopRatedMovieViewModel @Inject constructor(
 
     fun updateFavoriteResult() {
         viewModelScope.launch {
-            val list = tRMovieResponse.value
+            val list = nowPlayingMovies.value
             list?.forEach { movie ->
                 movie.isFavorite = movie.id?.let { isMovieInFavorites(it) } == true
             }
-            tRMovieResponse.postValue(list)
+            nowPlayingMovies.postValue(list)
         }
     }
 }

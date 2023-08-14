@@ -18,13 +18,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.Constants
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMainBinding
-import com.example.movieapp.model.popularMovie.ResultPopular
-import com.example.movieapp.model.topRated.ResultTopRated
+import com.example.movieapp.model.movie.MovieResult
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.view.BaseFragment
+import com.example.movieapp.view.adapters.NowPlayingMovieAdapter
 import com.example.movieapp.view.adapters.PopularMovieAdapter
 import com.example.movieapp.view.adapters.TopRatedMovieAdapter
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
+import com.example.movieapp.viewModel.NowPlayingMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
 import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,14 +34,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainFragment :
     BaseFragment(),
     PopularMovieAdapter.OnFavoriteStatusChangeListener,
-    TopRatedMovieAdapter.OnFavoriteStatusChangeListener {
+    TopRatedMovieAdapter.OnFavoriteStatusChangeListener,
+    NowPlayingMovieAdapter.OnFavoriteStatusChangeListener {
     private lateinit var fragmentMainBinding: FragmentMainBinding
     private val popularMovieViewModel by viewModels<PopularMovieViewModel>()
     private val topRatedMovieViewModel by viewModels<TopRatedMovieViewModel>()
     private val favoriteMovieViewModel by viewModels<FavoriteMovieViewModel>()
+    private val nowPlayingMovieViewModel by viewModels<NowPlayingMovieViewModel>()
 
     private lateinit var popularMovieAdapter: PopularMovieAdapter
     private lateinit var topRatedMovieAdapter: TopRatedMovieAdapter
+    private lateinit var nowPlayingMovieAdapter: NowPlayingMovieAdapter
     private var isLoading = false
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +53,24 @@ class MainFragment :
     ): View {
         showProgressDialog()
         fragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
+
+       /* val topRatedMoviesLayout = fragmentMainBinding.llTopRatedMovies
+
+        val scrollView = fragmentMainBinding.scrollView
+        scrollView.viewTreeObserver?.addOnScrollChangedListener {
+            val scrollY = scrollView.scrollY
+            if (scrollY > 20) {
+                // Scroll has passed the threshold, hide the top rated movies section with animation
+                topRatedMoviesLayout?.animate()?.alpha(0f)?.setDuration(300)?.start()
+                if (scrollY > 50) {
+                    topRatedMoviesLayout?.visibility = View.GONE
+                }
+            } else {
+                // Scroll is back above the threshold, show the top rated movies section with animation
+                topRatedMoviesLayout?.animate()?.alpha(1f)?.setDuration(300)?.start()
+                topRatedMoviesLayout?.visibility = View.VISIBLE
+            }
+        }*/
         return fragmentMainBinding.root
     }
 
@@ -80,6 +102,11 @@ class MainFragment :
             hideProgressDialog()
             isLoading = false
         }
+
+        nowPlayingMovieViewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
+            nowPlayingMovieAdapter.updateList(it)
+            hideProgressDialog()
+        }
         popularMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             if (!message.isNullOrEmpty()) {
                 Log.d("TAGX", "fetchData: $message")
@@ -87,6 +114,12 @@ class MainFragment :
             }
         }
         topRatedMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (!message.isNullOrEmpty()) {
+                showErrorDialog(message.toString()) // show error dialog for fetching top rated movies
+            }
+        }
+
+        nowPlayingMovieViewModel.errorMessageNowPlayingMovies.observe(viewLifecycleOwner) { message ->
             if (!message.isNullOrEmpty()) {
                 showErrorDialog(message.toString()) // show error dialog for fetching top rated movies
             }
@@ -108,8 +141,9 @@ class MainFragment :
     private fun setupViews() {
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.title = ""
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        SPAN_COUNT = if (isLandscape) 5 else 3
+        val isLandscape =
+            resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        SPAN_COUNT = if (isLandscape) SPAN_COUNT_5 else SPAN_COUNT_3
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
@@ -153,10 +187,11 @@ class MainFragment :
     }
 
     private fun setupRecyclerViews() {
-        fragmentMainBinding.rvPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        fragmentMainBinding.rvPopularMovies.layoutManager =
+            LinearLayoutManager(requireContext())
         popularMovieAdapter = PopularMovieAdapter(
             object : PopularMovieAdapter.OnItemClickListener {
-                override fun onItemClick(movie: ResultPopular) {
+                override fun onItemClick(movie: MovieResult) {
                     val action = movie.id?.let {
                         MainFragmentDirections.actionMainFragmentToDetailFragment(
                             Constants.POPULAR,
@@ -189,25 +224,53 @@ class MainFragment :
         })
 
         fragmentMainBinding.rvTopRatedMovies?.layoutManager =
-            GridLayoutManager(requireContext(), 1, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         topRatedMovieAdapter =
             TopRatedMovieAdapter(
                 object : TopRatedMovieAdapter.OnItemClickListener {
-                    override fun onItemClick(movie: ResultTopRated) {
-                        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                            Constants.TOP_RATED,
-                            movie.id,
-                        )
-                        findNavController().navigate(action)
+                    override fun onItemClick(movie: MovieResult) {
+                        val action = movie.id?.let {
+                            MainFragmentDirections.actionMainFragmentToDetailFragment(
+                                Constants.TOP_RATED,
+                                it,
+                            )
+                        }
+                        if (action != null) {
+                            findNavController().navigate(action)
+                        }
                     }
                 },
                 this,
             )
         fragmentMainBinding.rvTopRatedMovies?.adapter = topRatedMovieAdapter
+
+        fragmentMainBinding.rvNowPlayingMovies?.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        nowPlayingMovieAdapter = NowPlayingMovieAdapter(
+            object : NowPlayingMovieAdapter.OnItemClickListener {
+                override fun onItemClick(movie: MovieResult) {
+                    val action = movie.id?.let {
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.POPULAR,
+                            it,
+                        )
+                    }
+                    if (action != null) {
+                        findNavController().navigate(action)
+                    }
+                }
+            },
+            this,
+        )
+        fragmentMainBinding.rvNowPlayingMovies?.adapter = nowPlayingMovieAdapter
     }
 
     companion object {
         private var SPAN_COUNT = 2
+        private var SPAN_COUNT_1 = 1
+        private var SPAN_COUNT_3 = 3
+        private var SPAN_COUNT_5 = 5
         private var viewType = false
         private var page = 1
     }
@@ -227,7 +290,7 @@ class MainFragment :
         alertDialog.show()
     }
 
-    override fun onFavoriteStatusChanged(movie: ResultPopular) {
+    override fun onFavoriteStatusChanged(movie: MovieResult) {
         favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
             popularMovieAdapter.updateFavoriteStatus(favoriteMovies)
         }
@@ -242,7 +305,7 @@ class MainFragment :
         )
     }
 
-    override fun onFavoriteStatusChanged(movie: ResultTopRated) {
+    override fun onFavoriteStatusChanged1(movie: MovieResult) {
         favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
             topRatedMovieAdapter.updateFavoriteStatus(favoriteMovies)
         }
@@ -251,7 +314,22 @@ class MainFragment :
                 0,
                 movie.id,
                 movie.title,
-                movie.poster_path,
+                movie.posterPath,
+                movie.voteAverage,
+            ),
+        )
+    }
+
+    override fun onFavoriteStatusChanged3(movie: MovieResult) {
+        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
+            nowPlayingMovieAdapter.updateFavoriteStatus(favoriteMovies)
+        }
+        favoriteMovieViewModel.actionFavButton(
+            FavoriteMovie(
+                0,
+                movie.id,
+                movie.title,
+                movie.posterPath,
                 movie.voteAverage,
             ),
         )

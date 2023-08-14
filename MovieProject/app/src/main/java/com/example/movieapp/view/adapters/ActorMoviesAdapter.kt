@@ -1,6 +1,5 @@
 package com.example.movieapp.view.adapters
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
