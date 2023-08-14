@@ -19,6 +19,9 @@ class ActorAdapter(private val onClickListener: OnItemClickListener) :
             val bindingItem = ActorItemBinding.bind(itemView)
             bindingItem.apply {
                 actorName.text = actor.name
+                if (actor.profile_path == null) {
+                    actorImage.setImageResource(com.example.movieapp.R.drawable.empty_person)
+                }
                 Glide.with(actorImage.context)
                     .load("https://image.tmdb.org/t/p/w500${actor.profile_path}")
                     .into(actorImage)

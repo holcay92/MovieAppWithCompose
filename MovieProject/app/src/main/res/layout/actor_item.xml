@@ -20,8 +20,8 @@
             android:id="@+id/actorImage"
             android:layout_width="60dp"
             android:layout_height="90dp"
-            android:src="@drawable/bino"
-            tools:src="@color/main_theme_bg" />
+            android:src="@drawable/empty_person"
+           />
 
 
     </com.google.android.material.card.MaterialCardView>

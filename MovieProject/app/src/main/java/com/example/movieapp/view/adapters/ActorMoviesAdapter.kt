@@ -15,9 +15,13 @@ class ActorMoviesAdapter(private val onActorMovieClickListener: OnActorMovieClic
         RecyclerView.ViewHolder(itemView.root) {
         fun bind(actorMovie: ActorMoviesCrew) {
             val bindingItem = ActorMovieItemBinding.bind(itemView)
-            Glide.with(itemView.context)
-                .load("https://image.tmdb.org/t/p/w500${actorMovie.posterPath}")
-                .into(bindingItem.actorMovieImage)
+            if (actorMovie.posterPath == null) {
+                bindingItem.actorMovieImage.setImageResource(com.example.movieapp.R.drawable.blank_movie_image)
+            } else {
+                Glide.with(itemView.context)
+                    .load("https://image.tmdb.org/t/p/w500${actorMovie.posterPath}")
+                    .into(bindingItem.actorMovieImage)
+            }
         }
     }
 
