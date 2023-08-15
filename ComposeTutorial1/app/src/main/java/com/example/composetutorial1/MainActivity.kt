@@ -1,19 +1,19 @@
 package com.example.composetutorial1
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,11 +26,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeTutorialTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    MessageCard(Message("Android", "Jetpack Compose"))
-                }
-            }
+            MessageCard(Message("Android", "Jetpack Compose"))
         }
     }
 }
@@ -55,7 +51,7 @@ fun MessageCard(msg: Message) {
         Spacer(modifier = Modifier.width(20.dp))
 
         Column {
-            Text("hello $name!")
+            Text("hello $msg!")
             // Add a vertical space between the author and message texts
             Spacer(modifier = Modifier.height(40.dp))
         }
