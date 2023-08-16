@@ -15,7 +15,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel = MainViewModel()
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,49 +41,58 @@ class MainActivity : ComponentActivity() {
             var names by remember {
                 mutableStateOf(listOf<String>())
             }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .fillMaxSize()
-                    .padding(16.dp),
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = mainViewModel.backgroundColor,
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .fillMaxSize()
+                        .padding(16.dp),
                 ) {
-                    OutlinedTextField(
-                        modifier = Modifier.weight(1f),
-                        value = name,
-                        onValueChange = { text ->
-                            name = text
-                        },
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Button(onClick = {
-                        if (name.isNotEmpty()) {
-                            names = names + name
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+
+                    ) {
+                        OutlinedTextField(
+                            modifier = Modifier.weight(1f),
+                            value = name,
+                            onValueChange = { text ->
+                                name = text
+                            },
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Button(onClick = {
+                            if (name.isNotEmpty()) {
+                                names = names + name
+                            }
+                            // empty text field
+                            name = ""
+
+                            mainViewModel.changeBackgroundColor()
+                        }) {
+                            Text(text = "Add")
                         }
-                        // empty text field
-                        name = ""
-                    }) {
-                        Text(text = "Add")
                     }
+                    NameList(names = names)
                 }
-                NameList(names = names)
             }
         }
     }
-}
 
-@Composable
-fun NameList(names: List<String>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier) {
-        items(names) { currentName ->
-            Text(
-                text = currentName,
-                modifier = Modifier.padding(16.dp).fillMaxWidth(),
-            )
-            Divider()
+    @Composable
+    fun NameList(names: List<String>, modifier: Modifier = Modifier) {
+        LazyColumn(modifier) {
+            items(names) { currentName ->
+                Text(
+                    text = currentName,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                )
+                Divider()
+            }
         }
     }
 }
