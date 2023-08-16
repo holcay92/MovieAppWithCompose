@@ -17,6 +17,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +37,10 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(listOf<String>())
             }
             Column(
-                modifier = Modifier.fillMaxSize().fillMaxSize().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .fillMaxSize()
+                    .padding(16.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -60,16 +64,21 @@ class MainActivity : ComponentActivity() {
                         Text(text = "Add")
                     }
                 }
-                LazyColumn {
-                    items(names) { currentName ->
-                        Text(
-                            text = currentName,
-                            modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                        )
-                        Divider()
-                    }
-                }
+                NameList(names = names)
             }
+        }
+    }
+}
+
+@Composable
+fun NameList(names: List<String>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier) {
+        items(names) { currentName ->
+            Text(
+                text = currentName,
+                modifier = Modifier.padding(16.dp).fillMaxWidth(),
+            )
+            Divider()
         }
     }
 }
