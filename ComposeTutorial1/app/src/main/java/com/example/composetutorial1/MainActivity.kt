@@ -1,5 +1,6 @@
 package com.example.composetutorial1
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -73,12 +74,17 @@ class MainActivity : ComponentActivity() {
                             name = ""
 
                             mainViewModel.changeBackgroundColor()
-                           /* Intent(applicationContext, SecondActivity::class.java).also {
-                                startActivity(it)
-                            }*/
+                            /* Intent(applicationContext, SecondActivity::class.java).also {
+                                 startActivity(it)
+                             }*/
                             Intent(Intent.ACTION_MAIN).also {
                                 it.`package` = "com.google.android.youtube"
-                                startActivity(it)
+                                try {
+                                    startActivity(it)
+                                } catch (e: ActivityNotFoundException) {
+                                    // youtube app isn't installed
+                                    e.printStackTrace()
+                                }
                             }
                         }) {
                             Text(text = "Add")
