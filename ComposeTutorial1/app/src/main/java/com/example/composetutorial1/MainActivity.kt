@@ -73,7 +73,11 @@ class MainActivity : ComponentActivity() {
                             name = ""
 
                             mainViewModel.changeBackgroundColor()
-                            Intent(this@MainActivity, SecondActivity::class.java).also {
+                           /* Intent(applicationContext, SecondActivity::class.java).also {
+                                startActivity(it)
+                            }*/
+                            Intent(Intent.ACTION_MAIN).also {
+                                it.`package` = "com.google.android.youtube"
                                 startActivity(it)
                             }
                         }) {
