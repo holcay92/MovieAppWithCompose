@@ -5,18 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieapp.R
-import com.example.movieapp.databinding.FragmentDetailReviewBinding
-import com.example.movieapp.view.adapters.DetailReviewAdapter
+import com.example.movieapp.model.review.ReviewResult
 import com.example.movieapp.viewModel.DetailReviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailReviewFragment : BaseFragment() {
-    private lateinit var binding: FragmentDetailReviewBinding
-    private lateinit var reviewAdapter: DetailReviewAdapter
     private val detailReviewViewModel by viewModels<DetailReviewViewModel>()
 
     override fun onCreateView(
@@ -24,48 +37,62 @@ class DetailReviewFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
-        setupRecyclerView()
-        setupReviewObservers()
+        val movieId = DetailReviewFragmentArgs.fromBundle(requireArguments()).movieId
+        return ComposeView(requireContext()).apply {
+            setContent {
+                DetailReviewScreen(movieId)
+            }
+        }
     }
 
     private fun setupToolbar() {
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.setTitle(R.string.show_reviews)
     }
+}
 
-    private fun setupRecyclerView() {
-        reviewAdapter = DetailReviewAdapter()
-        binding.rvDetailReview.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvDetailReview.adapter = reviewAdapter
-    }
-
-    private fun setupReviewObservers() {
-        val movieId = DetailReviewFragmentArgs.fromBundle(requireArguments()).movieId
-
-        showProgressDialog()
-        detailReviewViewModel.getReview(movieId)
-
-        detailReviewViewModel.reviewList.observe(viewLifecycleOwner) { reviews ->
-            hideProgressDialog()
-
-            if (reviews.isNullOrEmpty()) {
-                binding.tvDetailReviewNoReviewsFound.visibility = View.VISIBLE
+@Composable
+fun DetailReviewScreen(movieId: Int) {
+    val detailReviewViewModel: DetailReviewViewModel = viewModel()
+    detailReviewViewModel.getReview(movieId)
+    val reviewList = detailReviewViewModel.reviewList.collectAsState(initial = emptyList()).value
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 35.dp, bottom = 10.dp),
+    ) {
+        if (reviewList != null) {
+            if (reviewList.isEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.no_reviews_found),
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier.align(Alignment.Center),
+                )
             } else {
-                binding.tvDetailReviewNoReviewsFound.visibility = View.GONE
-                reviewAdapter.updateList(reviews)
+                DetailReviewAdapter(reviewList)
             }
         }
+    }
+}
 
-        detailReviewViewModel.errorMessageMovieReview.observe(viewLifecycleOwner) { errorMessage ->
-            hideProgressDialog()
-            showErrorDialog(errorMessage)
+@Composable
+fun DetailReviewItem(review: ReviewResult) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp),
+    ) {
+        Text(text = review.author)
+        Text(text = review.content)
+        Text(text = review.authorDetails.rating.toString())
+    }
+}
+
+@Composable
+fun DetailReviewAdapter(reviewList: List<ReviewResult>) {
+    LazyColumn {
+        items(reviewList) { review ->
+            DetailReviewItem(review)
         }
     }
 }

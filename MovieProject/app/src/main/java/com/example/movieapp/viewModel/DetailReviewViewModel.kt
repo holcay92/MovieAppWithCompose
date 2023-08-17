@@ -7,6 +7,7 @@ import com.example.movieapp.model.review.Review
 import com.example.movieapp.model.review.ReviewResult
 import com.example.movieapp.service.MovieApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call
 import retrofit2.Callback
 import javax.inject.Inject
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class DetailReviewViewModel @Inject constructor(private val apiService: MovieApiService) :
     ViewModel() {
 
-    val reviewList = MutableLiveData<List<ReviewResult>?>()
+    val reviewList = MutableStateFlow<List<ReviewResult>?>(null)
     var errorMessageMovieReview = MutableLiveData<String>()
 
     fun getReview(id: Int) {
@@ -28,7 +29,7 @@ class DetailReviewViewModel @Inject constructor(private val apiService: MovieApi
             }
 
             override fun onFailure(call: Call<Review?>, t: Throwable) {
-                reviewList.postValue(null)
+                // reviewList.postValue(null)
 
                 errorMessageMovieReview.postValue(
                     R.string.error_message_movie_review.toString(),
