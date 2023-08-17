@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -74,7 +75,7 @@ fun DetailReviewScreen(movieId: Int) {
                 Text(
                     text = stringResource(id = R.string.no_reviews_found),
                     fontSize = 20.sp,
-                    color = Color.White,
+                    color = colorResource(id = R.color.light_theme),
                     modifier = Modifier.align(Alignment.Center),
                 )
             } else {
@@ -87,26 +88,43 @@ fun DetailReviewScreen(movieId: Int) {
 @Composable
 fun DetailReviewItem(review: ReviewResult) {
     Column(
-        modifier = Modifier.border(width = 1.dp, color = colorResource(id = R.color.light_bold_theme), shape = MaterialTheme.shapes.medium)
+        modifier = Modifier.border(
+            width = 1.dp,
+            color = colorResource(id = R.color.light_bold_theme),
+            shape = MaterialTheme.shapes.medium,
+        )
             .background(color = colorResource(id = R.color.main_theme_bg)).padding(16.dp),
     ) {
-        Row {
-            Text(text = "Author : ", color = colorResource(id = R.color.light_theme))
+        Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                text = stringResource(id = R.string.author),
+                color = colorResource(id = R.color.light_theme),
+            )
+            Spacer(modifier = Modifier)
             Text(
                 text = review.author,
                 modifier = Modifier,
                 color = colorResource(id = R.color.light_theme),
             )
         }
-        Row {
-            Text(text = "Rating : ", color = colorResource(id = R.color.light_theme))
+        Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                text = stringResource(id = R.string.author_vote),
+                color = colorResource(id = R.color.light_theme),
+            )
             Text(
                 text = review.authorDetails.rating.toString(),
                 color = colorResource(id = R.color.light_theme),
             )
         }
-        Row {
-            Text(text = "Content : ", color = colorResource(id = R.color.light_theme))
+        Row(
+            modifier = Modifier.fillMaxSize().padding(top = 5.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                text = stringResource(id = R.string.review),
+                color = colorResource(id = R.color.light_theme),
+            )
             Text(text = review.content, color = colorResource(id = R.color.light_theme))
         }
     }
