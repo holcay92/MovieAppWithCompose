@@ -1,5 +1,6 @@
 package com.example.composetutorial1
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -72,6 +73,9 @@ class MainActivity : ComponentActivity() {
                             name = ""
 
                             mainViewModel.changeBackgroundColor()
+                            Intent(this@MainActivity, SecondActivity::class.java).also {
+                                startActivity(it)
+                            }
                         }) {
                             Text(text = "Add")
                         }
