@@ -53,7 +53,7 @@ class DetailReviewFragment : BaseFragment() {
         }
     }
 
-    private fun setupToolbar() { // todo
+    private fun setupToolbar() { // todo: compose toolbar
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.setTitle(R.string.show_reviews)
     }
@@ -90,7 +90,7 @@ fun DetailReviewItem(review: ReviewResult) {
         modifier = Modifier.border(
             width = 1.dp,
             color = colorResource(id = R.color.light_bold_theme),
-            shape = MaterialTheme.shapes.medium,
+            shape = MaterialTheme.shapes.extraLarge,
         )
             .background(color = colorResource(id = R.color.main_theme_bg)).padding(16.dp),
     ) {
@@ -124,7 +124,11 @@ fun DetailReviewItem(review: ReviewResult) {
                 text = stringResource(id = R.string.review),
                 color = colorResource(id = R.color.light_theme),
             )
-            Text(text = review.content, color = colorResource(id = R.color.light_theme))
+            Text(
+                text = review.content,
+                color = colorResource(id = R.color.light_theme),
+                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+            )
         }
     }
 }

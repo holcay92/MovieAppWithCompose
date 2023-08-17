@@ -17,8 +17,9 @@
     <color name="red">#FF0000</color>
     <color name="yellow">#FFFF00</color>
     <color name="status_bar_color">#040732</color>
-    <color name="movie_item_color_popular">#77040732</color>
+    <color name="movie_item_color_popular">#EB040732</color>
     <color name="top_rated_fav_button_color">#99EEEFF3</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
 
 <!-- <color name="tmdb_light_blue">#01b4e4</color> -->
