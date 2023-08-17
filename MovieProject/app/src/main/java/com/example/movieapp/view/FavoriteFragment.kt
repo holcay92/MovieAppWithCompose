@@ -81,7 +81,7 @@ class FavoriteFragment : Fragment() {
         setupToolbar()
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbar() { // todo compose transform
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.setTitle(R.string.favorites)
         actionBar?.setDisplayHomeAsUpEnabled(true)
