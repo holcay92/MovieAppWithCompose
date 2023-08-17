@@ -30,7 +30,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieapp.R
 import com.example.movieapp.model.review.ReviewResult
@@ -39,7 +38,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailReviewFragment : BaseFragment() {
-    private val detailReviewViewModel by viewModels<DetailReviewViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +45,7 @@ class DetailReviewFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         val movieId = DetailReviewFragmentArgs.fromBundle(requireArguments()).movieId
+        setupToolbar()
         return ComposeView(requireContext()).apply {
             setContent {
                 DetailReviewScreen(movieId)
@@ -54,7 +53,7 @@ class DetailReviewFragment : BaseFragment() {
         }
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbar() { // todo
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.setTitle(R.string.show_reviews)
     }

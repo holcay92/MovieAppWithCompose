@@ -9,7 +9,7 @@
         android:id="@+id/splashFragment"
         android:name="com.example.movieapp.view.homePage.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -19,7 +19,7 @@
         android:id="@+id/mainFragment"
         android:name="com.example.movieapp.view.homePage.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
             app:destination="@id/detailFragment"
@@ -40,11 +40,11 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.movieapp.view.DetailFragment"
-        android:label="DetailFragment" >
+        android:label="DetailFragment">
         <argument
             android:name="id"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
         <argument
             android:name="type"
             app:argType="string" />
@@ -69,7 +69,7 @@
         android:id="@+id/searchFragment"
         android:name="com.example.movieapp.view.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -78,7 +78,7 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.movieapp.view.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" >
+        tools:layout="@layout/fragment_favorite">
         <action
             android:id="@+id/action_favoriteFragment_to_detailFragment"
             app:destination="@id/detailFragment"
@@ -88,17 +88,16 @@
     <fragment
         android:id="@+id/detailReviewFragment"
         android:name="com.example.movieapp.view.DetailReviewFragment"
-        android:label="fragment_detail_review"
-        tools:layout="@layout/fragment_detail_review" >
+        android:label="fragment_detail_review">
         <argument
             android:name="movie_id"
-            app:argType="integer"
-            android:defaultValue="346698" />
+            android:defaultValue="346698"
+            app:argType="integer" />
     </fragment>
     <activity
         android:id="@+id/videoFullScreenActivity"
         android:name="com.example.movieapp.view.VideoFullScreenActivity"
-        android:label="VideoFullScreenActivity" >
+        android:label="VideoFullScreenActivity">
         <argument
             android:name="video_id"
             app:argType="string" />
@@ -107,7 +106,7 @@
         android:id="@+id/actorFragment"
         android:name="com.example.movieapp.view.ActorFragment"
         android:label="fragment_actor"
-        tools:layout="@layout/fragment_actor" >
+        tools:layout="@layout/fragment_actor">
         <argument
             android:name="actor_id"
             app:argType="integer" />
