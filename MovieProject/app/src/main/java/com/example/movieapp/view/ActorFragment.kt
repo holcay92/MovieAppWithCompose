@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -58,6 +59,7 @@ class ActorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        setupToolbar()
         val actorId = ActorFragmentArgs.fromBundle(requireArguments()).actorId
         return ComposeView(requireContext()).apply {
             setContent {
@@ -67,6 +69,11 @@ class ActorFragment : Fragment() {
                 )
             }
         }
+    }
+    private fun setupToolbar() { // todo: compose toolbar
+        val toolbar = activity as AppCompatActivity
+        toolbar.supportActionBar?.setTitle(R.string.info)
+        toolbar.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }
 

@@ -49,4 +49,5 @@
     <string name="movies">Movies :</string>
     <string name="now_playing_movies">Now Playing</string>
     <string name="trending_movies">Now Playing</string>
+    <string name="info">Information</string>
 </resources>

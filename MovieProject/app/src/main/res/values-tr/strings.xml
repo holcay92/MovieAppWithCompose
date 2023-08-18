@@ -50,5 +50,6 @@
     <string name="movies">Filmler :</string>
     <string name="now_playing_movies">Gösterimdekiler :</string>
     <string name="trending_movies">Trendler</string>
+    <string name="info">Oyuncu Bilgisi</string>
 
 </resources>
