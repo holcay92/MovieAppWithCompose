@@ -105,7 +105,7 @@
         android:id="@+id/actorFragment"
         android:name="com.example.movieapp.view.ActorFragment"
         android:label="fragment_actor"
-        tools:layout="@layout/fragment_actor">
+      >
         <argument
             android:name="actor_id"
             app:argType="integer" />
