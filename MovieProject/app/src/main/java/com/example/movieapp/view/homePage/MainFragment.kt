@@ -47,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -361,10 +362,16 @@ fun GridMovieItem(
 
 @Composable
 fun NowPlayingMoviesList(navController: NavController, movies: List<MovieResult>) {
+    Text(
+        modifier = Modifier.padding(start = 10.dp, top = 10.dp),
+        text = stringResource(id = R.string.now_playing_movies),
+        color = colorResource(id = R.color.light_theme),
+        fontWeight = FontWeight.Bold,
+    )
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 50.dp),
+            .padding(top = 10.dp),
         horizontalArrangement = Arrangement.Center,
     ) {
         items(movies.size) { index ->
@@ -388,10 +395,16 @@ fun NowPlayingMoviesList(navController: NavController, movies: List<MovieResult>
 
 @Composable
 fun TopRatedMoviesList(navController: NavController, movies: List<MovieResult>) {
+    Text(
+        modifier = Modifier.padding(start = 10.dp, top = 50.dp),
+        text = stringResource(id = R.string.top_rated_movies),
+        color = colorResource(id = R.color.light_theme),
+        fontWeight = FontWeight.Bold,
+    )
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 50.dp),
+            .padding(top = 10.dp),
         horizontalArrangement = Arrangement.Center,
     ) {
         items(movies.size) { index ->
@@ -419,11 +432,17 @@ fun PopularMoviesList(
     movies: List<MovieResult>,
 
 ) {
+    Text(
+        modifier = Modifier.padding(start = 10.dp, top = 10.dp),
+        text = stringResource(id = R.string.popular_movies),
+        color = colorResource(id = R.color.light_theme),
+        fontWeight = FontWeight.Bold,
+    )
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .height(700.dp)
-            .padding(top = 50.dp, bottom = 20.dp),
+            .padding(top = 10.dp, bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         items(movies.size) { index ->
