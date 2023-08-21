@@ -48,6 +48,8 @@ import com.example.movieapp.R
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 import com.example.movieapp.viewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -86,7 +88,10 @@ fun SearchScreen() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SearchView(searchViewModel)
+        SearchView(
+            searchViewModel,
+            onQueryChange = {},
+        )
         SearchResults(searchResponse!!)
     }
 }
@@ -94,10 +99,14 @@ fun SearchScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SearchView(searchViewModel: SearchViewModel) {
+fun SearchView(
+    searchViewModel: SearchViewModel,
+    onQueryChange: (String) -> Unit,
+) {
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
     val searchHistory = remember { mutableStateListOf<String>() }
+    val scope = rememberCoroutineScope()
 
     Card(modifier = Modifier) {
         SearchBar(
@@ -108,7 +117,15 @@ fun SearchView(searchViewModel: SearchViewModel) {
                     color = colorResource(id = R.color.red),
                 ),
             query = text,
-            onQueryChange = { text = it },
+            onQueryChange = {
+                text = it
+                scope.launch {
+                    delay(400)
+                    onQueryChange(text)
+                    active = false
+                    searchViewModel.searchMovies(text)
+                }
+            },
             onSearch = {
                 active = false
                 searchHistory.add(text)
@@ -142,6 +159,7 @@ fun SearchView(searchViewModel: SearchViewModel) {
                                 text = ""
                             } else {
                                 active = false
+                                searchViewModel.searchList.value = emptyList()
                             }
                         },
                         imageVector = Icons.Filled.Close,
