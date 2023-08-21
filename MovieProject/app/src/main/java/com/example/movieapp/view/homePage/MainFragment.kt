@@ -3,6 +3,7 @@ package com.example.movieapp.view.homePage
 import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,8 +68,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment :
     BaseFragment() {
-
-    private var isLoading = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -139,14 +138,12 @@ class MainFragment :
 
 @Composable
 fun MainScreen(navController: NavController) {
-    val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
     val popularMovieViewModel: PopularMovieViewModel = viewModel()
     val topRatedMovieViewModel: TopRatedMovieViewModel = viewModel()
     val nowPlayingMovieViewModel: NowPlayingMovieViewModel = viewModel()
-    popularMovieViewModel.fetchMovieList(1)
-    topRatedMovieViewModel.fetchMovieList()
-    nowPlayingMovieViewModel.fetchTrendingMovies()
-    val favoriteMovies = favoriteMovieViewModel.favMovieList.observeAsState(emptyList())
+    popularMovieViewModel.fetchPopularMovieList(1)
+    topRatedMovieViewModel.fetchTopRatedMovieList()
+    nowPlayingMovieViewModel.fetchNowPlayingMovies()
     val popularMovies = popularMovieViewModel.popularMovieResponse.observeAsState(emptyList())
     val topRatedMovies = topRatedMovieViewModel.tRMovieResponse.observeAsState(emptyList())
     val nowPlayingMovies = nowPlayingMovieViewModel.nowPlayingMovies.observeAsState(emptyList())
@@ -172,9 +169,9 @@ fun MainScreen(navController: NavController) {
 @Composable
 fun PopularMovieItem(
     movie: MovieResult?,
-
     onItemClick: () -> Unit,
 ) {
+    val popularMovieViewModel: PopularMovieViewModel = viewModel()
     val isFavorite = movie?.isFavorite ?: false
     var isMovieFavorite by remember { mutableStateOf(isFavorite) }
     val favoriteIconTint: Int = if (isMovieFavorite) {
@@ -238,7 +235,16 @@ fun PopularMovieItem(
                 IconButton(
                     onClick = {
                         isMovieFavorite = !isMovieFavorite
-                        actionFavoriteMovie(movie, favoriteMovieViewModel)
+                        val favMovie = FavoriteMovie(
+                            0,
+                            movie?.id,
+                            movie?.title,
+                            movie?.posterPath,
+                            movie?.voteAverage,
+                        )
+                        Log.d("TAGX", "actionFavoriteMovie: ${favMovie.id}")
+
+                        favoriteMovieViewModel.actionFavButton(favMovie)
                     },
                     modifier = Modifier
                         .padding(start = 10.dp)
@@ -282,6 +288,7 @@ fun GridMovieItem(
 ) {
     val isFavorite = movie?.isFavorite ?: false
     var isMovieFavorite by remember { mutableStateOf(isFavorite) }
+    Log.d("TAGX", "isFavorite: $isFavorite")
     val favoriteIconTint: Int = if (isMovieFavorite) {
         R.color.red
     } else {
@@ -322,7 +329,16 @@ fun GridMovieItem(
             IconButton(
                 onClick = {
                     isMovieFavorite = !isMovieFavorite
-                    actionFavoriteMovie(movie, favoriteMovieViewModel)
+                    val favMovie = FavoriteMovie(
+                        0,
+                        movie?.id,
+                        movie?.title,
+                        movie?.posterPath,
+                        movie?.voteAverage,
+                    )
+                    Log.d("TAGX", "actionFavoriteMovie: ${favMovie.id}")
+
+                    favoriteMovieViewModel.actionFavButton(favMovie)
                 },
                 modifier = Modifier
                     .size(30.dp)
@@ -426,21 +442,17 @@ fun PopularMoviesList(
                 }
             }
         }
-    }
-}
-
-fun actionFavoriteMovie(
-    movie: MovieResult?,
-    favoriteMovieViewModel: FavoriteMovieViewModel,
-) {
-    val favMovie = FavoriteMovie(
-        0,
-        movie?.id,
-        movie?.title,
-        movie?.posterPath,
-        movie?.voteAverage,
-    )
-    if (movie != null) {
-        favoriteMovieViewModel.actionFavButton(favMovie)
+        /* if (isLoading) {
+             item {
+                 Box(
+                     modifier = Modifier
+                         .fillMaxWidth()
+                         .padding(16.dp),
+                     contentAlignment = Alignment.Center,
+                 ) {
+                     CircularProgressIndicator() // Loading indicator
+                 }
+             }
+         }*/
     }
 }

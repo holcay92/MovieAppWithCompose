@@ -25,10 +25,10 @@ class PopularMovieViewModel @Inject constructor(
     var errorMessage = MutableLiveData<String>()
 
     init {
-        fetchMovieList(1)
+        fetchPopularMovieList(1)
     }
 
-    fun fetchMovieList(page: Int) {
+    fun fetchPopularMovieList(page: Int) {
         val call = movieApiService.getPopularMovies(page)
 
         call.enqueue(
@@ -57,7 +57,7 @@ class PopularMovieViewModel @Inject constructor(
     }
 
     fun getNextPage(page: Int) {
-        fetchMovieList(page)
+        fetchPopularMovieList(page)
     }
 
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {

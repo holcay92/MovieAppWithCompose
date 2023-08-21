@@ -25,10 +25,10 @@ class NowPlayingMovieViewModel @Inject constructor(
     var errorMessageNowPlayingMovies = MutableLiveData<String>()
 
     init {
-        fetchTrendingMovies()
+        fetchNowPlayingMovies()
     }
 
-    fun fetchTrendingMovies() {
+    fun fetchNowPlayingMovies() {
         val call = movieApiService.getNowPlayingMovies()
 
         call.enqueue(

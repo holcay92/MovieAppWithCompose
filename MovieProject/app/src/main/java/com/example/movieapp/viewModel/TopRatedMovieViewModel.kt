@@ -25,10 +25,10 @@ class TopRatedMovieViewModel @Inject constructor(
     var errorMessage = MutableLiveData<String>()
 
     init {
-        fetchMovieList()
+        fetchTopRatedMovieList()
     }
 
-    fun fetchMovieList() {
+    fun fetchTopRatedMovieList() {
         val call = movieApiService.getTopRatedMovies()
 
         call.enqueue(
