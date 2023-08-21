@@ -33,7 +33,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -168,8 +172,22 @@ fun MainScreen(navController: NavController) {
 @Composable
 fun PopularMovieItem(
     movie: MovieResult?,
+
     onItemClick: () -> Unit,
 ) {
+    val isFavorite = movie?.isFavorite ?: false
+    var isMovieFavorite by remember { mutableStateOf(isFavorite) }
+    val favoriteIconTint: Int = if (isMovieFavorite) {
+        R.color.red
+    } else {
+        R.color.light_theme
+    }
+    val favoriteIconRes = if (isMovieFavorite) {
+        R.drawable.add_fav_filled_icon // Use the filled icon resource
+    } else {
+        R.drawable.add_fav_empty_icon // Use the empty icon resource
+    }
+
     val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
     Card(
         onClick = onItemClick,
@@ -184,7 +202,9 @@ fun PopularMovieItem(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth().background(colorResource(id = R.color.main_theme_bg)).border(
+                .fillMaxWidth()
+                .background(colorResource(id = R.color.main_theme_bg))
+                .border(
                     1.dp,
                     colorResource(id = R.color.light_bold_theme),
                 ),
@@ -217,15 +237,17 @@ fun PopularMovieItem(
             ) {
                 IconButton(
                     onClick = {
+                        isMovieFavorite = !isMovieFavorite
                         actionFavoriteMovie(movie, favoriteMovieViewModel)
                     },
-                    modifier = Modifier.padding(start = 10.dp)
+                    modifier = Modifier
+                        .padding(start = 10.dp)
                         .size(34.dp),
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.add_fav_empty_icon),
+                        painter = painterResource(id = favoriteIconRes),
                         contentDescription = null,
-                        tint = colorResource(id = R.color.light_theme),
+                        tint = colorResource(id = favoriteIconTint),
                     )
                 }
                 Spacer(modifier = Modifier.height(5.dp))
@@ -258,11 +280,26 @@ fun GridMovieItem(
     movie: MovieResult?,
     onItemClick: () -> Unit,
 ) {
+    val isFavorite = movie?.isFavorite ?: false
+    var isMovieFavorite by remember { mutableStateOf(isFavorite) }
+    val favoriteIconTint: Int = if (isMovieFavorite) {
+        R.color.red
+    } else {
+        R.color.light_theme
+    }
+    val favoriteIconRes = if (isMovieFavorite) {
+        R.drawable.add_fav_filled_icon // Use the filled icon resource
+    } else {
+        R.drawable.add_fav_empty_icon // Use the empty icon resource
+    }
+
     val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
     Card(
         onClick = onItemClick,
-        modifier = Modifier.padding(5.dp)
-            .fillMaxWidth().clip(RoundedCornerShape(10.dp))
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(10.dp))
             .background(colorResource(R.color.transparent)),
         elevation = CardDefaults.cardElevation(5.dp),
         shape = RoundedCornerShape(10.dp),
@@ -284,6 +321,7 @@ fun GridMovieItem(
             )
             IconButton(
                 onClick = {
+                    isMovieFavorite = !isMovieFavorite
                     actionFavoriteMovie(movie, favoriteMovieViewModel)
                 },
                 modifier = Modifier
@@ -295,9 +333,9 @@ fun GridMovieItem(
             ) {
                 Box {
                     Icon(
-                        painter = painterResource(id = R.drawable.add_fav_empty_icon_top_rated),
+                        painter = painterResource(id = favoriteIconRes),
                         contentDescription = null,
-                        tint = colorResource(id = R.color.light_theme),
+                        tint = colorResource(id = favoriteIconTint),
                     )
                 }
             }
@@ -367,7 +405,8 @@ fun PopularMoviesList(
 ) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxWidth().height(700.dp)
+            .fillMaxWidth()
+            .height(700.dp)
             .padding(top = 50.dp, bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
