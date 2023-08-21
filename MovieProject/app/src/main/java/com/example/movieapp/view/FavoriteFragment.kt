@@ -1,6 +1,7 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.movieapp.Constants
 import com.example.movieapp.R
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
@@ -126,7 +128,8 @@ fun FavoriteScreen(navController: NavController) {
                 favMovieList = favoriteMovies,
                 onItemClick = {
                     val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(
-                        favoriteMovies.value[it.list_id].id.toString(),
+                        Constants.POPULAR,
+                        it.id!!,
                     )
                     navController.navigate(action)
                 },
