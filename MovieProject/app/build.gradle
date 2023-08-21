@@ -67,6 +67,7 @@ dependencies {
     // Optional - Integration with LiveData
     implementation 'androidx.compose.runtime:runtime-livedata'
     implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
+    implementation 'androidx.compose.material:material-icons-extended'
 
     // Compose dependencies end
 
