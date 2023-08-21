@@ -1,29 +1,59 @@
 package com.example.movieapp.view.homePage
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.movieapp.Constants
 import com.example.movieapp.R
-import com.example.movieapp.databinding.FragmentMainBinding
 import com.example.movieapp.model.movie.MovieResult
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.view.BaseFragment
-import com.example.movieapp.view.adapters.NowPlayingMovieAdapter
-import com.example.movieapp.view.adapters.PopularMovieAdapter
-import com.example.movieapp.view.adapters.TopRatedMovieAdapter
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.example.movieapp.viewModel.NowPlayingMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
@@ -32,46 +62,22 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment :
-    BaseFragment(),
-    PopularMovieAdapter.OnFavoriteStatusChangeListener,
-    TopRatedMovieAdapter.OnFavoriteStatusChangeListener,
-    NowPlayingMovieAdapter.OnFavoriteStatusChangeListener {
-    private lateinit var fragmentMainBinding: FragmentMainBinding
-    private val popularMovieViewModel by viewModels<PopularMovieViewModel>()
-    private val topRatedMovieViewModel by viewModels<TopRatedMovieViewModel>()
-    private val favoriteMovieViewModel by viewModels<FavoriteMovieViewModel>()
-    private val nowPlayingMovieViewModel by viewModels<NowPlayingMovieViewModel>()
+    BaseFragment() {
 
-    private lateinit var popularMovieAdapter: PopularMovieAdapter
-    private lateinit var topRatedMovieAdapter: TopRatedMovieAdapter
-    private lateinit var nowPlayingMovieAdapter: NowPlayingMovieAdapter
     private var isLoading = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        showProgressDialog()
-        fragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
-
-       /* val topRatedMoviesLayout = fragmentMainBinding.llTopRatedMovies
-
-        val scrollView = fragmentMainBinding.scrollView
-        scrollView.viewTreeObserver?.addOnScrollChangedListener {
-            val scrollY = scrollView.scrollY
-            if (scrollY > 20) {
-                // Scroll has passed the threshold, hide the top rated movies section with animation
-                topRatedMoviesLayout?.animate()?.alpha(0f)?.setDuration(300)?.start()
-                if (scrollY > 50) {
-                    topRatedMoviesLayout?.visibility = View.GONE
-                }
-            } else {
-                // Scroll is back above the threshold, show the top rated movies section with animation
-                topRatedMoviesLayout?.animate()?.alpha(1f)?.setDuration(300)?.start()
-                topRatedMoviesLayout?.visibility = View.VISIBLE
+        // showProgressDialog()
+        return ComposeView(requireContext()).apply {
+            setContent {
+                MainScreen(
+                    navController = findNavController(),
+                )
             }
-        }*/
-        return fragmentMainBinding.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,51 +85,6 @@ class MainFragment :
         // setup user interface
         setupViews()
         setupBackPressedCallback()
-        setupRecyclerViews()
-        setupGridButtonClickListener()
-
-        fragmentMainBinding.gridBtn.setOnClickListener {
-            viewType = !viewType
-            switchRecyclerViewLayout()
-        }
-
-        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) {
-        }
-    }
-
-    private fun fetchData() {
-        topRatedMovieViewModel.tRMovieResponse.observe(viewLifecycleOwner) {
-            topRatedMovieAdapter.updateList(it)
-            hideProgressDialog()
-        }
-
-        popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner) {
-            popularMovieAdapter.updateList(it)
-            hideProgressDialog()
-            isLoading = false
-        }
-
-        nowPlayingMovieViewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
-            nowPlayingMovieAdapter.updateList(it)
-            hideProgressDialog()
-        }
-        popularMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            if (!message.isNullOrEmpty()) {
-                Log.d("TAGX", "fetchData: $message")
-                showErrorDialog(message.toString()) // show error dialog for fetching popular movies
-            }
-        }
-        topRatedMovieViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            if (!message.isNullOrEmpty()) {
-                showErrorDialog(message.toString()) // show error dialog for fetching top rated movies
-            }
-        }
-
-        nowPlayingMovieViewModel.errorMessageNowPlayingMovies.observe(viewLifecycleOwner) { message ->
-            if (!message.isNullOrEmpty()) {
-                showErrorDialog(message.toString()) // show error dialog for fetching top rated movies
-            }
-        }
     }
 
     private fun setupBackPressedCallback() {
@@ -145,125 +106,6 @@ class MainFragment :
             resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         SPAN_COUNT = if (isLandscape) SPAN_COUNT_5 else SPAN_COUNT_3
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-    }
-
-    private fun setupGridButtonClickListener() {
-        fragmentMainBinding.gridBtn.setOnClickListener {
-            viewType = !viewType
-            switchRecyclerViewLayout()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        popularMovieViewModel.updateFavoriteResult()
-        topRatedMovieViewModel.updateFavoriteResult()
-        fetchData()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun switchRecyclerViewLayout() {
-        fragmentMainBinding.rvPopularMovies.layoutManager =
-            if (viewType) {
-                GridLayoutManager(requireContext(), SPAN_COUNT)
-            } else {
-                LinearLayoutManager(requireContext())
-            }
-        popularMovieAdapter.setViewType(
-            if (viewType) {
-                PopularMovieAdapter.ViewType.GRID
-            } else {
-                PopularMovieAdapter.ViewType.LIST
-            },
-        )
-        fragmentMainBinding.gridBtn.setImageResource(
-            if (viewType) {
-                R.drawable.list_view_icon
-            } else {
-                R.drawable.grid_view_icon
-            },
-        )
-        fragmentMainBinding.rvPopularMovies.adapter?.notifyDataSetChanged()
-    }
-
-    private fun setupRecyclerViews() {
-        fragmentMainBinding.rvPopularMovies.layoutManager =
-            LinearLayoutManager(requireContext())
-        popularMovieAdapter = PopularMovieAdapter(
-            object : PopularMovieAdapter.OnItemClickListener {
-                override fun onItemClick(movie: MovieResult) {
-                    val action = movie.id?.let {
-                        MainFragmentDirections.actionMainFragmentToDetailFragment(
-                            Constants.POPULAR,
-                            it,
-                        )
-                    }
-                    if (action != null) {
-                        findNavController().navigate(action)
-                    }
-                }
-            },
-            this,
-        )
-        fragmentMainBinding.rvPopularMovies.adapter = popularMovieAdapter
-
-        fragmentMainBinding.rvPopularMovies.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                if (!isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    isLoading = true // to prevent multiple calls
-                    page++
-                    popularMovieViewModel.getNextPage(page)
-                }
-            }
-        })
-
-        fragmentMainBinding.rvTopRatedMovies?.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        topRatedMovieAdapter =
-            TopRatedMovieAdapter(
-                object : TopRatedMovieAdapter.OnItemClickListener {
-                    override fun onItemClick(movie: MovieResult) {
-                        val action = movie.id?.let {
-                            MainFragmentDirections.actionMainFragmentToDetailFragment(
-                                Constants.TOP_RATED,
-                                it,
-                            )
-                        }
-                        if (action != null) {
-                            findNavController().navigate(action)
-                        }
-                    }
-                },
-                this,
-            )
-        fragmentMainBinding.rvTopRatedMovies?.adapter = topRatedMovieAdapter
-
-        fragmentMainBinding.rvNowPlayingMovies?.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-        nowPlayingMovieAdapter = NowPlayingMovieAdapter(
-            object : NowPlayingMovieAdapter.OnItemClickListener {
-                override fun onItemClick(movie: MovieResult) {
-                    val action = movie.id?.let {
-                        MainFragmentDirections.actionMainFragmentToDetailFragment(
-                            Constants.POPULAR,
-                            it,
-                        )
-                    }
-                    if (action != null) {
-                        findNavController().navigate(action)
-                    }
-                }
-            },
-            this,
-        )
-        fragmentMainBinding.rvNowPlayingMovies?.adapter = nowPlayingMovieAdapter
     }
 
     companion object {
@@ -289,49 +131,277 @@ class MainFragment :
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
+}
 
-    override fun onFavoriteStatusChanged(movie: MovieResult) {
-        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
-            popularMovieAdapter.updateFavoriteStatus(favoriteMovies)
+@Composable
+fun MainScreen(navController: NavController) {
+    val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
+    val popularMovieViewModel: PopularMovieViewModel = viewModel()
+    val topRatedMovieViewModel: TopRatedMovieViewModel = viewModel()
+    val nowPlayingMovieViewModel: NowPlayingMovieViewModel = viewModel()
+    popularMovieViewModel.fetchMovieList(1)
+    topRatedMovieViewModel.fetchMovieList()
+    nowPlayingMovieViewModel.fetchTrendingMovies()
+    val favoriteMovies = favoriteMovieViewModel.favMovieList.observeAsState(emptyList())
+    val popularMovies = popularMovieViewModel.popularMovieResponse.observeAsState(emptyList())
+    val topRatedMovies = topRatedMovieViewModel.tRMovieResponse.observeAsState(emptyList())
+    val nowPlayingMovies = nowPlayingMovieViewModel.nowPlayingMovies.observeAsState(emptyList())
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        item {
+            TopRatedMoviesList(navController, topRatedMovies.value ?: emptyList())
         }
-        favoriteMovieViewModel.actionFavButton(
-            FavoriteMovie(
-                0,
-                movie.id,
-                movie.title,
-                movie.posterPath,
-                movie.voteAverage,
-            ),
-        )
+        item {
+            NowPlayingMoviesList(navController, nowPlayingMovies.value ?: emptyList())
+        }
+        item {
+            PopularMoviesList(
+                navController,
+                popularMovies.value ?: emptyList(),
+            )
+        }
     }
+}
 
-    override fun onFavoriteStatusChanged1(movie: MovieResult) {
-        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
-            topRatedMovieAdapter.updateFavoriteStatus(favoriteMovies)
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
+@Composable
+fun PopularMovieItem(
+    movie: MovieResult?,
+    onItemClick: () -> Unit,
+) {
+    val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
+    Card(
+        onClick = onItemClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(3.dp)
+            .background(colorResource(id = R.color.transparent)),
+        elevation = CardDefaults.cardElevation(10.dp),
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(1.dp, colorResource(id = R.color.light_bold_theme)),
+
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth().background(colorResource(id = R.color.main_theme_bg)).border(
+                    1.dp,
+                    colorResource(id = R.color.light_bold_theme),
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            GlideImage(
+                model = "https://image.tmdb.org/t/p/w500${movie?.posterPath}",
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(60.dp, 90.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color.Transparent),
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            movie?.title?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier
+                        .weight(2f)
+                        .align(Alignment.CenterVertically),
+                    color = colorResource(id = R.color.light_theme),
+                )
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Column(
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .align(Alignment.CenterVertically),
+            ) {
+                IconButton(
+                    onClick = {
+                        actionFavoriteMovie(movie, favoriteMovieViewModel)
+                    },
+                    modifier = Modifier.padding(start = 10.dp)
+                        .size(34.dp),
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.add_fav_empty_icon),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.light_theme),
+                    )
+                }
+                Spacer(modifier = Modifier.height(5.dp))
+                Row(
+                    modifier = Modifier.padding(horizontal = 5.dp),
+                    verticalAlignment = Alignment.Bottom,
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.vote_star),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.light_theme),
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+
+                    Text(
+
+                        text = movie?.voteAverage.toString(),
+                        color = colorResource(id = R.color.light_theme),
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+            }
         }
-        favoriteMovieViewModel.actionFavButton(
-            FavoriteMovie(
-                0,
-                movie.id,
-                movie.title,
-                movie.posterPath,
-                movie.voteAverage,
-            ),
-        )
     }
+}
 
-    override fun onFavoriteStatusChanged3(movie: MovieResult) {
-        favoriteMovieViewModel.favMovieList.observe(viewLifecycleOwner) { favoriteMovies ->
-            nowPlayingMovieAdapter.updateFavoriteStatus(favoriteMovies)
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
+@Composable
+fun GridMovieItem(
+    movie: MovieResult?,
+    onItemClick: () -> Unit,
+) {
+    val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
+    Card(
+        onClick = onItemClick,
+        modifier = Modifier.padding(5.dp)
+            .fillMaxWidth().clip(RoundedCornerShape(10.dp))
+            .background(colorResource(R.color.transparent)),
+        elevation = CardDefaults.cardElevation(5.dp),
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(1.dp, colorResource(id = R.color.light_bold_theme)),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentAlignment = Alignment.BottomEnd,
+        ) {
+            GlideImage(
+                model = "https://image.tmdb.org/t/p/w500${movie?.posterPath}",
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(80.dp, 120.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color.Transparent),
+            )
+            IconButton(
+                onClick = {
+                    actionFavoriteMovie(movie, favoriteMovieViewModel)
+                },
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(5.dp)
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(colorResource(R.color.transparent_white)),
+
+            ) {
+                Box {
+                    Icon(
+                        painter = painterResource(id = R.drawable.add_fav_empty_icon_top_rated),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.light_theme),
+                    )
+                }
+            }
         }
-        favoriteMovieViewModel.actionFavButton(
-            FavoriteMovie(
-                0,
-                movie.id,
-                movie.title,
-                movie.posterPath,
-                movie.voteAverage,
-            ),
-        )
+    }
+}
+
+@Composable
+fun NowPlayingMoviesList(navController: NavController, movies: List<MovieResult>) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        items(movies.size) { index ->
+            val movie = movies[index]
+            movie.let {
+                GridMovieItem(
+                    movie = it,
+                ) {
+                    val action = it.let { movieItem ->
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.TOP_RATED,
+                            movieItem.id!!,
+                        )
+                    }
+                    navController.navigate(action)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TopRatedMoviesList(navController: NavController, movies: List<MovieResult>) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        items(movies.size) { index ->
+            val movie = movies[index]
+            movie.let {
+                GridMovieItem(
+                    movie = it,
+                ) {
+                    val action = it.let { movieItem ->
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.TOP_RATED,
+                            movieItem.id!!,
+                        )
+                    }
+                    navController.navigate(action)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PopularMoviesList(
+    navController: NavController,
+    movies: List<MovieResult>,
+
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth().height(700.dp)
+            .padding(top = 50.dp, bottom = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        items(movies.size) { index ->
+            val movie = movies[index]
+            movie.let {
+                PopularMovieItem(
+                    movie = it,
+                ) {
+                    val action = it.let { movieItem ->
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.TOP_RATED,
+                            movieItem.id!!,
+                        )
+                    }
+                    navController.navigate(action)
+                }
+            }
+        }
+    }
+}
+
+fun actionFavoriteMovie(
+    movie: MovieResult?,
+    favoriteMovieViewModel: FavoriteMovieViewModel,
+) {
+    val favMovie = FavoriteMovie(
+        0,
+        movie?.id,
+        movie?.title,
+        movie?.posterPath,
+        movie?.voteAverage,
+    )
+    if (movie != null) {
+        favoriteMovieViewModel.actionFavButton(favMovie)
     }
 }

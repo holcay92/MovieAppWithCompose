@@ -78,7 +78,7 @@ fun DetailReviewScreen(movieId: Int) {
                     modifier = Modifier.align(Alignment.Center),
                 )
             } else {
-                DetailReviewAdapter(reviewList)
+                DetailReviewRecyclerView(reviewList)
             }
         }
     }
@@ -134,7 +134,7 @@ fun DetailReviewItem(review: ReviewResult) {
 }
 
 @Composable
-fun DetailReviewAdapter(reviewList: List<ReviewResult>) {
+fun DetailReviewRecyclerView(reviewList: List<ReviewResult>) {
     LazyColumn {
         items(reviewList) { review ->
             Card(

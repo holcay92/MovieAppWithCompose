@@ -28,7 +28,7 @@ class TopRatedMovieViewModel @Inject constructor(
         fetchMovieList()
     }
 
-    private fun fetchMovieList() {
+    fun fetchMovieList() {
         val call = movieApiService.getTopRatedMovies()
 
         call.enqueue(

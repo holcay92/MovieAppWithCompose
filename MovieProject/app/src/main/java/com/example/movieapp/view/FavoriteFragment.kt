@@ -1,7 +1,6 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -124,7 +123,7 @@ fun FavoriteScreen(navController: NavController) {
                 )
             }
         } else {
-            FavoriteMovieAdapter(
+            FavoriteMovieRecyclerView(
                 favMovieList = favoriteMovies,
                 onItemClick = {
                     val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(
@@ -172,7 +171,7 @@ fun ShowRemoveConfirmationDialog(
 }
 
 @Composable
-fun FavoriteMovieAdapter(
+fun FavoriteMovieRecyclerView(
     favMovieList: State<List<FavoriteMovie>>,
     onItemClick: (FavoriteMovie) -> Unit,
 ) {

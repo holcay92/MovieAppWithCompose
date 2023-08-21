@@ -23,11 +23,12 @@ class PopularMovieViewModel @Inject constructor(
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<MovieResult>?>()
     var errorMessage = MutableLiveData<String>()
+
     init {
         fetchMovieList(1)
     }
 
-    private fun fetchMovieList(page: Int) {
+    fun fetchMovieList(page: Int) {
         val call = movieApiService.getPopularMovies(page)
 
         call.enqueue(

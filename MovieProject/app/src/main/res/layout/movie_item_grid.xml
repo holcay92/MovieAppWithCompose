@@ -40,8 +40,6 @@
                 android:background="@drawable/rounded_bg"
                 android:src="@drawable/add_fav_empty_icon_top_rated" />
 
-            <!-- Use RelativeLayout to overlay views -->
-
         </FrameLayout>
 
     </com.google.android.material.card.MaterialCardView>

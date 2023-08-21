@@ -28,7 +28,7 @@ class NowPlayingMovieViewModel @Inject constructor(
         fetchTrendingMovies()
     }
 
-    private fun fetchTrendingMovies() {
+    fun fetchTrendingMovies() {
         val call = movieApiService.getNowPlayingMovies()
 
         call.enqueue(
