@@ -1,6 +1,7 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -45,11 +47,15 @@ import com.example.movieapp.model.credits.Cast
 import com.example.movieapp.model.credits.Credits
 import com.example.movieapp.model.movieDetail.MovieDetail
 import com.example.movieapp.model.movieImages.Poster
+import com.example.movieapp.model.videos.VideoResult
 import com.example.movieapp.room.FavoriteMovie
 import com.example.movieapp.viewModel.CreditsViewModel
 import com.example.movieapp.viewModel.DetailFragmentMovieImageViewModel
 import com.example.movieapp.viewModel.DetailViewModel
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -193,10 +199,13 @@ fun DetailScreen(movieId: Int, navController: NavController) {
     val movieImageList = detailFragmentMovieImageViewModel.imageResponse.observeAsState(emptyList())
     val detailViewModel: DetailViewModel = viewModel()
     val creditsViewModel: CreditsViewModel = viewModel()
+
     detailViewModel.fetchMovieDetail(movieId)
     creditsViewModel.getMovieCredits(movieId)
+    detailViewModel.fetchMovieVideos(movieId)
     val movieDetailResponse = detailViewModel.movieDetail.observeAsState()
     val creditsResponseList = creditsViewModel.creditsResponse.observeAsState()
+    val movieTrailersResponse = detailViewModel.movieVideos.observeAsState()
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -221,7 +230,7 @@ fun DetailScreen(movieId: Int, navController: NavController) {
             }
         }
         item {
-            TrailerLayout(navController)
+            movieTrailersResponse.value?.let { TrailerLayout(it, navController) }
         }
     }
 }
@@ -745,7 +754,10 @@ fun MovieActorLayout(castResponse: List<Cast?>, onItemClick: (Int) -> Unit) {
 }
 
 @Composable
-fun TrailerLayout(navController: NavController) {
+fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavController) {
+    var videoNumber = 0
+    val trailer = movieTrailersResponse[videoNumber]
+    Log.d("TAGX", "TrailerLayout: ${trailer.key}")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -799,14 +811,7 @@ fun TrailerLayout(navController: NavController) {
             .background(Color.LightGray),
     )
 
-    // Replace with your YouTubePlayerView
-    Box(
-        modifier = Modifier
-            .wrapContentWidth()
-            .wrapContentHeight()
-            .padding(vertical = 16.dp)
-            .background(Color.Gray),
-    )
+    YoutubeScreen(trailer.key)
 
     Spacer(
         modifier = Modifier
@@ -814,4 +819,23 @@ fun TrailerLayout(navController: NavController) {
             .height(2.dp)
             .background(Color.LightGray),
     )
+}
+
+@Composable
+fun YoutubeScreen(
+    videoId: String,
+) {
+    LocalContext.current
+    AndroidView(factory = {
+        val view = YouTubePlayerView(it)
+        view.addYouTubePlayerListener(
+            object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    super.onReady(youTubePlayer)
+                    youTubePlayer.loadVideo(videoId, 0f)
+                }
+            },
+        )
+        view
+    })
 }
