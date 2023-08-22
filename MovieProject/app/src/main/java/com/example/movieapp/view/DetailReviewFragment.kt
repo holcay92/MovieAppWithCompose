@@ -30,6 +30,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieapp.R
 import com.example.movieapp.model.review.ReviewResult
@@ -37,7 +38,7 @@ import com.example.movieapp.viewModel.DetailReviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailReviewFragment : BaseFragment() {
+class DetailReviewFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

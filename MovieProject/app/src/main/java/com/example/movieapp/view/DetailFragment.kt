@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -59,7 +60,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailFragment : BaseFragment() {
+class DetailFragment : Fragment() {
 
     private lateinit var currentVideoId: String
     private var videoNumber = 0
@@ -815,8 +816,8 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
     Spacer(
         modifier = Modifier
             .fillMaxWidth()
-            .height(2.dp)
-            .background(Color.LightGray),
+            .height(1.dp)
+            .background(colorResource(id = R.color.light_transparent_theme)), // divider line
     )
     InitYoutubePlayer(
         videoId = trailer?.key ?: "",
@@ -827,9 +828,9 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
 
     Spacer(
         modifier = Modifier
-            .fillMaxWidth().padding(vertical = 16.dp)
-            .height(2.dp)
-            .background(Color.LightGray),
+            .fillMaxWidth().padding(bottom = 30.dp)
+            .height(1.dp)
+            .background(colorResource(id = R.color.light_transparent_theme)), // divider line
     )
 }
 
@@ -845,7 +846,7 @@ fun InitYoutubePlayer(
             object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     super.onReady(youTubePlayer)
-                    youTubePlayer.loadVideo(videoId, 0f)
+                    youTubePlayer.cueVideo(videoId, 0f)
                     onReady(youTubePlayer)
                 }
             },

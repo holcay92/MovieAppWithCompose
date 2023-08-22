@@ -49,6 +49,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -58,7 +59,6 @@ import com.example.movieapp.Constants
 import com.example.movieapp.R
 import com.example.movieapp.model.movie.MovieResult
 import com.example.movieapp.room.FavoriteMovie
-import com.example.movieapp.view.BaseFragment
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.example.movieapp.viewModel.NowPlayingMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
@@ -67,7 +67,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment :
-    BaseFragment() {
+    Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
