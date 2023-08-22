@@ -7,11 +7,11 @@
     <string name="top_rated_movies">En yüksek puan</string>
     <string name="title">Başlık : </string>
     <string name="rating">IMDB : </string>
-    <string name="budget">Bütçe : </string>
-    <string name="release_date">Yayınlanma tarihi : </string>
+    <string name="budget">Bütçe </string>
+    <string name="release_date">Yayınlanma tarihi</string>
     <string name="adult">Yetişkin : </string>
     <string name="vote_count">Oylanma sayısı : </string>
-    <string name="overview">Özet : </string>
+    <string name="overview">Özet </string>
     <string name="search">Ara</string>
     <string name="home">Ana menü</string>
     <string name="favorites">Favoriler</string>
@@ -36,10 +36,10 @@
     <string name="quite_from_app__message">Çıkmak istediğinize emin misiniz?</string>
     <string name="overView_placeholder">Özet</string>
     <string name="error_message">Hata oluştu!</string>
-    <string name="runtime">Süre : </string>
+    <string name="runtime">Süre </string>
     <string name="ok">Tamam</string>
     <string name="genres">Tür :</string>
-    <string name="director">Yönetmen : </string>
+    <string name="director">Yönetmen </string>
     <string name="not_available">Bilinmiyor</string>
     <string name="movie_fetch_error">Filmler yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.</string>
     <string name="error_message_movie_review">Yorumlar yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.</string>

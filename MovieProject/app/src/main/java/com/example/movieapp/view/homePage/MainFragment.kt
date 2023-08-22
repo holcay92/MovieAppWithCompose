@@ -3,7 +3,6 @@ package com.example.movieapp.view.homePage
 import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -243,7 +242,6 @@ fun PopularMovieItem(
                             movie?.posterPath,
                             movie?.voteAverage,
                         )
-                        Log.d("TAGX", "actionFavoriteMovie: ${favMovie.id}")
 
                         favoriteMovieViewModel.actionFavButton(favMovie)
                     },
@@ -289,7 +287,7 @@ fun GridMovieItem(
 ) {
     val isFavorite = movie?.isFavorite ?: false
     var isMovieFavorite by remember { mutableStateOf(isFavorite) }
-    Log.d("TAGX", "isFavorite: $isFavorite")
+
     val favoriteIconTint: Int = if (isMovieFavorite) {
         R.color.red
     } else {
@@ -337,7 +335,6 @@ fun GridMovieItem(
                         movie?.posterPath,
                         movie?.voteAverage,
                     )
-                    Log.d("TAGX", "actionFavoriteMovie: ${favMovie.id}")
 
                     favoriteMovieViewModel.actionFavButton(favMovie)
                 },

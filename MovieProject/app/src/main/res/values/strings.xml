@@ -1,16 +1,15 @@
 <resources>
     <string name="app_name">MovieApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="please_wait">Please Wait…</string>
     <string name="popular_movies">Popular</string>
     <string name="top_rated_movies">Top Rated</string>
     <string name="title">Title : </string>
     <string name="rating">IMDB : </string>
-    <string name="budget">Budget : </string>
-    <string name="release_date">Release Date : </string>
+    <string name="budget">Budget </string>
+    <string name="release_date">Release Date</string>
     <string name="adult">Adult Content : </string>
     <string name="vote_count">Vote Count : </string>
-    <string name="overview">Overview : </string>
+    <string name="overview">Overview </string>
     <string name="search">Search</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
@@ -35,13 +34,13 @@
     <string name="quite_from_app__message">Do you want to exit?</string>
     <string name="overView_placeholder">OverView</string>
     <string name="error_message">Error occurred, try again</string>
-    <string name="ok">Ok</string>
-    <string name="runtime">Duration: </string>
+    <string name="ok">OK</string>
+    <string name="runtime">Duration </string>
     <string name="genres">Genres : </string>
     <string name="not_available">Not Available</string>
     <string name="movie_fetch_error">Failed to fetch movies. Please check your internet connection.</string>
     <string name="error_message_movie_review">Failed to fetch reviews. Please check your internet connection.</string>
-    <string name="director">Director :</string>
+    <string name="director">Director</string>
     <string name="actor_name">Actor Name :</string>
     <string name="birthday">Birthday :</string>
     <string name="country">Country :</string>
