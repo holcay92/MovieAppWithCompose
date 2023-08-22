@@ -755,9 +755,9 @@ fun MovieActorLayout(castResponse: List<Cast?>, onItemClick: (Int) -> Unit) {
 
 @Composable
 fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavController) {
-    var videoNumber = 0
-    val trailer = movieTrailersResponse[videoNumber]
-    Log.d("TAGX", "TrailerLayout: ${trailer.key}")
+    var videoNumber by remember { mutableIntStateOf(0) }
+    val trailer = movieTrailersResponse.getOrNull(videoNumber)
+    Log.d("TAGX", "TrailerLayout: $trailer videoNumber: $videoNumber")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -766,7 +766,7 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
             .padding(vertical = 16.dp),
     ) {
         IconButton(
-            onClick = { /* Handle next button click */ },
+            onClick = { videoNumber = (videoNumber - 1).coerceAtLeast(0) },
             modifier = Modifier
                 .size(30.dp)
                 .weight(1f),
@@ -781,15 +781,23 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
         }
         Button(
             onClick = {
-                /*   val action =
-                       DetailFragmentDirections.actionDetailFragmentToVideoFullScreenActivity(videoKey)
-                   navController.navigate(action)*/
+                val action =
+                    trailer?.key?.let {
+                        DetailFragmentDirections.actionDetailFragmentToVideoFullScreenActivity(
+                            it,
+                        )
+                    }
+                if (action != null) {
+                    navController.navigate(action)
+                }
             },
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).size(50.dp),
             content = { Text(text = "Toggle Fullscreen") },
         )
         IconButton(
-            onClick = { /* Handle next button click */ },
+            onClick = {
+                videoNumber = (videoNumber + 1).coerceAtMost(movieTrailersResponse.size - 1)
+            },
             modifier = Modifier
                 .size(30.dp)
                 .weight(1f),
@@ -810,22 +818,27 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
             .height(2.dp)
             .background(Color.LightGray),
     )
-
-    YoutubeScreen(trailer.key)
+    InitYoutubePlayer(
+        videoId = trailer?.key ?: "",
+        onReady = { youTubePlayer ->
+            youTubePlayer.loadVideo(trailer?.key ?: "", 0f)
+        },
+    )
 
     Spacer(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().padding(vertical = 16.dp)
             .height(2.dp)
             .background(Color.LightGray),
     )
 }
 
 @Composable
-fun YoutubeScreen(
+fun InitYoutubePlayer(
     videoId: String,
+    onReady: (YouTubePlayer) -> Unit,
 ) {
-    LocalContext.current
+    Log.d("TAGX", "YoutubePlayer: $videoId")
     AndroidView(factory = {
         val view = YouTubePlayerView(it)
         view.addYouTubePlayerListener(
@@ -833,6 +846,7 @@ fun YoutubeScreen(
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     super.onReady(youTubePlayer)
                     youTubePlayer.loadVideo(videoId, 0f)
+                    onReady(youTubePlayer)
                 }
             },
         )
