@@ -263,14 +263,14 @@ fun PopularMoviesList(
 
     if (isGridMode) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(4),
             modifier = Modifier
-                .fillMaxSize().height(700.dp)
+                .height(700.dp)
                 .padding(top = 10.dp, bottom = 20.dp),
         ) {
             items(movies.size) { index ->
                 val movie = movies[index]
-                PopularMovieItem(
+                PopularGridMovieItem(
                     movie = movie,
                     onItemClick = {
                         val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
@@ -471,6 +471,82 @@ fun GridMovieItem(
         Box(
             modifier = Modifier
                 .fillMaxWidth(),
+            contentAlignment = Alignment.BottomEnd,
+        ) {
+            GlideImage(
+                model = "https://image.tmdb.org/t/p/w500${movie?.posterPath}",
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(80.dp, 120.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color.Transparent),
+            )
+            IconButton(
+                onClick = {
+                    isMovieFavorite = !isMovieFavorite
+                    val favMovie = FavoriteMovie(
+                        0,
+                        movie?.id,
+                        movie?.title,
+                        movie?.posterPath,
+                        movie?.voteAverage,
+                    )
+
+                    favoriteMovieViewModel.actionFavButton(favMovie)
+                },
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(5.dp)
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(colorResource(R.color.transparent_white)),
+
+            ) {
+                Box {
+                    Icon(
+                        painter = painterResource(id = favoriteIconRes),
+                        contentDescription = null,
+                        tint = colorResource(id = favoriteIconTint),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
+@Composable
+fun PopularGridMovieItem(
+    movie: MovieResult?,
+    onItemClick: () -> Unit,
+) {
+    val isFavorite = movie?.isFavorite ?: false
+    var isMovieFavorite by remember { mutableStateOf(isFavorite) }
+
+    val favoriteIconTint: Int = if (isMovieFavorite) {
+        R.color.red
+    } else {
+        R.color.light_theme
+    }
+    val favoriteIconRes = if (isMovieFavorite) {
+        R.drawable.add_fav_filled_icon // Use the filled icon resource
+    } else {
+        R.drawable.add_fav_empty_icon // Use the empty icon resource
+    }
+
+    val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
+    Card(
+        onClick = onItemClick,
+        modifier = Modifier
+            .padding(5.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(colorResource(R.color.transparent)),
+        elevation = CardDefaults.cardElevation(5.dp),
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(1.dp, colorResource(id = R.color.light_bold_theme)),
+    ) {
+        Box(
+            modifier = Modifier,
             contentAlignment = Alignment.BottomEnd,
         ) {
             GlideImage(
