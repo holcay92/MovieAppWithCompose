@@ -25,7 +25,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.GridOn
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -162,6 +167,158 @@ fun MainScreen(navController: NavController) {
                 popularMovies.value ?: emptyList(),
             )
         }
+    }
+}
+
+@Composable
+fun NowPlayingMoviesList(navController: NavController, movies: List<MovieResult>) {
+    Text(
+        modifier = Modifier.padding(start = 10.dp, top = 10.dp),
+        text = stringResource(id = R.string.now_playing_movies),
+        color = colorResource(id = R.color.light_theme),
+        fontWeight = FontWeight.Bold,
+    )
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        items(movies.size) { index ->
+            val movie = movies[index]
+            movie.let {
+                GridMovieItem(
+                    movie = it,
+                ) {
+                    val action = it.let { movieItem ->
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.TOP_RATED,
+                            movieItem.id!!,
+                        )
+                    }
+                    navController.navigate(action)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TopRatedMoviesList(navController: NavController, movies: List<MovieResult>) {
+    Text(
+        modifier = Modifier.padding(start = 10.dp, top = 50.dp),
+        text = stringResource(id = R.string.top_rated_movies),
+        color = colorResource(id = R.color.light_theme),
+        fontWeight = FontWeight.Bold,
+    )
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        items(movies.size) { index ->
+            val movie = movies[index]
+            movie.let {
+                GridMovieItem(
+                    movie = it,
+                ) {
+                    val action = it.let { movieItem ->
+                        MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.TOP_RATED,
+                            movieItem.id!!,
+                        )
+                    }
+                    navController.navigate(action)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PopularMoviesList(
+    navController: NavController,
+    movies: List<MovieResult>,
+
+) {
+    var isGridMode by remember { mutableStateOf(false) }
+    Row {
+        Text(
+            modifier = Modifier.padding(start = 10.dp, top = 10.dp),
+            text = stringResource(id = R.string.popular_movies),
+            color = colorResource(id = R.color.light_theme),
+            fontWeight = FontWeight.Bold,
+        )
+        Spacer(modifier = Modifier.weight(1f))
+
+        IconButton(onClick = { isGridMode = !isGridMode }) {
+            Icon(
+                imageVector = if (isGridMode) Icons.Filled.List else Icons.Filled.GridOn,
+                contentDescription = null,
+                tint = colorResource(id = R.color.light_theme),
+            )
+        }
+    }
+
+    if (isGridMode) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier
+                .fillMaxSize().height(700.dp)
+                .padding(top = 10.dp, bottom = 20.dp),
+        ) {
+            items(movies.size) { index ->
+                val movie = movies[index]
+                PopularMovieItem(
+                    movie = movie,
+                    onItemClick = {
+                        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                            Constants.TOP_RATED,
+                            movie.id ?: -1,
+                        )
+                        navController.navigate(action)
+                    },
+                )
+            }
+        }
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(700.dp)
+                .padding(top = 10.dp, bottom = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            items(movies.size) { index ->
+                val movie = movies[index]
+                movie.let {
+                    PopularMovieItem(
+                        movie = it,
+                    ) {
+                        val action = it.let { movieItem ->
+                            MainFragmentDirections.actionMainFragmentToDetailFragment(
+                                Constants.TOP_RATED,
+                                movieItem.id!!,
+                            )
+                        }
+                        navController.navigate(action)
+                    }
+                }
+            }
+        }
+        /* if (isLoading) {
+             item {
+                 Box(
+                     modifier = Modifier
+                         .fillMaxWidth()
+                         .padding(16.dp),
+                     contentAlignment = Alignment.Center,
+                 ) {
+                     CircularProgressIndicator() // Loading indicator
+                 }
+             }
+         }*/
     }
 }
 
@@ -354,121 +511,5 @@ fun GridMovieItem(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun NowPlayingMoviesList(navController: NavController, movies: List<MovieResult>) {
-    Text(
-        modifier = Modifier.padding(start = 10.dp, top = 10.dp),
-        text = stringResource(id = R.string.now_playing_movies),
-        color = colorResource(id = R.color.light_theme),
-        fontWeight = FontWeight.Bold,
-    )
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        items(movies.size) { index ->
-            val movie = movies[index]
-            movie.let {
-                GridMovieItem(
-                    movie = it,
-                ) {
-                    val action = it.let { movieItem ->
-                        MainFragmentDirections.actionMainFragmentToDetailFragment(
-                            Constants.TOP_RATED,
-                            movieItem.id!!,
-                        )
-                    }
-                    navController.navigate(action)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun TopRatedMoviesList(navController: NavController, movies: List<MovieResult>) {
-    Text(
-        modifier = Modifier.padding(start = 10.dp, top = 50.dp),
-        text = stringResource(id = R.string.top_rated_movies),
-        color = colorResource(id = R.color.light_theme),
-        fontWeight = FontWeight.Bold,
-    )
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        items(movies.size) { index ->
-            val movie = movies[index]
-            movie.let {
-                GridMovieItem(
-                    movie = it,
-                ) {
-                    val action = it.let { movieItem ->
-                        MainFragmentDirections.actionMainFragmentToDetailFragment(
-                            Constants.TOP_RATED,
-                            movieItem.id!!,
-                        )
-                    }
-                    navController.navigate(action)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun PopularMoviesList(
-    navController: NavController,
-    movies: List<MovieResult>,
-
-) {
-    Text(
-        modifier = Modifier.padding(start = 10.dp, top = 10.dp),
-        text = stringResource(id = R.string.popular_movies),
-        color = colorResource(id = R.color.light_theme),
-        fontWeight = FontWeight.Bold,
-    )
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(700.dp)
-            .padding(top = 10.dp, bottom = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        items(movies.size) { index ->
-            val movie = movies[index]
-            movie.let {
-                PopularMovieItem(
-                    movie = it,
-                ) {
-                    val action = it.let { movieItem ->
-                        MainFragmentDirections.actionMainFragmentToDetailFragment(
-                            Constants.TOP_RATED,
-                            movieItem.id!!,
-                        )
-                    }
-                    navController.navigate(action)
-                }
-            }
-        }
-        /* if (isLoading) {
-             item {
-                 Box(
-                     modifier = Modifier
-                         .fillMaxWidth()
-                         .padding(16.dp),
-                     contentAlignment = Alignment.Center,
-                 ) {
-                     CircularProgressIndicator() // Loading indicator
-                 }
-             }
-         }*/
     }
 }
