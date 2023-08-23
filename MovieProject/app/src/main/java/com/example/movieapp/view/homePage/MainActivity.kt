@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         popularMovieViewModel.fetchPopularMovieList()
         topRatedMovieViewModel.fetchTopRatedMovieList()
         nowPlayingMovieViewModel.fetchNowPlayingMovies()
-        // setupToolbar()
         setupBottomNavigation()
         hideSystemUI()
 
@@ -48,14 +47,6 @@ class MainActivity : AppCompatActivity() {
             }, SPLASH_DELAY.toLong())
         }
     }
-
-    /* private fun setupToolbar() {
-         val toolbar: Toolbar = activityMainBinding.toolbar
-         setSupportActionBar(toolbar)
-         val actionBar = supportActionBar
-         val backButton = R.drawable.ic_back_toolbar
-         actionBar?.setHomeAsUpIndicator(backButton)
-     }*/
 
     private fun setupBottomNavigation() {
         activityMainBinding.bottomNavigation.setOnItemSelectedListener { menuItem ->
@@ -100,12 +91,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.GONE
-       // activityMainBinding.toolbar?.visibility = View.GONE
+        // activityMainBinding.toolbar?.visibility = View.GONE
     }
 
     private fun showNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.VISIBLE
-        //activityMainBinding.toolbar?.visibility = View.VISIBLE
+        // activityMainBinding.toolbar?.visibility = View.VISIBLE
     }
 
     override fun onSupportNavigateUp(): Boolean {
