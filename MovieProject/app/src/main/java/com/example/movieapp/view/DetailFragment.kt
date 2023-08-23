@@ -120,9 +120,11 @@ fun DetailScreen(movieId: Int, navController: NavController) {
     val movieDetailResponse = detailViewModel.movieDetail.observeAsState()
     val creditsResponseList = creditsViewModel.creditsResponse.observeAsState()
     val movieTrailersResponse = detailViewModel.movieVideos.observeAsState()
+    movieDetailResponse.value?.title?.toString()
+        ?.let { CustomTopAppBar(it, onBackClick = { navController.popBackStack() }) }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(top=10.dp),
     ) {
         item {
             movieImageList.value?.let { MovieImageLayout(it) }

@@ -1,13 +1,10 @@
 package com.example.movieapp.view.homePage
 
-import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,7 +37,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -68,6 +64,7 @@ import com.example.movieapp.Constants
 import com.example.movieapp.R
 import com.example.movieapp.model.movie.MovieResult
 import com.example.movieapp.room.FavoriteMovie
+import com.example.movieapp.view.MainTopAppBar
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.example.movieapp.viewModel.NowPlayingMovieViewModel
 import com.example.movieapp.viewModel.PopularMovieViewModel
@@ -91,49 +88,6 @@ class MainFragment :
             }
         }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // setup user interface
-        setupViews()
-        setupBackPressedCallback()
-    }
-
-    private fun setupBackPressedCallback() {
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                alertDialog()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            onBackPressedCallback,
-        )
-    }
-
-    private fun setupViews() {
-        val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.title = ""
-        val isLandscape =
-            resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        //  SPAN_COUNT = if (isLandscape) SPAN_COUNT_5 else SPAN_COUNT_3
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-    }
-
-    private fun alertDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(R.string.warning)
-        builder.setMessage(R.string.quite_from_app__message)
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-        builder.setPositiveButton(R.string.yes) { _, _ ->
-            requireActivity().finish() // Exit the app
-        }
-        builder.setNegativeButton(R.string.no) { _, _ ->
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
 }
 
 const val SPAN_COUNT_6 = 6
@@ -150,6 +104,8 @@ fun MainScreen(navController: NavController) {
     popularMovieViewModel.updateFavoriteResult()
     topRatedMovieViewModel.updateFavoriteResult()
     nowPlayingMovieViewModel.updateFavoriteResult()
+
+    MainTopAppBar()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -248,6 +204,7 @@ fun PopularMoviesList(
         Configuration.ORIENTATION_LANDSCAPE -> {
             SPAN_COUNT_6
         }
+
         else -> {
             SPAN_COUNT_4
         }
@@ -288,10 +245,11 @@ fun PopularMoviesList(
                     GridMovieItem(
                         movie = movie,
                         onItemClick = {
-                            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                                Constants.TOP_RATED,
-                                movie.id ?: -1,
-                            )
+                            val action =
+                                MainFragmentDirections.actionMainFragmentToDetailFragment(
+                                    Constants.TOP_RATED,
+                                    movie.id ?: -1,
+                                )
                             navController.navigate(action)
                         },
                     )

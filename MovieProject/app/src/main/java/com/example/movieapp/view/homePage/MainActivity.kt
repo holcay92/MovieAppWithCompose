@@ -10,7 +10,6 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         popularMovieViewModel.fetchPopularMovieList()
         topRatedMovieViewModel.fetchTopRatedMovieList()
         nowPlayingMovieViewModel.fetchNowPlayingMovies()
-        setupToolbar()
+        // setupToolbar()
         setupBottomNavigation()
         hideSystemUI()
 
@@ -50,13 +49,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupToolbar() {
-        val toolbar: Toolbar = activityMainBinding.toolbar
-        setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        val backButton = R.drawable.ic_back_toolbar
-        actionBar?.setHomeAsUpIndicator(backButton)
-    }
+    /* private fun setupToolbar() {
+         val toolbar: Toolbar = activityMainBinding.toolbar
+         setSupportActionBar(toolbar)
+         val actionBar = supportActionBar
+         val backButton = R.drawable.ic_back_toolbar
+         actionBar?.setHomeAsUpIndicator(backButton)
+     }*/
 
     private fun setupBottomNavigation() {
         activityMainBinding.bottomNavigation.setOnItemSelectedListener { menuItem ->
@@ -101,12 +100,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.GONE
-        activityMainBinding.toolbar.visibility = View.GONE
+       // activityMainBinding.toolbar?.visibility = View.GONE
     }
 
     private fun showNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.VISIBLE
-        activityMainBinding.toolbar.visibility = View.VISIBLE
+        //activityMainBinding.toolbar?.visibility = View.VISIBLE
     }
 
     override fun onSupportNavigateUp(): Boolean {

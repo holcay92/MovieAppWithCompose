@@ -93,10 +93,11 @@ class FavoriteFragment : Fragment() {
 fun FavoriteScreen(navController: NavController) {
     val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
     val favoriteMovies = favoriteMovieViewModel.favMovieList.observeAsState(emptyList())
+    CustomTopAppBar("FAVORITES", onBackClick = { navController.popBackStack() })
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 35.dp, bottom = 10.dp)
+            .padding(top = 50.dp, bottom = 10.dp)
             .background(colorResource(id = R.color.main_theme)),
     ) {
         if (favoriteMovies.value.isEmpty()) {

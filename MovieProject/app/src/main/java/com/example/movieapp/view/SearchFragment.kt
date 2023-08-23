@@ -34,11 +34,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.movieapp.Constants
@@ -62,7 +63,7 @@ class SearchFragment : Fragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-                SearchScreen()
+                SearchScreen(findNavController())
             }
         }
     }
@@ -75,10 +76,10 @@ class SearchFragment : Fragment() {
 }
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navController: NavController) {
     val searchViewModel: SearchViewModel = viewModel()
     val searchResponse by searchViewModel.searchList.observeAsState(emptyList())
-
+    CustomTopAppBar("SEARCH", onBackClick = { navController.popBackStack() })
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,7 +106,7 @@ fun SearchView(
     val searchScope = rememberCoroutineScope()
     var searchJob by remember { mutableStateOf<Job?>(null) }
 
-    Card(modifier = Modifier) {
+    Card(modifier = Modifier.padding(top = 16.dp)) {
         SearchBar(
             modifier = Modifier
                 .fillMaxWidth().background(colorResource(id = R.color.main_theme_bg)),
@@ -115,7 +116,7 @@ fun SearchView(
                 searchScope.launch {
                     searchJob?.cancel() // Cancel the previous search job
                     searchJob = launch {
-                        delay(600)
+                        delay(900)
                         if (text.isNotEmpty()) {
                             active = false
                         }
@@ -270,10 +271,4 @@ fun MovieItem(movie: SearchResult) {
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSearchScreen() {
-    SearchScreen()
 }
