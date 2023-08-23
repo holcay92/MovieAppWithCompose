@@ -377,9 +377,10 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                         modifier = Modifier.size(20.dp),
                     )
                     Text(
-                        text = movieDetail.value?.voteAverage.toString(),
-                        fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_theme),
+                        text = movieDetail.value?.voteAverage.toString(), // vote average
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colorResource(id = R.color.light_bold_theme),
                     )
                     Text(
                         text = " /10  (",
@@ -389,7 +390,7 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                     Text(
                         text = movieDetail.value?.voteCount.toString(),
                         fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_theme),
+                        color = colorResource(id = R.color.light_bold_theme), // vote count
                     )
                     Text(
                         text = " votes)",
@@ -431,10 +432,11 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                             .fillMaxWidth()
                             .background(colorResource(R.color.main_theme))
                             .padding(4.dp),
-                        text = movieDetail.value?.releaseDate.toString(),
+                        text = movieDetail.value?.releaseDate.toString(), // release date
                         textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_theme),
+                        color = colorResource(id = R.color.light_bold_theme),
                     )
                 }
             }
@@ -465,10 +467,11 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                             .fillMaxWidth()
                             .background(colorResource(R.color.main_theme))
                             .padding(4.dp),
-                        text = "${movieDetail.value?.runtime?.toString() ?: 0} min",
+                        text = "${movieDetail.value?.runtime?.toString() ?: 0} min", // runtime
                         textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_theme),
+                        color = colorResource(id = R.color.light_bold_theme),
                     )
                 }
             }
@@ -509,10 +512,11 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                             modifier = Modifier.size(18.dp),
                         )
                         Text(
-                            text = movieDetail.value?.budget.toString(),
+                            text = movieDetail.value?.budget.toString(), // budget
                             textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
-                            color = colorResource(id = R.color.light_theme),
+                            color = colorResource(id = R.color.light_bold_theme),
                         )
                     }
                 }
@@ -552,8 +556,9 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                             .padding(4.dp),
                         text = director.toString(),
                         textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_theme),
+                        color = colorResource(id = R.color.light_bold_theme),
                     )
                 }
             }
@@ -578,19 +583,22 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
 
                     )
 
-                    LazyColumn(
-                        modifier = Modifier.heightIn(max = 90.dp),
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth()
+                            .background(colorResource(R.color.main_theme)),
+                        horizontalArrangement = Arrangement.Center,
                     ) {
                         items(movieDetail.value?.genres.orEmpty().size) { genre ->
                             Text(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(colorResource(R.color.main_theme))
-                                    .padding(4.dp),
+                                    .padding(horizontal = 8.dp, vertical = 4.dp),
                                 text = movieDetail.value?.genres?.get(genre)?.name.toString(),
                                 textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp,
-                                color = colorResource(id = R.color.light_theme),
+                                color = colorResource(id = R.color.light_bold_theme),
                             )
                         }
                     }
@@ -613,10 +621,10 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
         ) {
             Text(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth().clip(RoundedCornerShape(10.dp))
                     .background(colorResource(R.color.main_theme))
                     .padding(4.dp),
-                text = stringResource(id = R.string.overview),
+                text = stringResource(id = R.string.overview), // overview
                 color = colorResource(id = R.color.light_theme),
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
@@ -652,6 +660,22 @@ fun MovieActorLayout(castResponse: List<Cast?>, onItemClick: (Int) -> Unit) {
                 .height(1.dp)
                 .background(colorResource(id = R.color.light_transparent_theme)), // divider line
         )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 10.dp),
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth().clip(RoundedCornerShape(10.dp))
+                    .background(colorResource(R.color.main_theme))
+                    .padding(4.dp),
+                text = stringResource(id = R.string.cast), // cast
+                color = colorResource(id = R.color.light_theme),
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center,
+            )
+        }
 
         LazyRow(
             modifier = Modifier
@@ -693,8 +717,9 @@ fun MovieActorLayout(castResponse: List<Cast?>, onItemClick: (Int) -> Unit) {
                         modifier = Modifier
                             .width(60.dp),
                         text = castResponse[cast]?.name.toString(),
-                        color = colorResource(id = R.color.light_theme),
+                        color = colorResource(id = R.color.light_bold_theme),
                         fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
                         lineHeight = 10.sp,
                     )

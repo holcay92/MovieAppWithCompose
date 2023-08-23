@@ -38,7 +38,7 @@
     <string name="error_message">Hata oluştu!</string>
     <string name="runtime">Süre </string>
     <string name="ok">Tamam</string>
-    <string name="genres">Tür :</string>
+    <string name="genres">Tür</string>
     <string name="director">Yönetmen </string>
     <string name="not_available">Bilinmiyor</string>
     <string name="movie_fetch_error">Filmler yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.</string>
@@ -51,5 +51,6 @@
     <string name="now_playing_movies">Gösterimdekiler :</string>
     <string name="trending_movies">Trendler</string>
     <string name="info">Oyuncu Bilgisi</string>
+    <string name="cast">Oyuncular</string>
 
 </resources>
