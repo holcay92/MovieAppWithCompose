@@ -67,7 +67,7 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val movieId = extractMovieIdFromArguments()
+        val movieId = DetailFragmentArgs.fromBundle(requireArguments()).id
         return ComposeView(requireContext()).apply {
             setContent {
                 MaterialTheme {
@@ -538,7 +538,7 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                             .fillMaxWidth()
                             .background(colorResource(R.color.main_theme))
                             .padding(4.dp),
-                        text = stringResource(id = R.string.director),
+                        text = stringResource(id = R.string.director), // director
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center,
                         color = colorResource(id = R.color.light_theme),
@@ -571,68 +571,35 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                             .fillMaxWidth()
                             .background(colorResource(R.color.main_theme))
                             .padding(4.dp),
-                        text = stringResource(id = R.string.director),
+                        text = stringResource(id = R.string.genres), // genres
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center,
                         color = colorResource(id = R.color.light_theme),
 
                     )
 
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(colorResource(R.color.main_theme))
-                            .padding(4.dp),
-                        text = director.toString(),
-                        textAlign = TextAlign.Center,
-                        fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_theme),
-                    )
+                    LazyColumn(
+                        modifier = Modifier.heightIn(max = 90.dp),
+                    ) {
+                        items(movieDetail.value?.genres.orEmpty().size) { genre ->
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(colorResource(R.color.main_theme))
+                                    .padding(4.dp),
+                                text = movieDetail.value?.genres?.get(genre)?.name.toString(),
+                                textAlign = TextAlign.Center,
+                                fontSize = 14.sp,
+                                color = colorResource(id = R.color.light_theme),
+                            )
+                        }
+                    }
                 }
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-        ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colorResource(R.color.main_theme))
-                    .padding(4.dp),
-                text = stringResource(id = R.string.genres),
-                fontSize = 14.sp,
-                color = colorResource(id = R.color.light_theme),
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                Text(
-                    text = "Action",
-                    fontSize = 14.sp,
-                    color = colorResource(id = R.color.light_theme),
-                    modifier = Modifier.padding(end = 8.dp),
-                )
-                Text(
-                    text = "Action",
-                    fontSize = 14.sp,
-                    color = colorResource(id = R.color.light_theme),
-                    modifier = Modifier.padding(end = 8.dp),
-                )
-                Text(
-                    text = "Action",
-                    fontSize = 14.sp,
-                    color = colorResource(id = R.color.light_theme),
-                )
-            }
-        }
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
