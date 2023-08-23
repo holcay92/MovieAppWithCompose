@@ -68,7 +68,9 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata'
     implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
     implementation 'androidx.compose.material:material-icons-extended'
-
+    def paging_version = "3.2.0"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    implementation "androidx.paging:paging-compose:3.2.0"
 
 
 
@@ -83,7 +85,7 @@ dependencies {
     //fragment
     implementation 'androidx.fragment:fragment-ktx:1.6.1'
     //okhttp
-    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
 
     //logging interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'

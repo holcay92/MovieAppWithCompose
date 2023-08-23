@@ -1,7 +1,6 @@
 package com.example.movieapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,27 +79,8 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBackButtonNavigation()
-
-        /*  setupViewPager()
-          adjustViewPagerDimensions()
-          observeMovieImageList(movieId)
-          observeMovieDetailAndVideos(movieId)
-          handleShowReviewsButton(movieId)
-          observeFavoriteMovieList(movieId)*/
         // Enable the back button
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        /*  bindingDetail.apply {
-              fullscreenButton.setOnClickListener {
-                  handleFullScreenButton()
-              }
-              nextButton.setOnClickListener {
-                  switchToNextVideo()
-              }
-              previousButton.setOnClickListener {
-                  switchToPreviousVideo()
-              }
-          }*/
     }
 
     private fun setupBackButtonNavigation() {
@@ -114,63 +94,7 @@ class DetailFragment : Fragment() {
             viewLifecycleOwner,
             onBackPressedCallback,
         )
-    }
-
-    private fun extractMovieIdFromArguments(): Int {
-        return DetailFragmentArgs.fromBundle(requireArguments()).id
-    }
-
-    /* private fun adjustViewPagerDimensions() { // todo height
-         val displayMetrics = DisplayMetrics()
-         requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
-         val screenHeight = displayMetrics.heightPixels
-         val halfScreenHeight = screenHeight / 2
-         bindingDetail.viewPager.layoutParams.height = halfScreenHeight
-
-         val viewPager = bindingDetail.viewPager
-         val layoutParams = viewPager.layoutParams as LinearLayout.LayoutParams
-         // for the landscape mode
-         val orientation = resources.configuration.orientation
-         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-             layoutParams.width = resources.displayMetrics.widthPixels / 2
-         } else {
-             layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
-         }
-
-         viewPager.layoutParams = layoutParams
-     }*/
-
-    /*private fun initFirstVideo(video: VideoResult) {
-        currentVideoId = video.key
-        val youTubePlayerView: YouTubePlayerView = bindingDetail.youtubePlayerView1
-        lifecycle.addObserver(youTubePlayerView)
-        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.cueVideo(currentVideoId, 0f)
-            }
-        })
-    }
-*//*
-    private fun switchToNextVideo() {
-        val videos = detailViewModel.movieVideos.value
-        if (!videos.isNullOrEmpty()) {
-            videoNumber = (videoNumber + 1) % videos.size
-            val nextVideo = videos[videoNumber]
-            updateVideoUI(nextVideo)
-        }
-    }
-
-    private fun switchToPreviousVideo() {
-        val videos = detailViewModel.movieVideos.value
-        if (!videos.isNullOrEmpty()) {
-            if (videoNumber == 0) {
-                videoNumber = videos.size // cycle to the last video
-            }
-            videoNumber = (videoNumber - 1) % videos.size
-            val previousVideo = videos[videoNumber]
-            updateVideoUI(previousVideo)
-        }
-    }
+    } /*
 
     private fun updateVideoUI(video: VideoResult) {
         currentVideoId = video.key
@@ -190,13 +114,13 @@ fun DetailScreen(movieId: Int, navController: NavController) {
     val movieImageList = detailFragmentMovieImageViewModel.imageResponse.observeAsState(emptyList())
     val detailViewModel: DetailViewModel = viewModel()
     val creditsViewModel: CreditsViewModel = viewModel()
-
     detailViewModel.fetchMovieDetail(movieId)
     creditsViewModel.getMovieCredits(movieId)
     detailViewModel.fetchMovieVideos(movieId)
     val movieDetailResponse = detailViewModel.movieDetail.observeAsState()
     val creditsResponseList = creditsViewModel.creditsResponse.observeAsState()
     val movieTrailersResponse = detailViewModel.movieVideos.observeAsState()
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -584,7 +508,8 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
                     )
 
                     LazyRow(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .background(colorResource(R.color.main_theme)),
                         horizontalArrangement = Arrangement.Center,
                     ) {
@@ -621,7 +546,8 @@ fun MovieDetailLayout(movieDetail: State<MovieDetail?>, movieCrewDetail: State<C
         ) {
             Text(
                 modifier = Modifier
-                    .fillMaxWidth().clip(RoundedCornerShape(10.dp))
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
                     .background(colorResource(R.color.main_theme))
                     .padding(4.dp),
                 text = stringResource(id = R.string.overview), // overview
@@ -667,7 +593,8 @@ fun MovieActorLayout(castResponse: List<Cast?>, onItemClick: (Int) -> Unit) {
         ) {
             Text(
                 modifier = Modifier
-                    .fillMaxWidth().clip(RoundedCornerShape(10.dp))
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
                     .background(colorResource(R.color.main_theme))
                     .padding(4.dp),
                 text = stringResource(id = R.string.cast), // cast
@@ -740,7 +667,6 @@ fun MovieActorLayout(castResponse: List<Cast?>, onItemClick: (Int) -> Unit) {
 fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavController) {
     var videoNumber by remember { mutableIntStateOf(0) }
     val trailer = movieTrailersResponse.getOrNull(videoNumber)
-    Log.d("TAGX", "TrailerLayout: $trailer videoNumber: $videoNumber")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -749,7 +675,12 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
             .padding(vertical = 16.dp),
     ) {
         IconButton(
-            onClick = { videoNumber = (videoNumber - 1).coerceAtLeast(0) },
+            onClick = {
+                if (videoNumber == 0) {
+                    videoNumber = movieTrailersResponse.size // cycle to the last video
+                }
+                videoNumber = (videoNumber - 1) % movieTrailersResponse.size
+            },
             modifier = Modifier
                 .size(30.dp)
                 .weight(1f),
@@ -775,7 +706,9 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
                 }
             },
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.main_theme)),
-            modifier = Modifier.weight(2f).width(150.dp)
+            modifier = Modifier
+                .weight(2f)
+                .width(150.dp)
                 .height(40.dp),
             content = {
                 Text(
@@ -787,7 +720,7 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
         )
         IconButton(
             onClick = {
-                videoNumber = (videoNumber + 1).coerceAtMost(movieTrailersResponse.size - 1)
+                videoNumber = (videoNumber + 1) % movieTrailersResponse.size
             },
             modifier = Modifier
                 .size(30.dp)
@@ -818,7 +751,8 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
 
     Spacer(
         modifier = Modifier
-            .fillMaxWidth().padding(bottom = 30.dp)
+            .fillMaxWidth()
+            .padding(bottom = 30.dp)
             .height(1.dp)
             .background(colorResource(id = R.color.light_transparent_theme)), // divider line
     )
@@ -829,7 +763,6 @@ fun InitYoutubePlayer(
     videoId: String,
     onReady: (YouTubePlayer) -> Unit,
 ) {
-    Log.d("TAGX", "YoutubePlayer: $videoId")
     AndroidView(factory = {
         val view = YouTubePlayerView(it)
         view.addYouTubePlayerListener(

@@ -27,17 +27,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -141,12 +144,13 @@ fun MainScreen(navController: NavController) {
     val popularMovieViewModel: PopularMovieViewModel = viewModel()
     val topRatedMovieViewModel: TopRatedMovieViewModel = viewModel()
     val nowPlayingMovieViewModel: NowPlayingMovieViewModel = viewModel()
-    popularMovieViewModel.fetchPopularMovieList(1)
-    topRatedMovieViewModel.fetchTopRatedMovieList()
-    nowPlayingMovieViewModel.fetchNowPlayingMovies()
     val popularMovies = popularMovieViewModel.popularMovieResponse.observeAsState(emptyList())
     val topRatedMovies = topRatedMovieViewModel.tRMovieResponse.observeAsState(emptyList())
     val nowPlayingMovies = nowPlayingMovieViewModel.nowPlayingMovies.observeAsState(emptyList())
+    popularMovieViewModel.updateFavoriteResult()
+    topRatedMovieViewModel.updateFavoriteResult()
+    nowPlayingMovieViewModel.updateFavoriteResult()
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -237,9 +241,10 @@ fun PopularMoviesList(
     movies: List<MovieResult>,
 
 ) {
-    var gridCellCount = SPAN_COUNT_4
+    val popularMovieViewModel: PopularMovieViewModel = viewModel()
+    val lazyListState = rememberLazyListState()
     val configuration = LocalConfiguration.current
-    gridCellCount = when (configuration.orientation) {
+    val gridCellCount = when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             SPAN_COUNT_6
         }
@@ -295,6 +300,7 @@ fun PopularMoviesList(
         }
     } else {
         LazyColumn(
+            state = lazyListState,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(700.dp)
@@ -317,19 +323,23 @@ fun PopularMoviesList(
                     }
                 }
             }
+
+            val reachedEnd =
+                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == lazyListState.layoutInfo.totalItemsCount - 1
+            if (reachedEnd) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        CircularProgressIndicator() // Loading indicator
+                    }
+                }
+                popularMovieViewModel.getNextPage()
+            }
         }
-        /* if (isLoading) {
-             item {
-                 Box(
-                     modifier = Modifier
-                         .fillMaxWidth()
-                         .padding(16.dp),
-                     contentAlignment = Alignment.Center,
-                 ) {
-                     CircularProgressIndicator() // Loading indicator
-                 }
-             }
-         }*/
     }
 }
 

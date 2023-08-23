@@ -8,26 +8,23 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
-import com.example.movieapp.service.MovieApiService
+import com.example.movieapp.viewModel.NowPlayingMovieViewModel
+import com.example.movieapp.viewModel.PopularMovieViewModel
+import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
-
-    @Inject
-    lateinit var movieApiService: MovieApiService
-
-    companion object {
-        private const val SPLASH_DELAY = 3000
-    }
+    private val popularMovieViewModel: PopularMovieViewModel by viewModels()
+    private val topRatedMovieViewModel: TopRatedMovieViewModel by viewModels()
+    private val nowPlayingMovieViewModel: NowPlayingMovieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +34,9 @@ class MainActivity : AppCompatActivity() {
             // Set the activity to full-screen mode
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
-
+        popularMovieViewModel.fetchPopularMovieList()
+        topRatedMovieViewModel.fetchTopRatedMovieList()
+        nowPlayingMovieViewModel.fetchNowPlayingMovies()
         setupToolbar()
         setupBottomNavigation()
         hideSystemUI()
@@ -99,6 +98,7 @@ class MainActivity : AppCompatActivity() {
             hideSystemUI()
         }
     }
+
     private fun hideNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.GONE
         activityMainBinding.toolbar.visibility = View.GONE
@@ -113,8 +113,8 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragmentContainerView)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+    companion object {
+        private const val SPLASH_DELAY = 3000
+    }
 }
-
-
-
-

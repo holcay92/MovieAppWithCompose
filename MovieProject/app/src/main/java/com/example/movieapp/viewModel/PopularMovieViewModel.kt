@@ -1,5 +1,6 @@
 package com.example.movieapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,13 +24,15 @@ class PopularMovieViewModel @Inject constructor(
     ViewModel() {
     var popularMovieResponse = MutableLiveData<List<MovieResult>?>()
     var errorMessage = MutableLiveData<String>()
+    private var currentPage = 1
+    private var loadingNextPage = false
 
     init {
-        fetchPopularMovieList(1)
+        fetchPopularMovieList()
     }
 
-    fun fetchPopularMovieList(page: Int) {
-        val call = movieApiService.getPopularMovies(page)
+    fun fetchPopularMovieList() {
+        val call = movieApiService.getPopularMovies(currentPage)
 
         call.enqueue(
             object : Callback<Movie?> {
@@ -44,7 +47,10 @@ class PopularMovieViewModel @Inject constructor(
                                 movie.isFavorite = movie.id?.let { isMovieInFavorites(it) } == true
                             }
                         }
-                        popularMovieResponse.value = results
+                        val currentResults = popularMovieResponse.value.orEmpty()
+                        popularMovieResponse.value = currentResults + (results ?: emptyList())
+                        currentPage++
+                        Log.d("TAGX", "Current page: $currentPage")
                     }
                 }
 
@@ -56,8 +62,11 @@ class PopularMovieViewModel @Inject constructor(
         )
     }
 
-    fun getNextPage(page: Int) {
-        fetchPopularMovieList(page)
+    fun getNextPage() {
+        if (!loadingNextPage) {
+            loadingNextPage = true
+            fetchPopularMovieList()
+        }
     }
 
     private suspend fun isMovieInFavorites(movieId: Int): Boolean {

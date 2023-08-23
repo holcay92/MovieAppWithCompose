@@ -1,13 +1,11 @@
 package com.example.movieapp.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.LazyColumn
@@ -48,6 +46,7 @@ import com.example.movieapp.R
 import com.example.movieapp.model.movieSearchResponse.SearchResult
 import com.example.movieapp.viewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -83,47 +82,45 @@ fun SearchScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.transparent))
-            .padding(top = 45.dp),
+            .padding(top = 40.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         SearchView(
             searchViewModel,
-            onQueryChange = {},
         )
         SearchResults(searchResponse!!)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SearchView(
     searchViewModel: SearchViewModel,
-    onQueryChange: (String) -> Unit,
+
 ) {
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
     val searchHistory = remember { mutableStateListOf<String>() }
-    val scope = rememberCoroutineScope()
+    val searchScope = rememberCoroutineScope()
+    var searchJob by remember { mutableStateOf<Job?>(null) }
 
     Card(modifier = Modifier) {
         SearchBar(
             modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = colorResource(id = R.color.red),
-                ),
+                .fillMaxWidth().background(colorResource(id = R.color.main_theme_bg)),
             query = text,
             onQueryChange = {
                 text = it
-                scope.launch {
-                    delay(400)
-                    onQueryChange(text)
-                    active = false
-                    searchViewModel.searchMovies(text)
+                searchScope.launch {
+                    searchJob?.cancel() // Cancel the previous search job
+                    searchJob = launch {
+                        delay(600)
+                        if (text.isNotEmpty()) {
+                            active = false
+                        }
+                        searchViewModel.searchMovies(text)
+                    }
                 }
             },
             onSearch = {
