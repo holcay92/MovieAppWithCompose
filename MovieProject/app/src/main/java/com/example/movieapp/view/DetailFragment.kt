@@ -62,9 +62,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private lateinit var currentVideoId: String
-    private var videoNumber = 0
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -142,13 +139,6 @@ class DetailFragment : Fragment() {
 
          viewPager.layoutParams = layoutParams
      }*/
-
-    private fun handleFullScreenButton() {
-        val action = DetailFragmentDirections.actionDetailFragmentToVideoFullScreenActivity(
-            currentVideoId,
-        )
-        findNavController().navigate(action)
-    }
 
     /*private fun initFirstVideo(video: VideoResult) {
         currentVideoId = video.key
@@ -792,8 +782,16 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
                     navController.navigate(action)
                 }
             },
-            modifier = Modifier.weight(1f).size(50.dp),
-            content = { Text(text = "Toggle Fullscreen") },
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.main_theme)),
+            modifier = Modifier.weight(2f).width(150.dp)
+                .height(40.dp),
+            content = {
+                Text(
+                    text = "Toggle Fullscreen",
+                    color = colorResource(id = R.color.light_theme),
+                    fontSize = 12.sp,
+                )
+            },
         )
         IconButton(
             onClick = {
