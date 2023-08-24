@@ -1,12 +1,12 @@
 package com.example.movieapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.room.Dao
 import com.example.movieapp.room.FavoriteMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,16 +16,24 @@ class FavoriteMovieViewModel @Inject constructor(private val dao: Dao) : ViewMod
     var favMovieList: LiveData<List<FavoriteMovie>> = dao.getAllItems()
 
     fun actionFavButton(movie: FavoriteMovie) = viewModelScope.launch {
-        val favoriteMovies = favMovieList.value.orEmpty()
-        Log.d("TAGX", "actionFavButton list: $favoriteMovies")
-        Log.d("TAGX", "actionFavButton movie parameter: $movie")
+        val favoriteMovies = favMovieList.value
 
         if (isFavorite(movie)) {
-            Log.d("TAGX", "actionFavButton movie delete: $movie")
-            dao.deleteFavorite(movie)
+            val result = dao.deleteFavorite(movie)
+            if (result == 0) {
+                deleteMovieFromDatabase(movie.id!!)
+            }
         } else {
-            Log.d("TAGX", "actionFavButton movie insert: $movie")
             dao.insertFavorite(movie)
+        }
+    }
+
+    private suspend fun deleteMovieFromDatabase(movieId: Int) {
+        val movie = coroutineScope {
+            dao.getMovieById(movieId)
+        }
+        movie?.let {
+            val result = dao.deleteFavorite(it)
         }
     }
 

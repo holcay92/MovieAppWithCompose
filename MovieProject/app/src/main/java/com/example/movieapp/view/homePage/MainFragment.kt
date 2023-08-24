@@ -203,6 +203,7 @@ fun PopularMoviesList(
 ) {
     val popularMovieViewModel: PopularMovieViewModel = viewModel()
     val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
+    popularMovieViewModel.observeMovieFromViewModelFavorite(favoriteMovieViewModel)
     val lazyListState = rememberLazyListState()
     val lazyGridState = rememberLazyGridState()
     val configuration = LocalConfiguration.current
