@@ -8,23 +8,15 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
-import com.example.movieapp.viewModel.NowPlayingMovieViewModel
-import com.example.movieapp.viewModel.PopularMovieViewModel
-import com.example.movieapp.viewModel.TopRatedMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
-    private val popularMovieViewModel: PopularMovieViewModel by viewModels()
-    private val topRatedMovieViewModel: TopRatedMovieViewModel by viewModels()
-    private val nowPlayingMovieViewModel: NowPlayingMovieViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -33,9 +25,6 @@ class MainActivity : AppCompatActivity() {
             // Set the activity to full-screen mode
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
-        popularMovieViewModel.fetchPopularMovieList()
-        topRatedMovieViewModel.fetchTopRatedMovieList()
-        nowPlayingMovieViewModel.fetchNowPlayingMovies()
         setupBottomNavigation()
         hideSystemUI()
 

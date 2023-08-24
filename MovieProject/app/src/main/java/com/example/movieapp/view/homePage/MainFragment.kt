@@ -313,20 +313,6 @@ fun PopularMoviesList(
                     }
                 }
             }
-            val reachedEnd =
-                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == (lazyListState.layoutInfo.totalItemsCount - 1)
-            if (reachedEnd) {
-                item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        CircularProgressIndicator() // Loading indicator
-                    }
-                }
-            }
         }
     }
 }
