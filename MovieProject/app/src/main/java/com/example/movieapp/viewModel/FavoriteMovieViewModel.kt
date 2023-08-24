@@ -1,5 +1,6 @@
 package com.example.movieapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,12 +17,20 @@ class FavoriteMovieViewModel @Inject constructor(private val dao: Dao) : ViewMod
 
     fun actionFavButton(movie: FavoriteMovie) = viewModelScope.launch {
         val favoriteMovies = favMovieList.value.orEmpty()
+        Log.d("TAGX", "actionFavButton list: $favoriteMovies")
+        Log.d("TAGX", "actionFavButton movie parameter: $movie")
 
-        if (favoriteMovies.any { it.id == movie.id }) {
-            val deleteMovie = favoriteMovies.find { it.id == movie.id }
-            dao.deleteFavorite(deleteMovie!!)
+        if (isFavorite(movie)) {
+            Log.d("TAGX", "actionFavButton movie delete: $movie")
+            dao.deleteFavorite(movie)
         } else {
+            Log.d("TAGX", "actionFavButton movie insert: $movie")
             dao.insertFavorite(movie)
         }
+    }
+
+    private fun isFavorite(movie: FavoriteMovie): Boolean {
+        val favoriteMovies = favMovieList.value.orEmpty()
+        return favoriteMovies.any { it.id == movie.id }
     }
 }

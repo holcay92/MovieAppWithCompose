@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -201,7 +202,9 @@ fun PopularMoviesList(
 
 ) {
     val popularMovieViewModel: PopularMovieViewModel = viewModel()
+    val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
     val lazyListState = rememberLazyListState()
+    val lazyGridState = rememberLazyGridState()
     val configuration = LocalConfiguration.current
     val gridCellCount = when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
@@ -233,6 +236,7 @@ fun PopularMoviesList(
 
     if (isGridMode) {
         LazyVerticalGrid(
+            state = lazyGridState,
             columns = GridCells.Fixed(gridCellCount),
             modifier = Modifier
                 .height(700.dp)
@@ -256,6 +260,24 @@ fun PopularMoviesList(
                             navController.navigate(action)
                         },
                     )
+                    if (index == movies.size - 1) {
+                        // Load next page when reaching the last item
+                        popularMovieViewModel.getNextPage()
+                    }
+                }
+            }
+            val reachedEnd =
+                lazyGridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == (lazyGridState.layoutInfo.totalItemsCount - 1)
+            if (reachedEnd) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        CircularProgressIndicator() // Loading indicator
+                    }
                 }
             }
         }
@@ -273,20 +295,26 @@ fun PopularMoviesList(
                 movie.let {
                     PopularMovieItem(
                         movie = it,
-                    ) {
-                        val action = it.let { movieItem ->
-                            MainFragmentDirections.actionMainFragmentToDetailFragment(
-                                Constants.TOP_RATED,
-                                movieItem.id!!,
-                            )
-                        }
-                        navController.navigate(action)
+                        onItemClick = {
+                            val action = it.let { movieItem ->
+                                MainFragmentDirections.actionMainFragmentToDetailFragment(
+                                    Constants.TOP_RATED,
+                                    movieItem.id!!,
+                                )
+                            }
+                            navController.navigate(action)
+                        },
+                        favoriteMovieViewModel,
+                    )
+
+                    if (index == movies.size - 1) {
+                        // Load next page when reaching the last item
+                        popularMovieViewModel.getNextPage()
                     }
                 }
             }
-
             val reachedEnd =
-                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == lazyListState.layoutInfo.totalItemsCount - 1
+                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == (lazyListState.layoutInfo.totalItemsCount - 1)
             if (reachedEnd) {
                 item {
                     Box(
@@ -298,7 +326,6 @@ fun PopularMoviesList(
                         CircularProgressIndicator() // Loading indicator
                     }
                 }
-                popularMovieViewModel.getNextPage()
             }
         }
     }
@@ -309,6 +336,7 @@ fun PopularMoviesList(
 fun PopularMovieItem(
     movie: MovieResult?,
     onItemClick: () -> Unit,
+    favoriteMovieViewModel: FavoriteMovieViewModel,
 ) {
     val isFavorite = movie?.isFavorite ?: false
     var isMovieFavorite by remember { mutableStateOf(isFavorite) }
@@ -323,7 +351,6 @@ fun PopularMovieItem(
         R.drawable.add_fav_empty_icon // Use the empty icon resource
     }
 
-    val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
     Card(
         onClick = onItemClick,
         modifier = Modifier
