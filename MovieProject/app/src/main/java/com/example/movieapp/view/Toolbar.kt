@@ -35,16 +35,17 @@ fun CustomTopAppBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(colorResource(id = R.color.main_theme_bg))
-            .height(56.dp).padding(top = 8.dp),
+            .height(56.dp).padding(top = 4.dp),
 
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             IconButton(onClick = onBackClick, modifier = Modifier.weight(1f)) {
                 Icon(
+                    modifier = Modifier.align(Alignment.CenterVertically),
                     imageVector = Icons.Default.ArrowBackIos,
                     contentDescription = "Back",
                     tint = colorResource(

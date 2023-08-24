@@ -240,7 +240,7 @@ fun PopularMoviesList(
             columns = GridCells.Fixed(gridCellCount),
             modifier = Modifier
                 .height(700.dp)
-                .padding(top = 10.dp, bottom = 20.dp),
+                .padding(bottom = 20.dp),
         ) {
             items(movies.size) { index ->
                 val movie = movies[index]

@@ -90,7 +90,7 @@ fun SearchScreen(navController: NavController) {
         SearchView(
             searchViewModel,
         )
-        SearchResults(searchResponse!!)
+        SearchResults(searchResponse!!, navController)
     }
 }
 
@@ -201,21 +201,30 @@ fun SearchView(
 }
 
 @Composable
-fun SearchResults(movies: List<SearchResult>) {
+fun SearchResults(movies: List<SearchResult>, navController: NavController) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     ) {
         items(movies) { movie ->
-            MovieItem(movie = movie)
+            MovieItem(movie = movie, navController = navController)
         }
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun MovieItem(movie: SearchResult) {
+fun MovieItem(movie: SearchResult, navController: NavController) {
     Card(
+        onClick = {
+            val action = movie.id?.let {
+                SearchFragmentDirections.actionSearchFragmentToDetailFragment(
+                    Constants.POPULAR,
+                    it,
+                )
+            }
+            navController.navigate(action!!)
+        },
         modifier = Modifier
             .background(Color.Transparent)
             .padding(5.dp).clickable {
