@@ -70,6 +70,7 @@ class ActorFragment : Fragment() {
             }
         }
     }
+
     private fun setupToolbar() { // todo: compose toolbar
         val toolbar = activity as AppCompatActivity
         toolbar.supportActionBar?.setTitle(R.string.info)
@@ -92,7 +93,11 @@ fun ActorScreen(actorId: Int, navController: NavController) {
         snapshotFlow { configuration.orientation }
             .collect { orientation = it }
     }
-
+    actorResponse?.name?.let {
+        CustomTopAppBar(title = it) {
+            navController.popBackStack()
+        }
+    }
     when (orientation) {
         Configuration.ORIENTATION_PORTRAIT -> {
             LazyColumn(

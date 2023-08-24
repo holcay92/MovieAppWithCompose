@@ -125,7 +125,7 @@ fun DetailScreen(movieId: Int, navController: NavController) {
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(top = 10.dp),
+        modifier = Modifier.fillMaxSize().padding(top = 50.dp),
     ) {
         item {
             movieImageList.value?.let { MovieImageLayout(it) }
@@ -157,7 +157,7 @@ fun DetailScreen(movieId: Int, navController: NavController) {
 @Composable
 fun MovieImageLayout(movieImageResponse: List<Poster>) {
     LazyRow(
-        modifier = Modifier.padding(top = 50.dp),
+        modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         items(movieImageResponse.size) { imageResource ->
