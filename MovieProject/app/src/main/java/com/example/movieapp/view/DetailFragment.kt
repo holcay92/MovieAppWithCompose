@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.* // ktlint-disable no-wildcard-imports
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.* // ktlint-disable no-wildcard-imports
 import androidx.compose.runtime.Composable
@@ -69,9 +68,7 @@ class DetailFragment : Fragment() {
         val movieId = DetailFragmentArgs.fromBundle(requireArguments()).id
         return ComposeView(requireContext()).apply {
             setContent {
-                MaterialTheme {
-                    DetailScreen(movieId, findNavController())
-                }
+                DetailScreen(movieId, navController = findNavController())
             }
         }
     }
@@ -120,11 +117,15 @@ fun DetailScreen(movieId: Int, navController: NavController) {
     val movieDetailResponse = detailViewModel.movieDetail.observeAsState()
     val creditsResponseList = creditsViewModel.creditsResponse.observeAsState()
     val movieTrailersResponse = detailViewModel.movieVideos.observeAsState()
-    movieDetailResponse.value?.title?.toString()
-        ?.let { CustomTopAppBar(it, onBackClick = { navController.popBackStack() }) }
+    movieDetailResponse.value?.title?.let {
+        CustomTopAppBar(
+            it,
+            onBackClick = { navController.popBackStack() },
+        )
+    }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(top=10.dp),
+        modifier = Modifier.fillMaxSize().padding(top = 10.dp),
     ) {
         item {
             movieImageList.value?.let { MovieImageLayout(it) }

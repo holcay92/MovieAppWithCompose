@@ -2,6 +2,7 @@ package com.example.movieapp.view.homePage
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,12 +75,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment :
     Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // showProgressDialog()
         return ComposeView(requireContext()).apply {
             setContent {
                 MainScreen(
@@ -96,11 +97,14 @@ const val SPAN_COUNT_4 = 4
 @Composable
 fun MainScreen(navController: NavController) {
     val popularMovieViewModel: PopularMovieViewModel = viewModel()
-    val topRatedMovieViewModel: TopRatedMovieViewModel = viewModel()
-    val nowPlayingMovieViewModel: NowPlayingMovieViewModel = viewModel()
     val popularMovies = popularMovieViewModel.popularMovieResponse.observeAsState(emptyList())
+
+    val topRatedMovieViewModel: TopRatedMovieViewModel = viewModel()
     val topRatedMovies = topRatedMovieViewModel.tRMovieResponse.observeAsState(emptyList())
+
+    val nowPlayingMovieViewModel: NowPlayingMovieViewModel = viewModel()
     val nowPlayingMovies = nowPlayingMovieViewModel.nowPlayingMovies.observeAsState(emptyList())
+
     popularMovieViewModel.updateFavoriteResult()
     topRatedMovieViewModel.updateFavoriteResult()
     nowPlayingMovieViewModel.updateFavoriteResult()
@@ -307,7 +311,6 @@ fun PopularMovieItem(
     movie: MovieResult?,
     onItemClick: () -> Unit,
 ) {
-    val popularMovieViewModel: PopularMovieViewModel = viewModel()
     val isFavorite = movie?.isFavorite ?: false
     var isMovieFavorite by remember { mutableStateOf(isFavorite) }
     val favoriteIconTint: Int = if (isMovieFavorite) {

@@ -7,24 +7,6 @@
     android:background="@color/main_theme_bg"
     tools:context=".view.homePage.MainActivity">
 
-    <!--<androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/toolbar_main_theme"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/light_theme">
-
-        <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/content_description"
-            android:src="@drawable/tmdb_icon" />
-    </androidx.appcompat.widget.Toolbar>-->
 
 
     <androidx.fragment.app.FragmentContainerView

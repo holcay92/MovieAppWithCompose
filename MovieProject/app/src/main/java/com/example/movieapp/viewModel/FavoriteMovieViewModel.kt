@@ -15,9 +15,9 @@ class FavoriteMovieViewModel @Inject constructor(private val dao: Dao) : ViewMod
     var favMovieList: LiveData<List<FavoriteMovie>> = dao.getAllItems()
 
     fun actionFavButton(movie: FavoriteMovie) = viewModelScope.launch {
-        val favoriteMovies = favMovieList.value
+        val favoriteMovies = favMovieList.value.orEmpty()
 
-        if (favoriteMovies?.any { it.id == movie.id } == true) {
+        if (favoriteMovies.any { it.id == movie.id }) {
             val deleteMovie = favoriteMovies.find { it.id == movie.id }
             dao.deleteFavorite(deleteMovie!!)
         } else {

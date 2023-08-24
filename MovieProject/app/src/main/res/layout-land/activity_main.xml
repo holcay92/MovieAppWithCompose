@@ -9,27 +9,6 @@
     android:clipToPadding="false"
     tools:context=".view.homePage.MainActivity">
 
-<!--    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/toolbar_main_theme"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Movie App"
-        app:titleTextColor="@color/light_theme">
-
-        <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/tmdb_landscape"
-            android:contentDescription="@string/content_description" />
-    </androidx.appcompat.widget.Toolbar>-->
-
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"

@@ -1,6 +1,5 @@
 package com.example.movieapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -50,7 +49,7 @@ class PopularMovieViewModel @Inject constructor(
                         val currentResults = popularMovieResponse.value.orEmpty()
                         popularMovieResponse.value = currentResults + (results ?: emptyList())
                         currentPage++
-                        Log.d("TAGX", "Current page: $currentPage")
+                        // Log.d("TAGX", "Current page: $currentPage")
                     }
                 }
 
