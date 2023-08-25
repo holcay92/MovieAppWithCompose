@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.movieapp.view.homePage.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash">
+        android:label="fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -18,8 +17,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.movieapp.view.homePage.MainFragment"
-        android:label="fragment_main"
-       >
+        android:label="fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
             app:destination="@id/detailFragment"
