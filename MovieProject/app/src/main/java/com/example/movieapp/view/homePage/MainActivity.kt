@@ -41,16 +41,25 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
+                    if (findNavController(R.id.fragmentContainerView).currentDestination?.id == R.id.mainFragment) {
+                        return@setOnItemSelectedListener true
+                    }
                     findNavController(R.id.fragmentContainerView).navigate(R.id.mainFragment)
                     true
                 }
 
                 R.id.favorites -> {
+                    if (findNavController(R.id.fragmentContainerView).currentDestination?.id == R.id.favoriteFragment) {
+                        return@setOnItemSelectedListener true
+                    }
                     findNavController(R.id.fragmentContainerView).navigate(R.id.favoriteFragment)
                     true
                 }
 
                 R.id.action_search_nav_bar -> {
+                    if (findNavController(R.id.fragmentContainerView).currentDestination?.id == R.id.searchFragment) {
+                        return@setOnItemSelectedListener true
+                    }
                     findNavController(R.id.fragmentContainerView).navigate(R.id.searchFragment)
                     true
                 }
