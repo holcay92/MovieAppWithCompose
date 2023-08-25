@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -75,17 +76,19 @@ fun CustomTopAppBar(
 @Composable
 fun MainTopAppBar() {
     val logo: Painter = painterResource(id = R.drawable.tmdb_icon)
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(colorResource(id = R.color.main_theme_bg))
             .height(56.dp).padding(top = 8.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
         Image(
             painter = logo,
             contentDescription = "Logo",
-            modifier = Modifier.size(36.dp).align(Alignment.TopCenter),
+            modifier = Modifier.size(36.dp),
 
         )
     }
