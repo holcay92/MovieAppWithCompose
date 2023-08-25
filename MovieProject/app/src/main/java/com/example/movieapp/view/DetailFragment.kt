@@ -97,7 +97,12 @@ fun DetailScreen(movieId: Int, navController: NavController) {
     }
     if (loadingState == true) {
         // Show loading indicator
-        CircularProgressIndicator(modifier = Modifier.width(100.dp).height(100.dp))
+        CircularProgressIndicator(
+            modifier = Modifier.width(50.dp).height(50.dp),
+            color = colorResource(
+                id = R.color.light_bold_theme,
+            ),
+        )
     } else {
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(top = 50.dp),
