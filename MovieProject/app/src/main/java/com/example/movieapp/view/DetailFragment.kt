@@ -53,7 +53,7 @@ import com.example.movieapp.viewModel.DetailFragmentMovieImageViewModel
 import com.example.movieapp.viewModel.DetailViewModel
 import com.example.movieapp.viewModel.FavoriteMovieViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -767,17 +767,19 @@ fun InitYoutubePlayer(
     videoId: String,
     onReady: (YouTubePlayer) -> Unit,
 ) {
-    AndroidView(factory = {
-        val view = YouTubePlayerView(it)
-        view.addYouTubePlayerListener(
-            object : AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    super.onReady(youTubePlayer)
+    val context = LocalContext.current
+    val view = remember { YouTubePlayerView(context) }
+
+    AndroidView(
+        factory = { view },
+        modifier = Modifier.fillMaxSize(),
+        update = { view ->
+            view.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                     youTubePlayer.cueVideo(videoId, 0f)
                     onReady(youTubePlayer)
                 }
-            },
-        )
-        view
-    })
+            })
+        },
+    )
 }
