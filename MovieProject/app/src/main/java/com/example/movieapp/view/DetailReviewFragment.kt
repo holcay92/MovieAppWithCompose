@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -48,17 +47,11 @@ class DetailReviewFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         val movieId = DetailReviewFragmentArgs.fromBundle(requireArguments()).movieId
-        setupToolbar()
         return ComposeView(requireContext()).apply {
             setContent {
                 DetailReviewScreen(movieId, findNavController())
             }
         }
-    }
-
-    private fun setupToolbar() { // todo: compose toolbar
-        val toolbar = activity as AppCompatActivity
-        toolbar.supportActionBar?.setTitle(R.string.show_reviews)
     }
 }
 
@@ -67,7 +60,10 @@ fun DetailReviewScreen(movieId: Int, navController: NavController) {
     val detailReviewViewModel: DetailReviewViewModel = viewModel()
     detailReviewViewModel.getReview(movieId)
     val reviewList = detailReviewViewModel.reviewList.collectAsState(initial = emptyList()).value
-    CustomTopAppBar(stringResource(id = R.string.show_reviews), onBackClick = { navController.popBackStack() })
+    CustomTopAppBar(
+        stringResource(id = R.string.show_reviews),
+        onBackClick = { navController.popBackStack() },
+    )
     Box(
         modifier = Modifier
             .fillMaxSize()

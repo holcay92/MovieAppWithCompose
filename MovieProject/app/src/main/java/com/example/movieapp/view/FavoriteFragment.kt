@@ -201,7 +201,7 @@ fun FavoriteMovieItem(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             GlideImage(
-                model = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
+                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
                 contentDescription = null,
                 modifier = Modifier.width(60.dp).height(90.dp)
                     .clip(RoundedCornerShape(10.dp)),

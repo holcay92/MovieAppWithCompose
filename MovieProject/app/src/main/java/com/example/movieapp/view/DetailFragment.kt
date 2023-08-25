@@ -161,7 +161,7 @@ fun MovieImageLayout(movieImageResponse: List<Poster>) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         items(movieImageResponse.size) { imageResource ->
-            val movieImageResponseItem = movieImageResponse[imageResource].file_path
+            val movieImageResponseItem = movieImageResponse[imageResource].filePath
             Card(
                 modifier = Modifier
                     .padding(5.dp)

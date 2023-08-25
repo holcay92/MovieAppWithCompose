@@ -180,7 +180,7 @@ fun SearchView(
                         contentDescription = null,
                     )
                     Text(
-                        text = historyItem ?: "",
+                        text = historyItem,
                         modifier = Modifier.weight(1f),
                         color = Color.Black,
                         fontSize = 16.sp,
