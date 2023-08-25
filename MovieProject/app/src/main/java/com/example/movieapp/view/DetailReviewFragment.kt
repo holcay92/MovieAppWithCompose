@@ -67,7 +67,7 @@ fun DetailReviewScreen(movieId: Int, navController: NavController) {
     val detailReviewViewModel: DetailReviewViewModel = viewModel()
     detailReviewViewModel.getReview(movieId)
     val reviewList = detailReviewViewModel.reviewList.collectAsState(initial = emptyList()).value
-    CustomTopAppBar("REVIEWS", onBackClick = { navController.popBackStack() })
+    CustomTopAppBar(stringResource(id = R.string.show_reviews), onBackClick = { navController.popBackStack() })
     Box(
         modifier = Modifier
             .fillMaxSize()

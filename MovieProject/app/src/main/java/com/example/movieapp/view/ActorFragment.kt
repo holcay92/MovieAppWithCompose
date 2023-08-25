@@ -188,7 +188,7 @@ fun ActorInfoSection(
             )
             Text(
                 text = actor.name ?: "",
-                color = colorResource(id = R.color.light_theme),
+                color = colorResource(id = R.color.light_bold_theme),
                 fontStyle = FontStyle.Italic,
                 fontSize = 18.sp,
             )
@@ -202,7 +202,7 @@ fun ActorInfoSection(
             )
             Text(
                 text = actor.birthday ?: "",
-                color = colorResource(id = R.color.light_theme),
+                color = colorResource(id = R.color.light_bold_theme),
                 fontStyle = FontStyle.Italic,
                 fontSize = 18.sp,
             )
@@ -216,7 +216,7 @@ fun ActorInfoSection(
             )
             Text(
                 text = actor.placeOfBirth ?: "",
-                color = colorResource(id = R.color.light_theme),
+                color = colorResource(id = R.color.light_bold_theme),
                 fontStyle = FontStyle.Italic,
                 fontSize = 18.sp,
             )
@@ -284,7 +284,7 @@ fun ActorInfoSection(
                 actor.biography?.let {
                     Text(
                         text = it,
-                        color = colorResource(id = R.color.light_theme),
+                        color = colorResource(id = R.color.light_bold_theme),
                         fontStyle = FontStyle.Italic,
                         fontFamily = FontFamily.Serif,
                         fontSize = 16.sp,

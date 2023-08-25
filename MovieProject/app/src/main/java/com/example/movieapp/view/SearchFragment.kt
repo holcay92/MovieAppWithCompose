@@ -79,7 +79,7 @@ class SearchFragment : Fragment() {
 fun SearchScreen(navController: NavController) {
     val searchViewModel: SearchViewModel = viewModel()
     val searchResponse by searchViewModel.searchList.observeAsState(emptyList())
-    CustomTopAppBar("SEARCH", onBackClick = { navController.popBackStack() })
+    CustomTopAppBar(stringResource(id = R.string.search), onBackClick = { navController.popBackStack() })
     Column(
         modifier = Modifier
             .fillMaxSize()

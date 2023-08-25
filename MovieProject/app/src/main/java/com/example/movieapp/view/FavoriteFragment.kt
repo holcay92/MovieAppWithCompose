@@ -81,7 +81,7 @@ class FavoriteFragment : Fragment() {
 fun FavoriteScreen(navController: NavController) {
     val favoriteMovieViewModel: FavoriteMovieViewModel = viewModel()
     val favoriteMovies = favoriteMovieViewModel.favMovieList.observeAsState(emptyList())
-    CustomTopAppBar("FAVORITES", onBackClick = { navController.popBackStack() })
+    CustomTopAppBar(stringResource(id = R.string.favorites), onBackClick = { navController.popBackStack() })
     Box(
         modifier = Modifier
             .fillMaxSize()
