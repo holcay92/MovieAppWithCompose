@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.model.review.ReviewResult
 import com.example.movieapp.viewModel.DetailReviewViewModel
@@ -49,7 +51,7 @@ class DetailReviewFragment : Fragment() {
         setupToolbar()
         return ComposeView(requireContext()).apply {
             setContent {
-                DetailReviewScreen(movieId)
+                DetailReviewScreen(movieId, findNavController())
             }
         }
     }
@@ -61,14 +63,15 @@ class DetailReviewFragment : Fragment() {
 }
 
 @Composable
-fun DetailReviewScreen(movieId: Int) {
+fun DetailReviewScreen(movieId: Int, navController: NavController) {
     val detailReviewViewModel: DetailReviewViewModel = viewModel()
     detailReviewViewModel.getReview(movieId)
     val reviewList = detailReviewViewModel.reviewList.collectAsState(initial = emptyList()).value
+    CustomTopAppBar("REVIEWS", onBackClick = { navController.popBackStack() })
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 35.dp, bottom = 10.dp),
+            .padding(top = 45.dp, bottom = 10.dp),
     ) {
         if (reviewList != null) {
             if (reviewList.isEmpty()) {

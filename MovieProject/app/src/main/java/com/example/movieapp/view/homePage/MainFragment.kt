@@ -112,7 +112,7 @@ fun MainScreen(navController: NavController) {
     MainTopAppBar()
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(top = 45.dp),
     ) {
         item {
             TopRatedMoviesList(navController, topRatedMovies.value ?: emptyList())
@@ -165,7 +165,7 @@ fun NowPlayingMoviesList(navController: NavController, movies: List<MovieResult>
 @Composable
 fun TopRatedMoviesList(navController: NavController, movies: List<MovieResult>) {
     Text(
-        modifier = Modifier.padding(start = 10.dp, top = 50.dp),
+        modifier = Modifier.padding(start = 10.dp),
         text = stringResource(id = R.string.top_rated_movies),
         color = colorResource(id = R.color.light_theme),
         fontWeight = FontWeight.Bold,
