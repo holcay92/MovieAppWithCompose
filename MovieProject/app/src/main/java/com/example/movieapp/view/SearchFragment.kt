@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +18,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
@@ -227,20 +227,16 @@ fun MovieItem(movie: SearchResult, navController: NavController) {
         },
         modifier = Modifier
             .background(Color.Transparent)
-            .padding(5.dp).clickable {
-                val action = movie.id?.let {
-                    SearchFragmentDirections.actionSearchFragmentToDetailFragment(
-                        Constants.POPULAR,
-                        it,
-                    )
-                }
-            },
-        elevation = CardDefaults.cardElevation(10.dp),
+            .padding(5.dp),
 
     ) {
         Row(
             modifier = Modifier
-                .background(colorResource(id = R.color.main_theme_bg))
+                .background(colorResource(id = R.color.main_theme_bg)).border(
+                    width = 1.dp,
+                    color = colorResource(id = R.color.light_bold_theme),
+                    shape = RoundedCornerShape(15.dp),
+                )
                 .fillMaxWidth(),
 
             horizontalArrangement = Arrangement.SpaceBetween,

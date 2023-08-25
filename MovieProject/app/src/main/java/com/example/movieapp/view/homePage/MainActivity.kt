@@ -80,12 +80,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.GONE
-        // activityMainBinding.toolbar?.visibility = View.GONE
     }
 
     private fun showNavigationBarAndToolbar() {
         activityMainBinding.bottomNavigation.visibility = View.VISIBLE
-        // activityMainBinding.toolbar?.visibility = View.VISIBLE
     }
 
     override fun onSupportNavigateUp(): Boolean {
