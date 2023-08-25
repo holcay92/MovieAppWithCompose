@@ -679,10 +679,11 @@ fun TrailerLayout(movieTrailersResponse: List<VideoResult>, navController: NavCo
     ) {
         IconButton(
             onClick = {
-                if (videoNumber == 0) {
-                    videoNumber = movieTrailersResponse.size // cycle to the last video
+                videoNumber = if (videoNumber == 0) {
+                    movieTrailersResponse.size - 1 // cycle to the last video
+                } else {
+                    (videoNumber - 1) % movieTrailersResponse.size
                 }
-                videoNumber = (videoNumber - 1) % movieTrailersResponse.size
             },
             modifier = Modifier
                 .size(30.dp)

@@ -41,8 +41,8 @@ fun SplashScreen() {
     val rotationState = rememberInfiniteTransition(label = "")
     val rotation by rotationState.animateFloat(
         initialValue = 0f,
-        targetValue = 180f,
-        animationSpec = infiniteRepeatable(tween(1000), RepeatMode.Reverse),
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(tween(2000)),
         label = "",
     )
 
