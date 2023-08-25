@@ -215,6 +215,8 @@ fun SearchResults(movies: List<SearchResult>, navController: NavController) {
 @OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MovieItem(movie: SearchResult, navController: NavController) {
+    val icon = if (movie.isFavorite) R.drawable.add_fav_filled_icon else R.drawable.add_fav_empty_icon
+    val iconTint = if (movie.isFavorite) colorResource(id = R.color.red) else colorResource(id = R.color.light_theme)
     Card(
         onClick = {
             val action = movie.id?.let {
@@ -243,10 +245,10 @@ fun MovieItem(movie: SearchResult, navController: NavController) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                painter = painterResource(id = if (movie.isFavorite) R.drawable.add_fav_filled_icon else R.drawable.add_fav_empty_icon),
+                painter = painterResource(icon),
                 contentDescription = null, // Provide proper description
-                tint = Color.Yellow,
-                modifier = Modifier
+                tint = iconTint,
+                modifier = Modifier.padding(start = 10.dp)
                     .size(30.dp),
             )
 

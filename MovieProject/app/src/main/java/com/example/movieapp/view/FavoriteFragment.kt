@@ -86,7 +86,7 @@ fun FavoriteScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 50.dp, bottom = 10.dp)
-            .background(colorResource(id = R.color.main_theme)),
+            .background(colorResource(id = R.color.main_theme_bg)),
     ) {
         if (favoriteMovies.value.isEmpty()) {
             Column(
