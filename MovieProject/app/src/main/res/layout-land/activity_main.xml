@@ -7,7 +7,7 @@
     android:background="@color/main_theme_bg"
     android:fitsSystemWindows="true"
     android:clipToPadding="false"
-    tools:context=".view.homePage.MainActivity">
+   >
 
 
     <androidx.fragment.app.FragmentContainerView
