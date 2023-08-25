@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -72,36 +70,6 @@ class DetailFragment : Fragment() {
             }
         }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupBackButtonNavigation()
-        // Enable the back button
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun setupBackButtonNavigation() {
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val action = DetailFragmentDirections.actionDetailFragmentToMainFragment()
-                findNavController().navigate(action)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            onBackPressedCallback,
-        )
-    } /*
-
-    private fun updateVideoUI(video: VideoResult) {
-        currentVideoId = video.key
-        val youTubePlayerView: YouTubePlayerView = bindingDetail.youtubePlayerView1
-        youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-            override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.cueVideo(currentVideoId, 0f)
-            }
-        })
-    }*/
 }
 
 @Composable
@@ -111,44 +79,53 @@ fun DetailScreen(movieId: Int, navController: NavController) {
     val movieImageList = detailFragmentMovieImageViewModel.imageResponse.observeAsState(emptyList())
     val detailViewModel: DetailViewModel = viewModel()
     val creditsViewModel: CreditsViewModel = viewModel()
-    detailViewModel.fetchMovieDetail(movieId)
-    creditsViewModel.getMovieCredits(movieId)
-    detailViewModel.fetchMovieVideos(movieId)
+    LaunchedEffect(movieId) {
+        detailViewModel.fetchMovieDetail(movieId)
+        creditsViewModel.getMovieCredits(movieId)
+        detailViewModel.fetchMovieVideos(movieId)
+    }
+
     val movieDetailResponse = detailViewModel.movieDetail.observeAsState()
     val creditsResponseList = creditsViewModel.creditsResponse.observeAsState()
     val movieTrailersResponse = detailViewModel.movieVideos.observeAsState()
+    val loadingState by detailViewModel.loadingState.observeAsState()
     movieDetailResponse.value?.title?.let {
         CustomTopAppBar(
             it,
             onBackClick = { navController.popBackStack() },
         )
     }
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(top = 50.dp),
-    ) {
-        item {
-            movieImageList.value?.let { MovieImageLayout(it) }
-        }
-        item {
-            ReviewAndFavoriteLayout(
-                navController,
-                movieDetailResponse,
-            )
-        }
-        item {
-            MovieDetailLayout(movieDetailResponse, creditsResponseList)
-        }
-        item {
-            creditsResponseList.value?.cast?.let { actor ->
-                MovieActorLayout(actor) {
-                    val action = DetailFragmentDirections.actionDetailFragmentToActorFragment(it)
-                    navController.navigate(action)
+    if (loadingState == true) {
+        // Show loading indicator
+        CircularProgressIndicator(modifier = Modifier.width(100.dp).height(100.dp))
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(top = 50.dp),
+        ) {
+            item {
+                movieImageList.value?.let { MovieImageLayout(it) }
+            }
+            item {
+                ReviewAndFavoriteLayout(
+                    navController,
+                    movieDetailResponse,
+                )
+            }
+            item {
+                MovieDetailLayout(movieDetailResponse, creditsResponseList)
+            }
+            item {
+                creditsResponseList.value?.cast?.let { actor ->
+                    MovieActorLayout(actor) {
+                        val action =
+                            DetailFragmentDirections.actionDetailFragmentToActorFragment(it)
+                        navController.navigate(action)
+                    }
                 }
             }
-        }
-        item {
-            movieTrailersResponse.value?.let { TrailerLayout(it, navController) }
+            item {
+                movieTrailersResponse.value?.let { TrailerLayout(it, navController) }
+            }
         }
     }
 }
@@ -773,7 +750,7 @@ fun InitYoutubePlayer(
     AndroidView(
         factory = { view },
         modifier = Modifier.fillMaxSize(),
-        update = { view ->
+        update = {
             view.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                 override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                     youTubePlayer.cueVideo(videoId, 0f)

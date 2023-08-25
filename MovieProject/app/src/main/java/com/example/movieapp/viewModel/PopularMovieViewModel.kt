@@ -25,6 +25,7 @@ class PopularMovieViewModel @Inject constructor(
     var errorMessage = MutableLiveData<String>()
     private var currentPage = 1
     private var loadingNextPage = false
+    var loadingState = MutableLiveData<Boolean>()
 
     init {
         fetchPopularMovieList()
@@ -37,6 +38,7 @@ class PopularMovieViewModel @Inject constructor(
     }
 
     fun fetchPopularMovieList() {
+        loadingState.value = true
         val call = movieApiService.getPopularMovies(currentPage)
 
         call.enqueue(
@@ -56,12 +58,14 @@ class PopularMovieViewModel @Inject constructor(
                         popularMovieResponse.value = currentResults + (results ?: emptyList())
                         currentPage++
                         loadingNextPage = false
+                        loadingState.value = false
                     }
                 }
 
                 override fun onFailure(call: Call<Movie?>, t: Throwable) {
                     errorMessage.postValue("Failed to fetch movies. Please check your internet connection.")
                     popularMovieResponse.postValue(null)
+                    loadingState.value = false
                 }
             },
         )

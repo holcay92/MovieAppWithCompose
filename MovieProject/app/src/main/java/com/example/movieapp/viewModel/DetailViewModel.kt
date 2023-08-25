@@ -19,8 +19,10 @@ class DetailViewModel @Inject constructor(private val movieApiService: MovieApiS
     var movieVideos = MutableLiveData<List<VideoResult>?>()
     var errorMessageMovieDetail = MutableLiveData<String>()
     var errorMessageMovieVideos = MutableLiveData<String>()
+    val loadingState = MutableLiveData<Boolean>()
 
     fun fetchMovieDetail(id: Int) {
+        loadingState.value = true
         val call = movieApiService.getMovieDetails(id)
 
         call.enqueue(
@@ -32,17 +34,20 @@ class DetailViewModel @Inject constructor(private val movieApiService: MovieApiS
                     if (response.isSuccessful) {
                         movieDetail.value = response.body()
                     }
+                    loadingState.value = false
                 }
 
                 override fun onFailure(call: Call<MovieDetail?>, t: Throwable) {
                     errorMessageMovieDetail.postValue("Movie Detail Fetch Error") // todo add translation
                     movieDetail.postValue(null)
+                    loadingState.value = false
                 }
             },
         )
     }
 
     fun fetchMovieVideos(id: Int) {
+        loadingState.value = true
         val call = movieApiService.getMovieVideos(id)
 
         call.enqueue(
@@ -54,11 +59,13 @@ class DetailViewModel @Inject constructor(private val movieApiService: MovieApiS
                     if (response.isSuccessful) {
                         movieVideos.value = response.body()?.results
                     }
+                    loadingState.value = false
                 }
 
                 override fun onFailure(call: Call<Videos?>, t: Throwable) {
                     errorMessageMovieVideos.postValue("Movie Videos Fetch Error") // todo add translation
                     movieVideos.postValue(null)
+                    loadingState.value = false
                 }
             },
 

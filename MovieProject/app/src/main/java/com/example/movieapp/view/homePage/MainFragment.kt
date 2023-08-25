@@ -38,6 +38,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -98,33 +99,39 @@ const val SPAN_COUNT_4 = 4
 fun MainScreen(navController: NavController) {
     val popularMovieViewModel: PopularMovieViewModel = viewModel()
     val popularMovies = popularMovieViewModel.popularMovieResponse.observeAsState(emptyList())
+    val loadingState by popularMovieViewModel.loadingState.observeAsState()
 
     val topRatedMovieViewModel: TopRatedMovieViewModel = viewModel()
     val topRatedMovies = topRatedMovieViewModel.tRMovieResponse.observeAsState(emptyList())
 
     val nowPlayingMovieViewModel: NowPlayingMovieViewModel = viewModel()
     val nowPlayingMovies = nowPlayingMovieViewModel.nowPlayingMovies.observeAsState(emptyList())
-
-    popularMovieViewModel.updateFavoriteResult()
-    topRatedMovieViewModel.updateFavoriteResult()
-    nowPlayingMovieViewModel.updateFavoriteResult()
+    LaunchedEffect(null) {
+        popularMovieViewModel.updateFavoriteResult()
+        topRatedMovieViewModel.updateFavoriteResult()
+        nowPlayingMovieViewModel.updateFavoriteResult()
+    }
 
     MainTopAppBar()
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(top = 45.dp),
-    ) {
-        item {
-            TopRatedMoviesList(navController, topRatedMovies.value ?: emptyList())
-        }
-        item {
-            NowPlayingMoviesList(navController, nowPlayingMovies.value ?: emptyList())
-        }
-        item {
-            PopularMoviesList(
-                navController,
-                popularMovies.value ?: emptyList(),
-            )
+    if (loadingState == true) {
+        // Show loading indicator
+        CircularProgressIndicator(modifier = Modifier.width(100.dp).height(100.dp))
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(top = 45.dp),
+        ) {
+            item {
+                TopRatedMoviesList(navController, topRatedMovies.value ?: emptyList())
+            }
+            item {
+                NowPlayingMoviesList(navController, nowPlayingMovies.value ?: emptyList())
+            }
+            item {
+                PopularMoviesList(
+                    navController,
+                    popularMovies.value ?: emptyList(),
+                )
+            }
         }
     }
 }
