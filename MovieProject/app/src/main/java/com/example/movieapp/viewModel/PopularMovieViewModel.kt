@@ -37,7 +37,7 @@ class PopularMovieViewModel @Inject constructor(
         }
     }
 
-    fun fetchPopularMovieList() {
+    private fun fetchPopularMovieList() {
         loadingState.value = true
         val call = movieApiService.getPopularMovies(currentPage)
 

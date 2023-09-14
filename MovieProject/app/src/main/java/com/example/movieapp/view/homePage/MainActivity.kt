@@ -95,10 +95,16 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.bottomNavigation.visibility = View.VISIBLE
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.fragmentContainerView)
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
+    // unused
+    /*   override fun onSupportNavigateUp(): Boolean {
+           Log.d("TAGX", "onSupportNavigateUp: ")
+           val navController = findNavController(R.id.fragmentContainerView)
+           if (navController.currentDestination?.id == R.id.mainFragment) {
+               Log.d("TAGX", "onSupportNavigateUp:if block ")
+               return false
+           }
+           return navController.navigateUp() || super.onSupportNavigateUp()
+       }*/
 
     companion object {
         private const val SPLASH_DELAY = 2000

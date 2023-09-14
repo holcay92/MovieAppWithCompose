@@ -2,6 +2,7 @@ package com.example.movieapp.view.homePage
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -114,6 +115,7 @@ fun MainScreen(navController: NavController) {
 
     MainTopAppBar()
     if (loadingState == true) {
+        Log.d("TAGX", "MainScreen: loadingState == true")
         // Show loading indicator
         CircularProgressIndicator(
             modifier = Modifier.width(50.dp).height(50.dp),
@@ -279,27 +281,13 @@ fun PopularMoviesList(
                     }
                 }
             }
-            val reachedEnd =
-                lazyGridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == (lazyGridState.layoutInfo.totalItemsCount - 1)
-            if (reachedEnd) {
-                item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        CircularProgressIndicator() // Loading indicator
-                    }
-                }
-            }
         }
     } else {
         LazyColumn(
             state = lazyListState,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(700.dp)
+                .height(600.dp)
                 .padding(top = 10.dp, bottom = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
